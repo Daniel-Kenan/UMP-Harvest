@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 
+def page(name):return f"Pages/{name}.html"
+
 def home(request):
-    return HttpResponse("Hello, World!")
+    return  render(request, page("Home"))
