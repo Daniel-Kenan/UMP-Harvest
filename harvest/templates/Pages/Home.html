@@ -1,30 +1,177 @@
-<!DOCTYPE html>
-<html lang="en">
-    {% load static %}
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
-    <title>Hello World</title>
-    <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
-    <link rel="stylesheet" href="{% static 'css/vendor.css' %}">
-    <link rel="stylesheet" href="{% static 'styles.css' %}">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&family=Open+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
-</head>
-<body>  
-    {% include "Components/Sidebar.html" %}
-    {% include "Components/Cart.html" %}
-    <h1>Hello, World!</h1>
+{% extends 'base.html' %}
 
+{% block title %}
+Home - My Site
+{% endblock %}
+{% load static %}
+{% block content %}
+    <section style="background-image: url({% static "images/banner-1.jpg" %});background-repeat: no-repeat;background-size: cover;">
+        <div class="container-lg">
+          <div class="row">
+            <div class="col-lg-6 pt-5 mt-5">
+              <h2 class="display-1 ls-1"><span class="fw-bold text-primary">UMP's</span> Harvest <span class="fw-bold">at your Doorsteps</span></h2>
+              <p class="fs-4">Growing the future, one harvest at a time.</p>
+              <div class="d-flex gap-3">
+                <a href="#" class="btn btn-primary text-uppercase fs-6 rounded-pill px-4 py-3 mt-3">Start Shopping</a>
+                <a href="#" class="btn btn-dark text-uppercase fs-6 rounded-pill px-4 py-3 mt-3">Join Now</a>
+              </div>
+              <div class="row my-5">
+                <div class="col">
+                  <div class="row text-dark">
+                    <div class="col-auto"><p class="fs-1 fw-bold lh-sm mb-0">14k+</p></div>
+                    <div class="col"><p class="text-uppercase lh-sm mb-0">Product Varieties</p></div>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="row text-dark">
+                    <div class="col-auto"><p class="fs-1 fw-bold lh-sm mb-0">50k+</p></div>
+                    <div class="col"><p class="text-uppercase lh-sm mb-0">Happy Customers</p></div>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="row text-dark">
+                    <div class="col-auto"><p class="fs-1 fw-bold lh-sm mb-0">10+</p></div>
+                    <div class="col"><p class="text-uppercase lh-sm mb-0">Store Locations</p></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="row row-cols-1 row-cols-sm-3 row-cols-lg-3 g-0 justify-content-center">
+            <div class="col">
+              <div class="card border-0 bg-primary rounded-0 p-4 text-light">
+                <div class="row">
+                  <div class="col-md-3 text-center">
+                    <svg width="60" height="60"><use xlink:href="#fresh"></use></svg>
+                  </div>
+                  <div class="col-md-9">
+                    <div class="card-body p-0">
+                      <h5 class="text-light">Fresh from farm</h5>
+                      <p class="card-text">Discover the true taste of farm-fresh goodness every day.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card border-0 bg-secondary rounded-0 p-4 text-light">
+                <div class="row">
+                  <div class="col-md-3 text-center">
+                    <svg width="60" height="60"><use xlink:href="#organic"></use></svg>
+                  </div>
+                  <div class="col-md-9">
+                    <div class="card-body p-0">
+                      <h5 class="text-light">100% Organic</h5>
+                      <p class="card-text"> Enjoy wholesome, earth-friendly choices that nurture your well-being.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card border-0 bg-danger rounded-0 p-4 text-light">
+                <div class="row">
+                  <div class="col-md-3 text-center">
+                    <svg width="60" height="60"><use xlink:href="#delivery"></use></svg>
+                  </div>
+                  <div class="col-md-9">
+                    <div class="card-body p-0">
+                      <h5 class="text-light">Delivery</h5>
+                      <p class="card-text">Enjoy the convenience of fresh, farm-to-door delivery.saving you time </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        
+        </div>
+      </section>
 
-    <script src="js/jquery-1.11.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
-    <script src="js/plugins.js"></script>
-    <script src="js/script.js"></script>
-</body>
-</html>
+    {% include "Components/Categories.html" %}
+    {% include "Components/Products.html" %}
+    <section class="py-3">
+        <div class="container-lg">
+          <div class="row">
+            <div class="col-md-12">
+  
+              <div class="banner-blocks">
+              
+                <div class="banner-ad d-flex align-items-center large bg-info block-1" style="background: url('{% static "images/banner-ad-1.jpg" %}') no-repeat; background-size: cover;">
+                  <div class="banner-content p-5">
+                    <div class="content-wrapper text-light">
+                      <h3 class="banner-title text-light">Items on SALE</h3>
+                      <p>Discounts up to 30%</p>
+                      <a href="#" class="btn-link text-white">Shop Now</a>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="banner-ad bg-success-subtle block-2" style="background:url('{% static "images/banner-ad-2.jpg" %}') no-repeat;background-size: cover">
+                  <div class="banner-content align-items-center p-5">
+                    <div class="content-wrapper text-light">
+                      <h3 class="banner-title text-light">Combo offers</h3>
+                      <p>Discounts up to 50%</p>
+                      <a href="#" class="btn-link text-white">Shop Now</a>
+                    </div>
+                  </div>
+                </div>
+  
+                <div class="banner-ad bg-danger block-3" style="background:url({% static "images/banner-ad-3.jpg" %}) no-repeat;background-size: cover">
+                  <div class="banner-content align-items-center p-5">
+                    <div class="content-wrapper text-light">
+                      <h3 class="banner-title text-light">Discount Coupons</h3>
+                      <p>Discounts up to 40%</p>
+                      <a href="#" class="btn-link text-white">Shop Now</a>
+                    </div>
+                  </div>
+                </div>
+  
+              </div>
+              <!-- / Banner Blocks -->
+                
+            </div>
+          </div>
+        </div>
+      </section>
+      {% comment %} featured products{% endcomment %}
+
+      <section>
+        <div class="container-lg">
+  
+          <div class="bg-secondary text-light py-5 my-5" style="background: url('{% static "images/banner-newsletter.jpg" %}') no-repeat; background-size: cover;">
+            <div class="container">
+              <div class="row justify-content-center">
+                <div class="col-md-5 p-3">
+                  
+                  {% comment %} <p>Just Sign Up &amp; Register it now to become member.</p> {% endcomment %}
+                </div>
+                <div class="col-md-5 p-3" style="visibility:hidden">
+                  <form style="display:hidden">
+                    <div class="mb-3">
+                      <label for="name" class="form-label d-none">Name</label>
+                      <input type="text" class="form-control form-control-md rounded-0" name="name" id="name" placeholder="Name">
+                    </div>
+                    <div class="mb-3">
+                      <label for="email" class="form-label d-none">Email</label>
+                      <input type="email" class="form-control form-control-md rounded-0" name="email" id="email" placeholder="Email Address">
+                    </div>
+                    <div class="d-grid gap-2">
+                      <button type="submit" class="btn btn-dark btn-md rounded-0">Submit</button>
+                    </div>
+                  </form>
+                  
+                </div>
+                
+              </div>
+              
+            </div>
+          </div>
+        </div>
+      </section>
+
+    {% include "Components/Blog.html" %}
+   
+    {% endblock %}
     

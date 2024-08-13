@@ -1,0 +1,42 @@
+{% load static %}
+<section class="py-5 overflow-hidden">
+  <div class="container-lg">
+    <div class="row">
+      <div class="col-md-12">
+
+        <div class="section-header d-flex flex-wrap justify-content-between mb-5">
+          <h2 class="section-title">Category</h2>
+
+          <div class="d-flex align-items-center">
+            <a href="#" class="btn btn-primary me-2">View All</a>
+            <div class="swiper-buttons">
+              <button class="swiper-prev category-carousel-prev btn btn-yellow swiper-button-disabled swiper-button-lock" disabled="" tabindex="-1" aria-label="Previous slide" aria-controls="swiper-wrapper-3ca6d9ee3695627b" aria-disabled="true">❮</button>
+              <button class="swiper-next category-carousel-next btn btn-yellow swiper-button-disabled swiper-button-lock" disabled="" tabindex="-1" aria-label="Next slide" aria-controls="swiper-wrapper-3ca6d9ee3695627b" aria-disabled="true">❯</button>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+
+        <div class="category-carousel swiper swiper-initialized swiper-horizontal swiper-backface-hidden">
+          <div class="swiper-wrapper" id="swiper-wrapper-3ca6d9ee3695627b" aria-live="polite">
+            <a href="category.html" class="nav-link swiper-slide text-center swiper-slide-active" role="group" aria-label="1 / 2" style="width: 158.4px; margin-right: 30px;">
+              <img src="{% static "images/category-thumb-1.jpg" %}" class="rounded-circle" alt="Category Thumbnail">
+              <h4 class="fs-6 mt-3 fw-normal category-title">Fruits</h4>
+            </a>
+            
+            <a href="category.html" class="nav-link swiper-slide text-center swiper-slide-next" role="group" aria-label="2 / 2" style="width: 158.4px; margin-right: 30px;">
+              <img src="{% static "images/category-thumb-1.jpg" %}" class="rounded-circle" alt="Category Thumbnail">
+              <h4 class="fs-6 mt-3 fw-normal category-title">vegetables</h4>
+            </a>
+          </div>
+         
+        <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span></div>
+
+      </div>
+    </div>
+  </div>
+</section>
