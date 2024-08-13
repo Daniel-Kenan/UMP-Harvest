@@ -1,17 +1,20 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, Group, Permission
-
 # Custom User model to handle different roles and additional fields
+from django.db import models
+from django.contrib.auth.models import AbstractUser, Group, Permission
+
 class User(AbstractUser):
     phone_number = models.CharField(max_length=15, unique=True, null=True, blank=True)
     address = models.TextField(null=True, blank=True)
     role = models.CharField(max_length=50, choices=[('Customer', 'Customer'), ('Admin', 'Admin'), ('Farmer', 'Farmer')], default='Customer')
     is_active = models.BooleanField(default=True)
     groups = models.ManyToManyField(Group, related_name='harvest_user_set', blank=True)
-    uaser_permissions = models.ManyToManyField(Permission, related_name='harvest_user_permissions_set', blank=True)
+    user_permissions = models.ManyToManyField(Permission, related_name='harvest_user_permissions_set', blank=True)
     
     def __str__(self):
         return self.username
+
 
 class Category(models.Model):
     name = models.CharField(max_length=100, unique=True)
