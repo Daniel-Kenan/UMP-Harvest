@@ -15,8 +15,9 @@ def complete_payment_form(request):
     return render(request , page("Card")) 
 
 def shop(request):
-    product_list = Product.objects.all()
-    paginator = Paginator(product_list, 9)
+    query = request.GET.get('search', '')
+    product_list = Product.objects.filter(name__icontains=query)
+    paginator = Paginator(product_list, 10)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     return render(request, page("Shop"),{'page_obj': page_obj})
