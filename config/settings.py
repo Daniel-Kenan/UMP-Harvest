@@ -91,8 +91,9 @@ CSRF_TRUSTED_ORIGINS = [
     'https://ump-harvest-production.up.railway.app/',
 ]
 
-SECURE_SSL_REDIRECT = True
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_SSL_REDIRECT = bool(not DEBUG)
+
+# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 
 # Password validation

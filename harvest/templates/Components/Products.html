@@ -19,16 +19,16 @@
               <div class="product-item">
                 <figure>
                   <a href="{{ product.get_absolute_url }}" title="{{ product.name }}">
-                    <img src="{{ product.image.url }}" alt="{{ product.name }}" class="tab-image">
+                    <img src="{{ product.image }}" alt="{{ product.name }}" class="tab-image">
                   </a>
                 </figure>
                 <div class="d-flex flex-column text-center">
                   <h3 class="fs-6 fw-normal">{{ product.name }}</h3>
                   <div>
                     <span class="rating">
-                      {% for _ in range(product.rating) %}
+                     
                       <svg width="18" height="18" class="text-warning"><use xlink:href="#star-full"></use></svg>
-                      {% endfor %}
+                    
                     </span>
                     <span>({{ product.review_count }})</span>
                   </div>

@@ -40,8 +40,9 @@ class Product(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     rating = models.IntegerField(default=0)
+    is_best_selling = models.BooleanField(default=False)
     review_count = models.IntegerField(default=0)
-    
+
     def __str__(self):
         return self.name
 
