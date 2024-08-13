@@ -39,6 +39,8 @@ class Product(models.Model):
     slug = models.SlugField(max_length=200, unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    rating = models.IntegerField(default=0)
+    review_count = models.IntegerField(default=0)
     
     def __str__(self):
         return self.name

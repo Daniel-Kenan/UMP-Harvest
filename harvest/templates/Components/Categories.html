@@ -10,8 +10,8 @@
           <div class="d-flex align-items-center">
             <a href="#" class="btn btn-primary me-2">View All</a>
             <div class="swiper-buttons">
-              <button class="swiper-prev category-carousel-prev btn btn-yellow swiper-button-disabled swiper-button-lock" disabled="" tabindex="-1" aria-label="Previous slide" aria-controls="swiper-wrapper-3ca6d9ee3695627b" aria-disabled="true">❮</button>
-              <button class="swiper-next category-carousel-next btn btn-yellow swiper-button-disabled swiper-button-lock" disabled="" tabindex="-1" aria-label="Next slide" aria-controls="swiper-wrapper-3ca6d9ee3695627b" aria-disabled="true">❯</button>
+              <button class="swiper-prev category-carousel-prev btn btn-yellow swiper-button-disabled swiper-button-lock" disabled="" tabindex="-1" aria-label="Previous slide" aria-controls="swiper-wrapper" aria-disabled="true">❮</button>
+              <button class="swiper-next category-carousel-next btn btn-yellow swiper-button-disabled swiper-button-lock" disabled="" tabindex="-1" aria-label="Next slide" aria-controls="swiper-wrapper" aria-disabled="true">❯</button>
             </div>
           </div>
         </div>
@@ -22,19 +22,17 @@
       <div class="col-md-12">
 
         <div class="category-carousel swiper swiper-initialized swiper-horizontal swiper-backface-hidden">
-          <div class="swiper-wrapper" id="swiper-wrapper-3ca6d9ee3695627b" aria-live="polite">
-            <a href="category.html" class="nav-link swiper-slide text-center swiper-slide-active" role="group" aria-label="1 / 2" style="width: 158.4px; margin-right: 30px;">
-              <img src="{% static "images/category-thumb-1.jpg" %}" class="rounded-circle" alt="Category Thumbnail">
-              <h4 class="fs-6 mt-3 fw-normal category-title">Fruits</h4>
-            </a>
-            
-            <a href="category.html" class="nav-link swiper-slide text-center swiper-slide-next" role="group" aria-label="2 / 2" style="width: 158.4px; margin-right: 30px;">
-              <img src="{% static "images/category-thumb-1.jpg" %}" class="rounded-circle" alt="Category Thumbnail">
-              <h4 class="fs-6 mt-3 fw-normal category-title">vegetables</h4>
-            </a>
+          <div class="swiper-wrapper" id="swiper-wrapper" aria-live="polite">
+            {% for category in categories %}
+              <a href="" class="nav-link swiper-slide text-center" role="group" aria-label="{{ forloop.counter }} / {{ forloop.total }}" style="width: 158.4px; margin-right: 30px;">
+                <img src="{{ category.image }}" style="width:150px;height:150px" class="rounded-circle" alt="{{ category.name }} Thumbnail">
+                <h4 class="fs-6 mt-3 fw-normal category-title">{{ category.name }}</h4>
+              </a>
+            {% endfor %}
           </div>
          
-        <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span></div>
+          <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span>
+        </div>
 
       </div>
     </div>

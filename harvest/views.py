@@ -1,10 +1,13 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-
-def page(name):return f"Pages/{name}.html"
+from .models import Category,Product
+def page(name): 
+    return f"Pages/{name}.html"
 
 def home(request):
-    return  render(request, page("Home"))
+    categories = Category.objects.all()
+    best_selling_products = Product.objects.filter(is_best_selling=True) 
+    return  render(request, page("Home"),{'categories': categories,'best_selling_products': best_selling_products})
 
 def complete_payment_form(request):
     return render(request , page("Card")) 
