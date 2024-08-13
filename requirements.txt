@@ -1,7 +1,8 @@
-dj_database_url
-mysqlclient
+dj_database_url==0.5.0
 python-dotenv
 Django
-djangorestframework
-gunicorn
-whitenoise
+djangorestframework==3.14.0
+gunicorn==20.1.0
+whitenoise==6.3.0
+channels==3.0.5
+daphne==3.0.2
