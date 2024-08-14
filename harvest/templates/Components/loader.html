@@ -6,14 +6,11 @@
 </div>
 
 
-<script>
-
-const loader = document.querySelector("#loader-animation");
-
-document.addEventListener("DOMContentLoaded",()=>{
-    setTimeout(()=>{
-     loader.style.display="none";
-    },1000)
-    
-})
+<script defer>
+    const loader = document.querySelector("#loader-animation");
+    document.addEventListener("DOMContentLoaded",()=>{
+        setTimeout(()=>{
+         loader.style.display="none";
+        },500)        
+    })
 </script>
