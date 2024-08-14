@@ -18,11 +18,14 @@
                     <div class="widget-product-categories pt-5">
                         <h5 class="widget-title">Categories</h5>
                         <ul class="product-categories sidebar-list list-unstyled">
-                            <li class="cat-item"><a href="https://.com/collections/categories">All</a></li>
-                            <li class="cat-item"><a href="https://.com/organic/shop.html#" class="nav-link">Phones</a></li>
-                            <li class="cat-item"><a href="https://.com/organic/shop.html#" class="nav-link">Accessories</a></li>
-                            <li class="cat-item"><a href="https://.com/organic/shop.html#" class="nav-link">Tablets</a></li>
-                            <li class="cat-item"><a href="https://.com/organic/shop.html#" class="nav-link">Watches</a></li>
+                            <li class="cat-item"><a href="?category=">All</a></li>
+                            {% for cat in categories %}
+                                <li class="cat-item">
+                                    <a href="?category={{ cat.name }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.price_range %}&price_range={{ request.GET.price_range }}{% endif %}">
+                                        {{ cat.name }}
+                                    </a>
+                                </li>
+                            {% endfor %}
                         </ul>
                     </div>
 
