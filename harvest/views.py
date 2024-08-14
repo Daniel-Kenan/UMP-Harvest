@@ -14,13 +14,35 @@ def home(request):
 def complete_payment_form(request):
     return render(request , page("Card")) 
 
+from django.shortcuts import render
+from django.core.paginator import Paginator
+from .models import Product
+
 def shop(request):
-    query = request.GET.get('search', '')
-    product_list = Product.objects.filter(name__icontains=query)
+    # Get the search query
+    search_query = request.GET.get('search', '')
+
+    # Get the price range
+    price_range = request.GET.get('price_range', '')
+    
+    # Build the base query
+    product_list = Product.objects.filter(name__icontains=search_query)
+    
+    # Apply price range filter if specified
+    if price_range:
+        price_bounds = price_range.split('-')
+        if len(price_bounds) == 2:
+            min_price = float(price_bounds[0].replace('R', ''))
+            max_price = float(price_bounds[1].replace('R', ''))
+            product_list = product_list.filter(discounted_price__gte=min_price, discounted_price__lte=max_price)
+    
+    # Paginate the product list
     paginator = Paginator(product_list, 10)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-    return render(request, page("Shop"),{'page_obj': page_obj})
+    
+    return render(request, page("Shop"), {'page_obj': page_obj})
+
 
 def single_product(request):
     return render(request, page("SingleProduct"))

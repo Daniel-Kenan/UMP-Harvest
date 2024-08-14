@@ -1,0 +1,16 @@
+{% load static %}
+
+<div style="position:fixed;z-index:99999;top:0;left:0; background-color:#fff;display:flex; justify-content:center; align-items:center; height:100vh; width:100vw" id="loader-animation">
+    
+      <img src="{% static "loader.gif" %}" style="" />
+</div>
+
+
+<script>
+
+const loader = document.querySelector("#loader-animation");
+
+document.addEventListener("DOMContentLoaded",()=>{
+    loader.style.display="none";
+})
+</script>
