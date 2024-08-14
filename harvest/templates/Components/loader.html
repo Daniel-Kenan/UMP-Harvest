@@ -2,7 +2,7 @@
 
 <div style="position:fixed;z-index:99999;top:0;left:0; background-color:#fff;display:flex; justify-content:center; align-items:center; height:100vh; width:100vw" id="loader-animation">
     
-      <img src="{% static "loader.gif" %}" style="" />
+      <img src="{% static "loader.gif" %}" style="margin-top:-50px" />
 </div>
 
 
@@ -11,6 +11,9 @@
 const loader = document.querySelector("#loader-animation");
 
 document.addEventListener("DOMContentLoaded",()=>{
-    loader.style.display="none";
+    setTimeout(()=>{
+     loader.style.display="none";
+    },1000)
+    
 })
 </script>
