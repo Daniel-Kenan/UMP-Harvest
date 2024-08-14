@@ -3,6 +3,14 @@ from django.contrib import admin
 # Register your models here.
 from django.contrib import admin
 from .models import User, Category, Product, Tag, Article, Order, OrderItem, Review, Event, Inventory, Subscription, Notification
+from django.utils.translation import gettext_lazy as _
+
+
+admin.site.site_header = _("Your Custom Header Title")
+admin.site.site_title = _("Your Custom Site Title")
+admin.site.index_title = _("Your Custom Index Title")
+
+
 
 # Register the User model
 @admin.register(User)
