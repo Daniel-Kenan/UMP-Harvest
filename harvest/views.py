@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from .models import Category,Product, SearchQuery
 from django.core.paginator import Paginator
 from django.db.models import F
+from django.utils import timezone
 
 def page(name): 
     return f"Pages/{name}.html"
