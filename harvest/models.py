@@ -140,3 +140,12 @@ class Notification(models.Model):
     
     def __str__(self):
         return f"Notification for {self.user.username}"
+
+
+class SearchQuery(models.Model):
+    query = models.CharField(max_length=255)
+    search_count = models.PositiveIntegerField(default=0)
+    last_searched = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.query

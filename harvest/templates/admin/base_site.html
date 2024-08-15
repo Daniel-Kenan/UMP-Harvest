@@ -1,0 +1,43 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+{% block extrahead %}
+{{ block.super }}
+<link rel="stylesheet" type="text/css" href="{% static 'admin/css/custom_admin.css' %}">
+{% endblock %}
+
+{% block branding %}
+<h1 id="site-name">
+    <a href="{% url 'admin:index' %}">
+        <img src="{% static 'images/university-logo2.png' %}" alt="Site Logo" style="height: 50px;">
+    </a>
+</h1>
+{% endblock %}
+
+{% block usertools %}
+    <div id="user-tools">
+        Welcome ,
+        <strong>{{ request.user.get_username }}</strong>.
+
+        <a href="/">dashboard</a> /
+        <a href="{% url 'admin:password_change' %}">Change password</a> /
+
+        <form id="logout-form" method="post" action="{% url 'admin:logout' %}" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit" style="background:none;border:none;padding:0;color:#337ab7;text-decoration:underline;cursor:pointer;">
+                Log out
+            </button>
+        </form>
+
+        <button class="theme-toggle">
+            <svg aria-hidden="true" class="theme-icon-when-auto">
+                <use xlink:href="#icon-auto"></use>
+            </svg>
+            <svg aria-hidden="true" class="theme-icon-when-dark">
+                <use xlink:href="#icon-moon"></use>
+            </svg>
+            <svg aria-hidden="true" class="theme-icon-when-light">
+                <use xlink:href="#icon-sun"></use>
+            </svg>
+        </button>
+    </div>
+{% endblock %}

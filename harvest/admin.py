@@ -6,11 +6,9 @@ from .models import User, Category, Product, Tag, Article, Order, OrderItem, Rev
 from django.utils.translation import gettext_lazy as _
 
 
-admin.site.site_header = _("Your Custom Header Title")
-admin.site.site_title = _("Your Custom Site Title")
-admin.site.index_title = _("Your Custom Index Title")
-
-
+admin.site.site_header = _("UMP Harverst Administration")
+admin.site.site_title = _("UMP Harverst Administration")
+admin.site.index_title = _("Growing the future, one harvest at a time.")
 
 # Register the User model
 @admin.register(User)
