@@ -1,4 +1,8 @@
 {% load static %}
+<style>
+    span {
+    white-space: nowrap;
+}</style>
 <div class="py-4">
     <div class="container-lg">
         <div class="row g-5">
@@ -29,7 +33,7 @@
                         </ul>
                     </div>
 
-                    <div class="widget-product-tags pt-3">
+                    {% comment %} <div class="widget-product-tags pt-3">
                         <h5 class="widget-title">Tags</h5>
                         <ul class="product-tags sidebar-list list-unstyled">
                             <li class="tags-item"><a href="https://.com/organic/shop.html#" class="nav-link">White</a></li>
@@ -37,16 +41,16 @@
                             <li class="tags-item"><a href="https://.com/organic/shop.html#" class="nav-link">Mobile</a></li>
                             <li class="tags-item"><a href="https://.com/organic/shop.html#" class="nav-link">Modern</a></li>
                         </ul>
-                    </div>
+                    </div> {% endcomment %}
 
-                    <div class="widget-product-brands pt-3">
+                    {% comment %} <div class="widget-product-brands pt-3">
                         <h5 class="widget-title">Brands</h5>
                         <ul class="product-tags sidebar-list list-unstyled">
                             <li class="tags-item"><a href="https://.com/organic/shop.html#" class="nav-link">Apple</a></li>
                             <li class="tags-item"><a href="https://.com/organic/shop.html#" class="nav-link">Samsung</a></li>
                             <li class="tags-item"><a href="https://.com/organic/shop.html#" class="nav-link">Huwai</a></li>
                         </ul>
-                    </div>
+                    </div> {% endcomment %}
 
                     <div class="widget-price-filter pt-3">
                       <h5 class="widget-title">Filter By Price</h5>
@@ -109,7 +113,7 @@
                     <div class="col">
                         <div class="product-item">
                             <figure>
-                                <a href="" title="{{ product.title }}">
+                                <a href="{% url 'single_product' id=product.id %}" title="{{ product.title }}">
                                     <img src="{{ product.image }}" alt="Product Thumbnail" class="tab-image">
                                 </a>
                             </figure>
@@ -117,18 +121,32 @@
                                 <h3 class="fs-6 fw-normal">{{ product.name }}</h3>
                                 <div>
                                     <span class="rating">
-                                        <svg width="18" height="18" class="text-warning"><use xlink:href="#star-full"></use></svg>
-                                        <svg width="18" height="18" class="text-warning"><use xlink:href="#star-full"></use></svg>
-                                        <svg width="18" height="18" class="text-warning"><use xlink:href="#star-full"></use></svg>
-                                        <svg width="18" height="18" class="text-warning"><use xlink:href="#star-full"></use></svg>
-                                        <svg width="18" height="18" class="text-warning"><use xlink:href="#star-half"></use></svg>
+                                        {{ product.stars | safe }}
+                       
                                     </span>
-                                    <span>({{ product.rating }})</span>
+                                    <span>({{ product.review_count }})</span>
                                 </div>
                                 <div class="d-flex justify-content-center align-items-center gap-2">
-                                    <del>R{{ product.original_price }}</del>
-                                    <span class="text-dark fw-semibold">R {{ product.discounted_price }}00.00</span>
-                                    <span class="badge border border-dark-subtle rounded-0 fw-normal px-1 fs-7 lh-1 text-body-tertiary">{{ product.discount }} OFF</span>
+                                    {% if product.isOnDiscount %} 
+                                    <del>R{{ product.price }}</del>
+                                    {% endif %}
+                                    <span class="text-dark fw-semibold">R {{ product.discountedPrice }}</span>
+                                    <span class="badge rounded-0 fw-normal px-1 fs-7 lh-1"
+      style="
+          {% if product.discounted_price_percentage > 30 %} 
+              background-color: red; 
+              color: white; 
+          {% endif %}
+          {% if product.discounted_price_percentage > 0 %} 
+              border: 1px solid red; 
+              background-color: red; 
+              color: white; 
+          {% else %} 
+              border: 1px solid darkgray; 
+              color: darkgray; 
+          {% endif %}">
+    {{ product.discounted_price_percentage }}% OFF
+</span>
                                 </div>
                                 <div class="button-area p-3 pt-0">
                                     <div class="row g-1 mt-2">

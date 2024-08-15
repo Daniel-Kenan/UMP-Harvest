@@ -4,6 +4,37 @@ from .models import Category,Product, SearchQuery
 from django.core.paginator import Paginator
 from django.db.models import F
 from django.utils import timezone
+from django import template
+from django.shortcuts import render, get_object_or_404
+from decimal import Decimal
+
+def calculate_discounted_price(price, discount):
+    if not isinstance(price, Decimal):
+        price = Decimal(price)
+    if not isinstance(discount, Decimal):
+        discount = Decimal(discount)
+    
+    if discount < 0 or discount > 100:
+        raise ValueError("Discount must be between 0 and 100")
+
+    discounted_price = price * (Decimal('1') - discount / Decimal('100'))
+    return discounted_price.quantize(Decimal('0.01'))
+
+def generate_stars(rating):
+    # Number of stars to display
+    total_stars = 5
+    full_star_svg = '<svg width="18" height="18" class="text-warning"><use xlink:href="#star-full"></use></svg>'
+    empty_star_svg = '<svg width="18" height="18" class="text-muted"><use xlink:href="#star-empty"></use></svg>'
+    
+    # Generate stars based on the rating
+    stars = ''
+    for i in range(total_stars):
+        if i < rating:
+            stars += full_star_svg
+        else:
+            stars += empty_star_svg
+            
+    return stars
 
 def page(name): 
     return f"Pages/{name}.html"
@@ -26,8 +57,17 @@ from django.shortcuts import render
 from django.core.paginator import Paginator
 from .models import Product
 
-def single_product(request):
-    return render(request, page("SingleProduct"))
+def single_product(request,id):
+    top_searches = get_top_searches()
+    product = get_object_or_404(Product, id=id)
+    product.discountedPrice = calculate_discounted_price(product.price, product.discounted_price_percentage)
+    product.isOnDiscount = bool( not (product.price == product.discountedPrice) )
+    return render(request, page("SingleProduct"),{'product': product, "top_searches" : top_searches})
+
+def SignIn(request):
+    return render(request, "Auth/SignIn.html")
+def SignUp(request):
+    return render(request, "Auth/SignUp.html")
 
 def blog(request):
     return render(request, page("Blog"))
@@ -69,9 +109,15 @@ def shop(request):
     paginator = Paginator(product_list, 10)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-
+   
     # Fetch all categories for the sidebar
     categories = Category.objects.all()
+
+    # Add star ratings to each product in the page_obj
+    for product in page_obj.object_list:
+        product.stars = generate_stars(product.rating)
+        product.discountedPrice = calculate_discounted_price(product.price, product.discounted_price_percentage)
+        product.isOnDiscount = bool( not (product.price == product.discountedPrice) )
 
     return render(request, page("Shop"), {
         'page_obj': page_obj,
@@ -92,3 +138,4 @@ def clear_cache(request):
         raise PermissionDenied
     cache.clear()
     return HttpResponse('Cache has been cleared')
+

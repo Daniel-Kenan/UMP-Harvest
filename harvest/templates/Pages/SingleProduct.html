@@ -9,8 +9,8 @@ Home - My Site
     <div class="container-lg">
       <nav class="breadcrumb">
         <a class="breadcrumb-item" href="#">Home</a>
-        <a class="breadcrumb-item" href="#">Pages</a>
-        <span class="breadcrumb-item active" aria-current="page">Single Product</span>
+        <a class="breadcrumb-item" href="/shop/?category={{ product.category }}">{{ product.category }}</a>
+        <span class="breadcrumb-item active" aria-current="page"> {{ product.name }} </span>
       </nav>
       <div class="row g-5">
         <div class="col-lg-7">
@@ -43,7 +43,7 @@ Home - My Site
               <div class="swiper product-large-slider swiper-fade swiper-initialized swiper-horizontal swiper-watch-progress swiper-backface-hidden">
                 <div class="swiper-wrapper" id="swiper-wrapper-77a584b74175a398" aria-live="polite">
                   <div class="swiper-slide swiper-slide-visible swiper-slide-active" role="group" aria-label="1 / 5" style="width: 423px; opacity: 1; transform: translate3d(0px, 0px, 0px);">
-                    <div class="image-zoom" data-scale="2.5" data-image="images/product-large-1.jpg"><img src="images/product-large-1.jpg" alt="product-large" class="img-fluid"></div>
+                    <div class="image-zoom" data-scale="2.5" data-image="images/product-large-1.jpg" style="background-color:orange"><img src="{{ product.image}}"  style="width:100%;aspect-ratio: 1200 / 1200; " alt="product-large" class="img-fluid"></div>
                   </div>
                   <div class="swiper-slide swiper-slide-next" role="group" aria-label="2 / 5" style="width: 423px; opacity: 0; transform: translate3d(-423px, 0px, 0px);">
                     <div class="image-zoom" data-scale="2.5" data-image="images/product-large-2.jpg"><img src="images/product-large-2.jpg" alt="product-large" class="img-fluid"></div>
@@ -67,7 +67,7 @@ Home - My Site
         <div class="col-lg-5">
           <div class="product-info">
             <div class="element-header">
-              <h2 itemprop="name">Cashew Butter 500mg CBD</h2>
+              <h2 itemprop="name">{{ product.name }}</h2>
               <div class="rating-container d-flex gap-0 align-items-center">
                 <span class="rating me-2">
                   <svg width="24" height="24" class="text-warning"><use xlink:href="#star-full"></use></svg>
@@ -76,45 +76,18 @@ Home - My Site
                   <svg width="24" height="24" class="text-warning"><use xlink:href="#star-full"></use></svg>
                   <svg width="24" height="24" class="text-warning"><use xlink:href="#star-half"></use></svg>
                 </span>
-                <span class="rating-count">(4.5)</span>
+                <span class="rating-count">({{ product.rating }})</span>
               </div>
             </div>
             <div class="product-price pt-3 pb-3">
-              <strong class="text-primary display-6 fw-bold">$870.00</strong><del class="ms-2">$940.00</del>
+              <strong class="text-primary display-6 fw-bold">R{{ product.discountedPrice }}</strong>
+              {% if product.isOnDiscount %}<del class="ms-2">R{{ product.price }}</del> {% endif %}
+              
             </div>
-            <p>Justo, cum feugiat imperdiet nulla molestie ac vulputate scelerisque amet. Bibendum adipiscing platea blandit sit sed quam semper rhoncus. Diam ultrices maecenas consequat eu tortor orci, cras lectus mauris, cras egestas quam venenatis neque.</p>
+            <p> {{ product.description }}</p>
             <div class="cart-wrap py-4">
-              <div class="color-options pb-3">
-                <div class="color-toggle" data-option-index="0">
-                  <h6 class="item-title text-uppercase text-dark">Color:</h6>
-
-                  <input type="radio" class="btn-check" name="options-color" id="option5" autocomplete="off" checked="">
-                  <label class="btn" for="option5">Green</label>
-
-                  <input type="radio" class="btn-check" name="options-color" id="option6" autocomplete="off">
-                  <label class="btn" for="option6">Orange</label>
-
-                  <input type="radio" class="btn-check" name="options-color" id="option7" autocomplete="off" disabled="">
-                  <label class="btn" for="option7">Red</label>
-
-                  <input type="radio" class="btn-check" name="options-color" id="option8" autocomplete="off">
-                  <label class="btn" for="option8">Black</label>
-                </div>
-              </div>
-              <div class="swatch" data-option-index="1">
-                <h6 class="item-title text-uppercase text-dark">Size:</h6>
-                  <input type="radio" class="btn-check" name="options-size" id="option9" autocomplete="off" checked="">
-                  <label class="btn" for="option9">XL</label>
-
-                  <input type="radio" class="btn-check" name="options-size" id="option10" autocomplete="off">
-                  <label class="btn" for="option10">L</label>
-
-                  <input type="radio" class="btn-check" name="options-size" id="option11" autocomplete="off" disabled="">
-                  <label class="btn" for="option11">M</label>
-
-                  <input type="radio" class="btn-check" name="options-size" id="option12" autocomplete="off">
-                  <label class="btn" for="option12">S</label>
-              </div>
+              
+              
               <div class="product-quantity pt-3">
                 <div class="stock-number text-dark"><em>2 in stock</em></div>
                 <div class="stock-button-wrap">
@@ -140,17 +113,14 @@ Home - My Site
               </div>
             </div>
             <div class="meta-product py-2">
-              <div class="meta-item d-flex align-items-baseline">
-                <h6 class="item-title no-margin pe-2">SKU:</h6>
-                <span>1223</span>
-              </div>
+             
               <div class="meta-item d-flex align-items-baseline">
                 <h6 class="item-title no-margin pe-2">Category:</h6>
-                <a href="#">Watch</a>, <a href="#"> Screen touch</a>
+                <a href="/shop/?category={{ product.category }}"> {{ product.category }}</a>
               </div>
               <div class="meta-item d-flex align-items-baseline">
                 <h6 class="item-title no-margin pe-2">Tags:</h6>
-                <a href="#">Classic</a>, <a href="#"> Modern</a>
+                 <a href="#"> null </a>
               </div>
             </div>
           </div>
