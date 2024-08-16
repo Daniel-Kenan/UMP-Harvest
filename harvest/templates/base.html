@@ -16,8 +16,10 @@
     <link rel="icon" type="image/x-icon" href="{% static "favicons/favicon.ico" %}">
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <link rel="manifest" href="/manifest.json">
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
 </head>
-<body>
+<body style="position:relative; width:100%; min-height:100%; overflow-x:hidden">
     {% include "Components/loader.html" %}
     {% include "Components/SVG.html" %}
     {% include "Components/Sidebar.html" %}
@@ -37,6 +39,88 @@
     </script>
     <script src="js/script.js"></script>
     
+    <script>
+      function addToCart(productId, productName, productPrice) {
+          // Assuming you have a session or backend route to handle the cart addition
+          fetch(`/add-to-cart/`, {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json',
+                  'X-CSRFToken': '{{ csrf_token }}' // Make sure CSRF token is included in the request
+              },
+              body: JSON.stringify({
+                  'product_id': productId,
+                  'product_name': productName,
+                  'product_price': productPrice,
+                  'quantity': 1 // You can modify this based on user input
+              })
+          })
+          .then(response => response.json())
+          .then(data => {
+              // Display SweetAlert notification
+              Swal.fire({
+                  icon: 'success',
+                  title: 'Added to Cart!',
+                  text: `${productName} has been added to your cart.`,
+                  showConfirmButton: false,
+                  timer: 1500
+              });
+      
+              // Optionally update cart count in the UI
+              document.querySelector('.badge').textContent = data.cart_item_count;
+          })
+          .catch(error => {
+              console.error('Error adding to cart:', error);
+              Swal.fire({
+                  icon: 'error',
+                  title: 'Oops...',
+                  text: 'Something went wrong! Please try again.',
+              });
+          });
+      }
+      </script>
+      <script>
+        function addToCart(productId, productName, productPrice) {
+            // Assuming you have a session or backend route to handle the cart addition
+            fetch(`/add-to-cart/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}' // Make sure CSRF token is included in the request
+                },
+                body: JSON.stringify({
+                    'product_id': productId,
+                    'product_name': productName,
+                    'product_price': productPrice,
+                    'quantity': 1 // You can modify this based on user input
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Display SweetAlert notification
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Added to Cart!',
+                    text: `${productName} has been added to your cart.`,
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+        
+                // Optionally update cart count in the UI
+                document.querySelector('.badge').textContent = data.cart_item_count;
+            })
+            .catch(error => {
+                console.error('Error adding to cart:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Something went wrong! Please try again.',
+                });
+            });
+        }
+        </script>
+              
+
     <script>
         if ('serviceWorker' in navigator) {
           navigator.serviceWorker.register("/service-worker.js/", { scope: '/' })

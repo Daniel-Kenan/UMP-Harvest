@@ -14,4 +14,9 @@ urlpatterns = [
     path('manifest.json', TemplateView.as_view(template_name='PWA/manifest.json', content_type='application/json')),
     path('service-worker.js', TemplateView.as_view(template_name='PWA/service-worker.js', content_type='application/javascript')),
     path('clear_cache/', views.clear_cache),
+    path('add-to-cart/', views.add_to_cart, name='add_to_cart'),
+    path('cart/', views.view_cart, name='view_cart'),
+    path('cart/remove/<int:product_id>/', views.remove_from_cart, name='remove_from_cart'),
+    path('api/cart/', views.cart_data, name='cart_data'),
+
 ]

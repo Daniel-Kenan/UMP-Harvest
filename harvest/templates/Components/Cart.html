@@ -1,44 +1,211 @@
 {% load static %}
 
-<div class="offcanvas offcanvas-end hide" data-bs-scroll="true" tabindex="-1" id="offcanvasCart" aria-modal="true" role="dialog">
+<div class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="offcanvasCart" aria-modal="true" role="dialog">
     <div class="offcanvas-header justify-content-center">
-      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
-    <div class="offcanvas-body">
-      <div class="order-md-last">
-        <h4 class="d-flex justify-content-between align-items-center mb-3">
-          <span class="text-primary">Your cart</span>
-          <span class="badge bg-primary rounded-pill">3</span>
-        </h4>
-        <ul class="list-group mb-3">
-          <li class="list-group-item d-flex justify-content-between lh-sm">
-            <div>
-              <h6 class="my-0">Growers cider</h6>
-              <small class="text-body-secondary">Brief description</small>
+    <div class="offcanvas-body d-flex flex-column">
+        <div id="cart-items-wrapper" class="flex-grow-1 overflow-auto mb-3">
+            <ul id="cart-items-list" class="list-group">
+                <!-- Cart items will be dynamically inserted here -->
+            </ul>
+            <div id="skeleton-loading" class="skeleton-loading">
+                <div class="skeleton-item"></div>
+                <div class="skeleton-item"></div>
+                <div class="skeleton-item"></div>
             </div>
-            <span class="text-body-secondary">R12</span>
-          </li>
-          <li class="list-group-item d-flex justify-content-between lh-sm">
-            <div>
-              <h6 class="my-0">Fresh grapes</h6>
-              <small class="text-body-secondary">Brief description</small>
+        </div>
+        <div class="mt-auto">
+            <div class="total-price-section d-flex justify-content-between align-items-center py-3 px-4 bg-light border-top">
+                <span>Total (ZAR)</span>
+                <strong id="total-price">R0.00</strong>
             </div>
-            <span class="text-body-secondary">R8</span>
-          </li>
-          <li class="list-group-item d-flex justify-content-between lh-sm">
-            <div>
-              <h6 class="my-0">Heinz tomato ketchup</h6>
-              <small class="text-body-secondary">Brief description</small>
-            </div>
-            <span class="text-body-secondary">R5</span>
-          </li>
-          <li class="list-group-item d-flex justify-content-between">
-            <span>Total (ZAR)</span>
-            <strong>R20</strong>
-          </li>
-        </ul>
+            <button class="w-100 btn btn-primary btn-lg mt-3" type="button" onclick="location.href='{% url 'card-complete-payment-form' %}'">Continue to checkout</button>
+        </div>
+    </div>
+</div>
 
-        <button class="w-100 btn btn-primary btn-lg" type="submit" onclick="location.href = `{% url "card-complete-payment-form" %}`">Continue to checkout</button>
-      </div>
-    </div>
-  </div>
+
+
+
+<style>
+    #cart-items-wrapper {
+        max-height: 60vh; /* Adjust the height as needed */
+    }
+
+    .total-price-section {
+        background-color: #f8f9fa;
+        border-top: 1px solid #dee2e6;
+    }
+
+   #skeleton-loading {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .skeleton-item {
+        height: 50px;
+        background-color: #e0e0e0;
+        border-radius: 5px;
+        margin-top: 5px;
+        animation: skeleton-loading 1.2s infinite ease-in-out;
+    }
+
+    @keyframes skeleton-loading {
+        0% {
+            background-color: #e0e0e0;
+        }
+        50% {
+            background-color: #c0c0c0;
+        }
+        100% {
+            background-color: #e0e0e0;
+        }
+    }
+
+    .cart-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .cart-item h6 {
+        margin-bottom: 0;
+    }
+
+    .quantity-controls {
+        display: flex;
+        align-items: center;
+    }
+
+    .quantity-controls button {
+        background-color: transparent;
+        border: none;
+        font-size: 1.2rem;
+        margin: 0 5px;
+        cursor: pointer;
+    }
+</style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    function fetchCartData() {
+        showSkeletonLoading();
+
+        fetch('/api/cart/')
+        .then(response => response.json())
+        .then(data => {
+            const totalPriceElement = document.getElementById('total-price');
+
+            if (!totalPriceElement) {
+                console.error('Total price element is missing from the DOM.');
+                return;
+            }
+
+            // Ensure you only update total-price if it's present
+            totalPriceElement.textContent = `R${data.total_price}`;
+            
+            const cartItemsList = document.getElementById('cart-items-list');
+            cartItemsList.innerHTML = '';
+
+            data.cart.forEach(item => {
+                const listItem = document.createElement('li');
+                listItem.className = 'list-group-item d-flex justify-content-between lh-sm';
+                listItem.innerHTML = `
+                    <div>
+                        <h6 class="my-0">${item.name}</h6>
+                        <small class="text-body-secondary">
+                            Quantity: 
+                            <button class="btn btn-sm btn-warning" onclick="updateQuantity('${item.id}', ${item.quantity - 1})">-</button>
+                            ${item.quantity}
+                            <button class="btn btn-sm btn-warning" onclick="updateQuantity('${item.id}', ${item.quantity + 1})">+</button>
+                        </small>
+                    </div>
+                    <span class="text-body-secondary">R${item.price}</span>
+                `;
+                cartItemsList.appendChild(listItem);
+            });
+
+            hideSkeletonLoading();
+        })
+        .catch(error => {
+            console.error('Error fetching cart data:', error);
+            showErrorMessage('There was an issue fetching the cart data. Please try again later.');
+            hideSkeletonLoading();
+        });
+    }
+
+    function showSkeletonLoading() {
+        document.getElementById('skeleton-loading').style.display = 'block';
+    }
+
+    function hideSkeletonLoading() {
+        document.getElementById('skeleton-loading').style.display = 'none';
+    }
+
+    function updateQuantity(itemId, newQuantity) {
+        if (newQuantity <= 0) {
+            removeItem(itemId);
+            return;
+        }
+
+        fetch(`/api/cart/update/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCsrfToken()
+            },
+            body: JSON.stringify({ id: itemId, quantity: newQuantity })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                fetchCartData();
+            } else {
+                showErrorMessage('Failed to update item quantity.');
+            }
+        })
+        .catch(error => {
+            console.error('Error updating item quantity:', error);
+            showErrorMessage('Failed to update item quantity.');
+        });
+    }
+
+    function removeItem(itemId) {
+        fetch(`/api/cart/remove/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCsrfToken()
+            },
+            body: JSON.stringify({ id: itemId })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                fetchCartData();
+            } else {
+                showErrorMessage('Failed to remove item.');
+            }
+        })
+        .catch(error => {
+            console.error('Error removing item:', error);
+            showErrorMessage('Failed to remove item.');
+        });
+    }
+
+    function getCsrfToken() {
+        return document.querySelector('[name=csrfmiddlewaretoken]').value;
+    }
+
+    function showErrorMessage(message) {
+        alert(message); // Replace with a better UI element if needed
+    }
+
+    const offcanvasCart = document.getElementById('offcanvasCart');
+    offcanvasCart.addEventListener('show.bs.offcanvas', fetchCartData);
+});
+
+
+</script>

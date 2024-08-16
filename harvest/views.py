@@ -5,7 +5,7 @@ from django.core.paginator import Paginator
 from django.db.models import F
 from django.utils import timezone
 from django import template
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from decimal import Decimal
 
 def calculate_discounted_price(price, discount):
@@ -139,3 +139,70 @@ def clear_cache(request):
     cache.clear()
     return HttpResponse('Cache has been cleared')
 
+
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from .models import Product
+import json
+
+@csrf_exempt
+def add_to_cart(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        product_id = data['product_id']
+        product_name = data['product_name']
+        product_price = data['product_price']
+        quantity = data.get('quantity', 1)
+
+        cart = request.session.get('cart', {})
+        print(cart)
+        if product_id in cart:
+            cart[product_id]['quantity'] += quantity
+        else:
+            cart[product_id] = {
+                'name': product_name,
+                'price': product_price,
+                'quantity': quantity
+            }
+
+        request.session['cart'] = cart
+
+        return JsonResponse({'cart_item_count': len(cart)}, status=200)
+
+    return JsonResponse({'error': 'Invalid request'}, status=400)
+
+
+
+def view_cart(request):
+    cart = request.session.get('cart', {})
+    total_price = sum(float(item['price']) * item['quantity'] for item in cart.values())
+    return render(request, 'cart.html', {'cart': cart, 'total_price': total_price})
+
+def remove_from_cart(request, product_id):
+    cart = request.session.get('cart', {})
+    if str(product_id) in cart:
+        del cart[str(product_id)]
+        request.session['cart'] = cart
+    return redirect('view_cart')
+
+
+from django.http import JsonResponse
+@csrf_exempt
+def cart_data(request):
+    if request.method == 'GET':
+        cart = request.session.get('cart', {})
+        
+        # Ensure that 'cart' contains numerical values
+        for item in cart.values():
+            item['price'] = float(item.get('price', 0))
+            item['quantity'] = int(item.get('quantity', 0))
+
+        total_price = sum(item['price'] * item['quantity'] for item in cart.values())
+
+        response_data = {
+            'cart': [{'name': item['name'], 'price': item['price'], 'quantity': item['quantity']} for item in cart.values()],
+            'total_price': total_price,
+        }
+
+        return JsonResponse(response_data)
+    return JsonResponse({'error': 'Invalid request method'}, status=400)
