@@ -77,7 +77,7 @@ TEMPLATES = [
 SITE = 'http://localhost:8000/'  if  DEBUG else 'https://www.nextgensell.com/'
 WSGI_APPLICATION = 'config.wsgi.application'
 
-SANDBOX = False  # Example value, replace with your logic to determine sandbox status
+SANDBOX = True  # Example value, replace with your logic to determine sandbox status
 GATEWAY_CONFIG = {
     'sandbox': SANDBOX,
     'merchant_id': '10000100' if SANDBOX else os.environ.get('MERCHANT_ID'),
