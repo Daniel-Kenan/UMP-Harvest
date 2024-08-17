@@ -17,23 +17,25 @@ Home - My Site
           <div class="row flex-column-reverse flex-lg-row">
             <div class="col-md-12 col-lg-2">
               <!-- product-thumbnail-slider -->
+               <script>
+                function setImage(image){
+    const elms = document.getElementsByClassName("largeImage");
+    for (let elm of elms) {
+    elm.setAttribute("src",image)
+                }
+              }
+               </script>
               <div class="swiper product-thumbnail-slider swiper-initialized swiper-vertical swiper-backface-hidden swiper-thumbs">
                 <div class="swiper-wrapper" id="swiper-wrapper-6637f3ecf1732b9e" aria-live="polite" style="transform: translate3d(0px, 0px, 0px);">
                   <div class="swiper-slide swiper-slide-visible swiper-slide-active swiper-slide-thumb-active" role="group" aria-label="1 / 5" style="height: 68px; margin-bottom: 20px;">
-                    <img src="{% static "images/product-thumbnail-1.jpg" %}" alt="" class="thumb-image img-fluid">
+                    <img src="{{ product.image}}" onclick="setImage('{{ product.image }}')" style="background-color:orange" alt="" class="thumb-image img-fluid">
                   </div>
                   <div class="swiper-slide swiper-slide-visible swiper-slide-next" role="group" aria-label="2 / 5" style="height: 68px; margin-bottom: 20px;">
-                    <img src="{% static "images/product-thumbnail-2.jpg" %}" alt="" class="thumb-image img-fluid">
+                    <img src="{{ product.wiki_image}}"  onclick="setImage('{{ product.wiki_image }}')" style="margin-top:30px !important" alt="" class="thumb-image img-fluid">
                   </div>
-                  <div class="swiper-slide swiper-slide-visible" role="group" aria-label="3 / 5" style="height: 68px; margin-bottom: 20px;">
-                    <img src="{% static "images/product-thumbnail-3.jpg" %}" alt="" class="thumb-image img-fluid">
-                  </div>
-                  <div class="swiper-slide swiper-slide-visible" role="group" aria-label="4 / 5" style="height: 68px; margin-bottom: 20px;">
-                    <img src="{% static "images/product-thumbnail-4.jpg" %}" alt="" class="thumb-image img-fluid">
-                  </div>
-                  <div class="swiper-slide swiper-slide-visible" role="group" aria-label="5 / 5" style="height: 68px; margin-bottom: 20px;">
-                    <img src="{% static "images/product-thumbnail-5.jpg" %}" alt="" class="thumb-image img-fluid">
-                  </div>
+                  
+                  
+                  
                 </div>
               <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span></div>
               <!-- / product-thumbnail-slider -->
@@ -43,22 +45,14 @@ Home - My Site
               <div class="swiper product-large-slider swiper-fade swiper-initialized swiper-horizontal swiper-watch-progress swiper-backface-hidden">
                 <div class="swiper-wrapper" id="swiper-wrapper-77a584b74175a398" aria-live="polite">
                   <div class="swiper-slide swiper-slide-visible swiper-slide-active" role="group" aria-label="1 / 5" style="width: 423px; opacity: 1; transform: translate3d(0px, 0px, 0px);">
-                    <div class="image-zoom" data-scale="2.5" data-image="images/product-large-1.jpg" style="background-color:orange"><img src="{{ product.image}}"  style="width:100%;aspect-ratio: 1200 / 1200; " alt="product-large" class="img-fluid"></div>
+                    <div class="image-zoom largeImage" data-scale="2.5" data-image="{{ product.image}}"  style="background-color:orange"><img src="{{ product.image}}" class="largeImage"  style="width:100%;aspect-ratio: 1200 / 1200; " alt="product-large" class="img-fluid"></div>
                   </div>
-                  <div class="swiper-slide swiper-slide-next" role="group" aria-label="2 / 5" style="width: 423px; opacity: 0; transform: translate3d(-423px, 0px, 0px);">
-                    <div class="image-zoom" data-scale="2.5" data-image="images/product-large-2.jpg"><img src="images/product-large-2.jpg" alt="product-large" class="img-fluid"></div>
-                  </div>
-                  <div class="swiper-slide" role="group" aria-label="3 / 5" style="width: 423px; opacity: 0; transform: translate3d(-846px, 0px, 0px);">
-                    <div class="image-zoom" data-scale="2.5" data-image="images/product-large-3.jpg"><img src="images/product-large-3.jpg" alt="product-large" class="img-fluid"></div>
-                  </div>
-                  <div class="swiper-slide" role="group" aria-label="4 / 5" style="width: 423px; opacity: 0; transform: translate3d(-1269px, 0px, 0px);">
-                    <div class="image-zoom" data-scale="2.5" data-image="images/product-large-4.jpg"><img src="images/product-large-4.jpg" alt="product-large" class="img-fluid"></div>
-                  </div>
-                  <div class="swiper-slide" role="group" aria-label="5 / 5" style="width: 423px; opacity: 0; transform: translate3d(-1692px, 0px, 0px);">
-                    <div class="image-zoom" data-scale="2.5" data-image="images/product-large-5.jpg"><img src="images/product-large-5.jpg" alt="product-large" class="img-fluid"></div>
-                  </div>
+
+
+
+
                 </div>
-                <div class="swiper-pagination swiper-pagination-clickable swiper-pagination-bullets swiper-pagination-horizontal"><span class="swiper-pagination-bullet swiper-pagination-bullet-active" tabindex="0" role="button" aria-label="Go to slide 1" aria-current="true"></span><span class="swiper-pagination-bullet" tabindex="0" role="button" aria-label="Go to slide 2"></span><span class="swiper-pagination-bullet" tabindex="0" role="button" aria-label="Go to slide 3"></span><span class="swiper-pagination-bullet" tabindex="0" role="button" aria-label="Go to slide 4"></span><span class="swiper-pagination-bullet" tabindex="0" role="button" aria-label="Go to slide 5"></span></div>
+                
               <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span></div>
               <!-- / product-large-slider -->
             </div>
@@ -135,7 +129,7 @@ Home - My Site
         <div>
           <div class="nav nav-pills justify-content-center" id="v-pills-tab" role="tablist" aria-orientation="horizontal">
             <button class="nav-link text-start active" id="v-pills-description-tab" data-bs-toggle="pill" data-bs-target="#v-pills-description" type="button" role="tab" aria-controls="v-pills-description" aria-selected="true">Description</button>
-            <button class="nav-link text-start" id="v-pills-additional-tab" data-bs-toggle="pill" data-bs-target="#v-pills-additional" type="button" role="tab" aria-controls="v-pills-additional" aria-selected="false" tabindex="-1">Additional Information</button>
+            {% comment %} <button class="nav-link text-start" id="v-pills-additional-tab" data-bs-toggle="pill" data-bs-target="#v-pills-additional" type="button" role="tab" aria-controls="v-pills-additional" aria-selected="false" tabindex="-1">Additional Information</button> {% endcomment %}
             <button class="nav-link text-start" id="v-pills-reviews-tab" data-bs-toggle="pill" data-bs-target="#v-pills-reviews" type="button" role="tab" aria-controls="v-pills-reviews" aria-selected="false" tabindex="-1">Customer Reviews</button>
           </div>
           <div class="tab-content py-4" id="v-pills-tabContent">
@@ -148,112 +142,90 @@ Home - My Site
               <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
             </div>
             <div class="tab-pane fade" id="v-pills-reviews" role="tabpanel" aria-labelledby="v-pills-reviews-tab" tabindex="0">
-              <div class="review-box d-flex flex-wrap">
-                <div class="col-lg-6 d-flex flex-wrap gap-3">
-                  <div class="col-md-2">
-                    <div class="image-holder">
-                      <img src="images/reviewer-1.jpg" alt="review" class="img-fluid rounded-circle">
-                    </div>
-                  </div>
-                  <div class="col-md-8">
-                    <div class="review-content">
-                      <div class="rating-container d-flex align-items-center">
-                        <span class="rating me-2">
-                          <svg width="24" height="24" class="text-warning"><use xlink:href="#star-full"></use></svg>
-                          <svg width="24" height="24" class="text-warning"><use xlink:href="#star-full"></use></svg>
-                          <svg width="24" height="24" class="text-warning"><use xlink:href="#star-full"></use></svg>
-                          <svg width="24" height="24" class="text-warning"><use xlink:href="#star-full"></use></svg>
-                          <svg width="24" height="24" class="text-warning"><use xlink:href="#star-half"></use></svg>
-                        </span>
-                        <span class="rating-count">(3.5)</span>
+              
+
+              <section id="post-comment">
+                <div class="comments-wrap">
+                  <h2 class="my-5">
+                    <span class="count">3</span> Comments
+                  </h2>
+                  <div class="comment-list padding-small">
+                    <article class="comment-item row flex-wrap mb-3">
+                      <div class="col-lg-1 col-sm-3 mb-3">
+                        <img src="{% static 'images/avatar-person.svg' %}" alt="default" class="img-fluid rounded-circle">
                       </div>
-                      <div class="review-header">
-                        <span class="author-name">Tina Johnson</span>
-                        <span class="review-date">– 03/07/2023</span>
+                      <div class="col-lg-10 col-sm-9 author-wrap">
+                        <div class="author-post">
+                          <div class="comment-meta d-flex">
+                            <h4 class="author-name text-dark pe-1">Sam Smith</h4>
+                            <span class="meta-date text-muted">Jul 10</span>
+                          </div>
+                          <p class="no-margin">Mattis pulvinar non viverra donec pellentesque. Odio mi consequat libero dolor. Porta ut diam lobortis eget leo, lectus. Tortor diam dignissim amet, in interdum aliquet. Nascetur libero elementum adipiscing mauris maecenas et magna.</p>
+                          <div class="comments-reply">
+                            <a href="#" class="text-decoration-underline text-dark">Reply Now</a>
+                          </div>
+                        </div>
                       </div>
-                      <p>Vitae tortor condimentum lacinia quis vel eros donec ac. Nam at lectus urna duis convallis convallis</p>
-                    </div>
+                    </article>
+                    <article class="comment-item row child-comments flex-wrap ps-5 mb-3">
+                      <div class="col-lg-1 col-sm-3 mb-3">
+                        <img src="{% static 'images/avatar-person.svg' %}" alt="default" class="img-fluid rounded-circle">
+                      </div>
+                      <div class="col-lg-10 col-sm-9 author-wrap">
+                        <div class="author-post">
+                          <div class="comment-meta d-flex">
+                            <h4 class="author-name text-dark pe-1">Santie Mary</h4>
+                            <span class="meta-date text-muted">Jul 10</span>
+                          </div>
+                          <p class="no-margin">Tristique tempis condimentum diam done ullancomroer sit element henddg sit he consequert.Tristique tempis condimentum diam done ullancomroer sit element henddg sit he consequert.</p>
+                          <div class="comments-reply">
+                            <a href="#" class="text-decoration-underline text-dark">Reply Now</a>
+                          </div>
+                        </div>
+                      </div>
+                    </article>
+                    <article class="comment-item row flex-wrap">
+                      <div class="col-lg-1 col-sm-3 mb-3">
+                        <img src="{% static 'images/avatar-person.svg' %}" alt="default" class="img-fluid rounded-circle">
+                      </div>
+                      <div class="col-lg-10 col-sm-9 author-wrap">
+                        <div class="author-post">
+                          <div class="comment-meta d-flex">
+                            <h4 class="author-name text-dark pe-1">Analisa Nora</h4>
+                            <span class="meta-date text-muted">Jul 10</span>
+                          </div>
+                          <p class="no-margin">Tristique tempis condimentum diam done ullancomroer sit element henddg sit he consequert.Tristique tempis condimentum diam done ullancomroer sit element henddg sit he consequert.</p>
+                          <div class="comments-reply">
+                            <a href="#" class="text-decoration-underline text-dark">Reply Now</a>
+                          </div>
+                        </div>
+                      </div>
+                    </article>
                   </div>
                 </div>
-                <div class="col-lg-6 d-flex flex-wrap gap-3">
-                  <div class="col-md-2">
-                    <div class="image-holder">
-                      <img src="images/reviewer-2.jpg" alt="review" class="img-fluid rounded-circle">
-                    </div>
-                  </div>
-                  <div class="col-md-8">
-                    <div class="review-content">
-                      <div class="rating-container d-flex align-items-center">
-                        <span class="rating me-2">
-                          <svg width="24" height="24" class="text-warning"><use xlink:href="#star-full"></use></svg>
-                          <svg width="24" height="24" class="text-warning"><use xlink:href="#star-full"></use></svg>
-                          <svg width="24" height="24" class="text-warning"><use xlink:href="#star-full"></use></svg>
-                          <svg width="24" height="24" class="text-warning"><use xlink:href="#star-full"></use></svg>
-                          <svg width="24" height="24" class="text-warning"><use xlink:href="#star-half"></use></svg>
-                        </span>
-                        <span class="rating-count">(3.5)</span>
+                <div class="comment-respond mt-3 rounded-5 bg-light p-5 mt-5">
+                  <h2 class="my-5">Leave a Comment</h2>
+                  <form method="post" class="form-group padding-small">
+                  <p>Your email address will not be published. Required fields are marked *</p>
+                    <div class="row">
+                      <div class="col-lg-12 mb-3">
+                        <textarea class="form-control ps-3 pt-3" style="height:130px" id="comment" name="comment" placeholder="Write your comment here *"></textarea>
                       </div>
-                      <div class="review-header">
-                        <span class="author-name">Jenny Willis</span>
-                        <span class="review-date">– 03/06/2022</span>
+                      
+                      
+                      <div class="col-lg-12">
+                        <label class="d-flex align-items-center">
+                          <input type="checkbox" class="checked-box me-2">
+                          <span class="label-body">I declare that the comment i made is not offensive to this platform or anyone in general</span>
+                        </label>
                       </div>
-                      <p>Vitae tortor condimentum lacinia quis vel eros donec ac. Nam at lectus urna duis convallis convallis</p>
+                      <div class="col-lg-12 mt-3">
+                        <button class="btn btn-lg btn-primary text-uppercase btn-rounded-none w-100" type="submit">Post Comment</button>
+                      </div>
                     </div>
-                  </div>
+                  </form>
                 </div>
-              </div>
-
-              <div class="add-review mt-5">
-                <h3>Add a review</h3>
-                <p>Your email address will not be published. Required fields are marked *</p>
-                <form id="form" class="form-group">
-
-                  <div class="pb-3">
-                    <div class="review-rating">
-                      <span>Your rating *</span>
-                      <div class="rating-container d-flex align-items-center">
-                        <input type="radio" class="btn-check" name="options-rating" id="rating1" autocomplete="off" checked="">
-                        <label class="btn" for="rating1"><svg width="24" height="24" class="text-warning"><use xlink:href="#star-full"></use></svg></label>
-
-                        <input type="radio" class="btn-check" name="options-rating" id="rating2" autocomplete="off">
-                        <label class="btn" for="rating2"><svg width="24" height="24" class="text-warning"><use xlink:href="#star-full"></use></svg></label>
-
-                        <input type="radio" class="btn-check" name="options-rating" id="rating3" autocomplete="off">
-                        <label class="btn" for="rating3"><svg width="24" height="24" class="text-warning"><use xlink:href="#star-full"></use></svg></label>
-
-                        <input type="radio" class="btn-check" name="options-rating" id="rating4" autocomplete="off">
-                        <label class="btn" for="rating4"><svg width="24" height="24" class="text-warning"><use xlink:href="#star-full"></use></svg></label>
-                        
-                        <input type="radio" class="btn-check" name="options-rating" id="rating5" autocomplete="off">
-                        <label class="btn" for="rating5"><svg width="24" height="24" class="text-warning"><use xlink:href="#star-full"></use></svg></label>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="pb-3">
-                    <input type="file" class="form-control" data-text="Choose your file">
-                  </div>
-                  <div class="pb-3">
-                    <label>Your Review *</label>
-                    <textarea class="form-control" placeholder="Write your review here"></textarea>
-                  </div>
-                  <div class="pb-3">
-                    <label>Your Name *</label>
-                    <input type="text" name="name" placeholder="Write your name here" class="form-control">
-                  </div>
-                  <div class="pb-3">
-                    <label>Your Email *</label>
-                    <input type="text" name="email" placeholder="Write your email here" class="form-control">
-                  </div>
-                  <div class="pb-3">
-                    <label>
-                      <input type="checkbox" required="">
-                      <span class="label-body">Save my name, email, and website in this browser for the next
-                        time.</span>
-                    </label>
-                  </div>
-                  <button type="submit" name="submit" class="btn btn-dark btn-large text-uppercase w-100">Submit</button>
-                </form>
-              </div>
+              </section>
             </div>
           </div>
         </div>

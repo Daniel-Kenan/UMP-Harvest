@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+    {% load static %}
+  <meta charset="UTF-8">
+  <title>CodePen - Responsive Dark Dashboard</title>
+  <link href='https://fonts.googleapis.com/css?family=Kanit:400,500,300' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="{% static "dashboard.css" %}">
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<div class='container'>
+  <div class='sidebar'>
+    <div class='navigation-elm' onclick="location.href='/admin/'"><span class='nav-text'><i class="fa fa-fw fa-arrow-left"></i><span class='text-short'>Back</span> <span class='text-long'></span></span>
+    </div>
+
+    <div class='navigation-elm'><span class='nav-text'><i class="fa fa-fw fa-area-chart"></i><span class='text-short'>Reports</span> <span class='text-long'>Overview</span></span>
+    </div>
+    
+    
+    
+
+  </div>
+
+  <div class='row'>
+    <div class='key-metrics white-border'>
+      <div class='small'>Revenue</div>
+      58643.87R </div>
+    <div class='key-metrics blue-border'>
+      <div class='small'>Units Sold</div>950</div>
+  </div>
+  <div class='linechart-element'><canvas id="linechart"> </canvas>
+  </div>
+  <div class='row'>
+    <div class='piechart-element'>
+      <div class='piechart-label'>
+        <div class='label-heading'>Revenue </div>
+      
+      </div>
+      <div class='piechart-percent main-color'>68%</div>
+      <div class='piechart-container'>
+
+        <canvas id="piechart"></canvas>
+      </div>
+    </div>
+    <div class='piechart-element'>
+
+      <div class='piechart-label'>
+        <div class='label-heading'>Customer Satisfaction</div>
+        <p class='small'>User centered design viral hacker personas co-working food-truck co-working <span class='main-color'> 360 campaign</span> agile.</p>
+      </div>
+      <div class='piechart-percent main-color'>39%</div>
+      <div class='piechart-container'>
+        <canvas id="piechart2"></canvas>
+      </div>
+
+    </div>
+    <div class='piechart-element'>
+      <div class='piechart-label'>
+        <div class='label-heading'>Market Share Growth</div>
+        <p class='small'>Disrupt long shadow quantitative vs. qualitative bootstrapping iterate. Grok experiential is so
+          <span class='main-color'>2000 and late ship</span> it venture capital fund .</p>
+      </div>
+      <div class='piechart-percent main-color'>34%</div>
+      <div class='piechart-container'>
+        <canvas id="piechart3"></canvas>
+      </div>
+
+    </div>
+  </div>
+  <div class='row'>
+
+    <div class='stats-element'>
+      <div class='element-header'>Regional Performance Metrics</div>
+      <div class='stats-container' id='stats-element'>
+        
+        <div class='stats-table'>
+          
+            <table class="performance-table">
+                <thead>
+                  <tr>
+                    <td></td>
+                    <td>Total Users</td>
+                    <td>New Sign-ups</td>
+                    <td>Active Users</td>
+                    <td>Total Products</td>
+                    <td>Low Stock Alerts</td>
+                    <td>Total Orders</td>
+                    <td>Revenue</td>
+                    <td>Average Order Value</td>
+                    <td>Top Payment Methods</td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="table-desc">Today</td>
+                    <td>150</td>
+                    <td>5</td>
+                    <td>120</td>
+                    <td>1200</td>
+                    <td>8</td>
+                    <td>25</td>
+                    <td>R 2,500</td>
+                    <td>R 100</td>
+                    <td>Credit Card 60%, PayPal 30%, COD 10%</td>
+                  </tr>
+                  <tr>
+                    <td class="table-desc">Week to Date</td>
+                    <td>1,050</td>
+                    <td>35</td>
+                    <td>950</td>
+                    <td>1,250</td>
+                    <td>25</td>
+                    <td>175</td>
+                    <td>R 17,500</td>
+                    <td>R 100</td>
+                    <td>Credit Card 55%, PayPal 35%, COD 10%</td>
+                  </tr>
+                  <tr>
+                    <td class="table-desc">Month to Date</td>
+                    <td>4,200</td>
+                    <td>150</td>
+                    <td>3,800</td>
+                    <td>1,300</td>
+                    <td>50</td>
+                    <td>700</td>
+                    <td>R 70,000</td>
+                    <td>R 100</td>
+                    <td>Credit Card 50%, PayPal 40%, COD 10%</td>
+                  </tr>
+                  <tr>
+                    <td class="table-desc">Year to Date</td>
+                    <td>50,000</td>
+                    <td>2,000</td>
+                    <td>45,000</td>
+                    <td>1,400</td>
+                    <td>200</td>
+                    <td>8,000</td>
+                    <td>R 800,000</td>
+                    <td>R 100</td>
+                    <td>Credit Card 45%, PayPal 45%, COD 10%</td>
+                  </tr>
+                </tbody>
+              </table>
+              
+        </div>
+      </div>
+    </div>
+    <div class='order-element'>
+      <div class='element-header'></div>
+      <div class='order-scroll up' id='order-scrollup'><i class="fa fa-chevron-up"></i></div>
+      <div class='order-container' id='order-container' >
+
+        <div class='order-item' id='order-item'>
+          <h1>Order #413-8148622</h1>
+          <p>Status: <span class='main-color'>Dispatched</span><br>Tracking Number: 9851 1199 72</p>
+          <p>Order Date: 12/24/16<br> Customer Contact: test.clark@gmail.com</p>
+
+        </div>
+        <div class='order-item'>
+          <h1>Order #313-55416218</h1>
+          <p>Status: <span class='main-color'>Dispatched</span><br>Tracking Number: 1431 2349 11</p>
+          <p>Order Date: 12/24/16<br> Customer Contact: random.guy@gmail.com</p>
+        </div>
+        <div class='order-item highlight'>
+          <h1>Order #535-71122781</h1>
+          <p>Status: <span class='highlight'>Awaiting Shipment</span><br>Tracking Number: -</p>
+          <p>Order Date: 12/24/16<br> Customer Contact: aname.store@aol.com</p>
+        </div>
+        <div class='order-item highlight'>
+          <h1>Order #455-51133742</h1>
+          <p>Status: <span class='highlight'>Awaiting Shipment</span><br>Tracking Number: -</p>
+          <p>Order Date: 12/24/16<br> Customer Contact: special.order@yahoo.com</p>
+        </div>
+        <div class='order-item hold'>
+          <h1>Order #734-45422551</h1>
+          <p>Status: <span class='inactive'>On Hold</span><br>Tracking Number: -</p>
+          <p>Order Date: 12/20/16<br> Customer Contact: nobody123@gmail.com</p>
+        </div>
+        <div class='order-item hold'>
+          <h1>Order #532-13422331</h1>
+          <p>Status: <span class='inactive'>On Hold</span><br>Tracking Number: -</p>
+          <p>Order Date: 12/19/16<br> Customer Contact: random333.star@gmail.com</p>
+        </div>
+        <div class='order-item hold'>
+          <h1>Order #922-25491351</h1>
+          <p>Status: <span class='inactive'>On Hold</span><br>Tracking Number: -</p>
+          <p>Order Date: 12/19/16<br> Customer Contact: santa@gmail.com</p>
+        </div>
+      </div>
+      <div class='order-scroll' id='order-scrolldown'><i class="fa fa-chevron-down"></i></div>
+    </div>
+  </div>
+
+  
+</div>
+<!-- partial -->
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js'></script>
+<script src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script><script  src="./script.js"></script>
+<script>
+
+    Chart.defaults.global.responsive = true;
+Chart.defaults.global.maintainAspectRatio = false;
+Chart.defaults.global.animation =true;
+var data = {
+  labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September"],
+  datasets: [{
+    label: "My First dataset",
+    fillColor: "rgba(220,220,220,0.3)",
+    strokeColor: "rgba(220,220,220,1)",
+    pointColor: "rgba(220,220,220,1)",
+    pointStrokeColor: "#fff",
+    pointHighlightFill: "#fff",
+    pointHighlightStroke: "rgba(220,220,220,1)",
+    data: [6502, 5908, 8000, 8100, 5611, 5525, 4045, 2220, 3800]
+  }, {
+    label: "My Second dataset",
+    fillColor: "rgba(90,170,225,0.4)",
+    strokeColor: "rgba(151,187,205,1)",
+    pointColor: "rgba(151,187,205,1)",
+    pointStrokeColor: "#fff",
+    pointHighlightFill: "#fff",
+    pointHighlightStroke: "rgba(151,187,205,1)",
+    data: [2820, 4833, 4023, 1900, 8600, 2700, 9110, 5532, 4805]
+  }]
+};
+
+var ctx = document.getElementById("linechart").getContext("2d");
+var myLineChart = new Chart(ctx).Line(data, {
+  pointDot: false,
+  showScale: false,
+  bezierCurveTension: 0.45,
+  datasetStrokeWidth: 3,
+  multiTooltipTemplate: "<%= value %>R ",
+  pointHitDetectionRadius: 60,
+});
+var data2 = [{
+  value: 350,
+  color: "#5AB3D1",
+  highlight: "#5AB3D1",
+  label: "Red"
+}, {
+  value: 50,
+  color: "#DAD3EC",
+  highlight: "#DAD3EC",
+  label: "<Green>"
+}, {
+  value: 150,
+  color: "rgba(0,0,0,0.2)",
+  label: "",
+}]
+var data3 = [{
+  value: 200,
+  color: "#5AB3D1",
+  highlight: "#5AB3D1",
+  label: "Red"
+}, {
+  value: 20,
+  color: "#DAD3EC",
+  highlight: "#DAD3EC",
+  label: "<Green>"
+}, {
+  value: 300,
+  color: "rgba(0,0,0,0.2)",
+  label: "",
+}]
+
+var data4 = [{
+  value: 100,
+  color: "#5AB3D1",
+  highlight: "#5AB3D1",
+  label: "Red"
+}, {
+  value: 70,
+  color: "#DAD3EC",
+  highlight: "#DAD3EC",
+  label: "<Green>"
+}, {
+  value: 50,
+  color: "rgba(0,0,0,0.2)",
+  label: "",
+}]
+
+var myDoughnutChart = new Chart(document.getElementById("piechart").getContext("2d")).Doughnut(data2, {
+  animateScale: false,
+  percentageInnerCutout: 80,
+  segmentShowStroke: false,
+  tooltipTemplate: "",
+});
+
+var myDoughnutChart2 = new Chart(document.getElementById("piechart2").getContext("2d")).Doughnut(data3, {
+  animateScale: false,
+  percentageInnerCutout: 80,
+  segmentShowStroke: false,
+  tooltipTemplate: "",
+});
+var myDoughnutChart3 = new Chart(document.getElementById("piechart3").getContext("2d")).Doughnut(data4, {
+  animateScale: false,
+  percentageInnerCutout: 80,
+  segmentShowStroke: false,
+  tooltipTemplate: "",
+});
+//order scroll script
+var orderItemH = document.getElementById('order-item').clientHeight;
+console.log(orderItemH);
+var orderContainer = document.getElementById('order-container');
+var statsElementH = document.getElementById('stats-element').clientHeight;
+var initialAmount = Math.floor((statsElementH - 150) / orderItemH);
+var totalAmount = document.getElementsByClassName('order-item').length + 1;
+console.log(initialAmount + ' items can be displayed');
+orderContainer.style.height = (initialAmount * (orderItemH + 10)) + 'px';
+
+document.getElementById('order-scrolldown').addEventListener('click', function() {
+  scrollOrder(orderContainer.scrollTop + orderItemH + 14);
+});
+document.getElementById('order-scrollup').addEventListener('click', function() {
+  scrollOrderUp(orderContainer.scrollTop - orderItemH - 14);
+});
+
+window.onresize = function() {
+  orderItemH = document.getElementById('order-item').clientHeight;
+  statsElementH = document.getElementById('stats-element').clientHeight;
+  initialAmount = Math.floor((statsElementH) / orderItemH);
+  totalAmount = document.getElementsByClassName('order-item').length + 1;
+  orderContainer.style.height = (initialAmount * (orderItemH + 15)) + 'px';
+}
+
+function scrollOrder(max) {
+  if (orderContainer.scrollTop <= max && max < (totalAmount - initialAmount) * orderItemH) {
+    console.log(orderItemH)
+    window.setTimeout(function() {
+      orderContainer.scrollTop += 5;
+      scrollOrder(max);
+    }, 2)
+  }
+}
+
+function scrollOrderUp(goal) {
+  if (orderContainer.scrollTop >= goal && orderContainer.scrollTop > 0) {
+    orderContainer.scrollTop -= 5;
+    window.setTimeout(function() {
+      scrollOrderUp(goal);
+    }, 2)
+  }
+}
+</script>
+</body>
+</html>

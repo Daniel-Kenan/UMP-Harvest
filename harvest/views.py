@@ -65,7 +65,7 @@ def single_product(request,id):
     product = get_object_or_404(Product, id=id)
     product.discountedPrice = calculate_discounted_price(product.price, product.discounted_price_percentage)
     product.isOnDiscount = bool( not (product.price == product.discountedPrice) )
-    product.summary = wiki.search_object_history(str(product.name))
+    product.summary, product.wiki_image = wiki.search_object_history(str(product.name))
     return render(request, page("SingleProduct"),{'product': product, "top_searches" : top_searches})
 
 def SignIn(request):
@@ -239,3 +239,7 @@ def testpage(request):
 
 def bank_payment_transfer(request):
     return render(request, page("BankTransfer"))
+
+
+def dashboard(request):
+    return render(request, 'admin/dashboard.html')

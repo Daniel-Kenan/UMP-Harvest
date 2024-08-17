@@ -18,5 +18,6 @@ urlpatterns = [
     path('cart/', views.view_cart, name='view_cart'),
     path('cart/remove/<int:product_id>/', views.remove_from_cart, name='remove_from_cart'),
     path('api/cart/', views.cart_data, name='cart_data'),
-    path("payment-tranfer/", views.bank_payment_transfer, name='bank_payment_transfer')
+    path("payment-tranfer/", views.bank_payment_transfer, name='bank_payment_transfer'),
+    path("dashboard/", views.dashboard, name='dashboard')
 ]

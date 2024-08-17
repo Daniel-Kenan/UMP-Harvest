@@ -2,7 +2,21 @@
 {% load static %}
 {% block extrahead %}
 {{ block.super }}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 <link rel="stylesheet" type="text/css" href="{% static 'admin/css/custom_admin.css' %}">
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+</style>
+<style>
+    body,
+html,
+.container {
+  height: 100%;
+  margin: 0;
+  font-family: "Inter", sans-serif;;
+  font-size: 18px;
+}
+</style>
 {% endblock %}
 
 {% block branding %}
@@ -14,11 +28,11 @@
 {% endblock %}
 
 {% block usertools %}
-    <div id="user-tools">
+    <div id="user-tools" >
         Welcome ,
         <strong>{{ request.user.get_username }}</strong>.
 
-        <a href="/">dashboard</a> /
+        <a href="{% url "dashboard" %}">dashboard</a> /
         <a href="{% url 'admin:password_change' %}">Change password</a> /
 
         <form id="logout-form" method="post" action="{% url 'admin:logout' %}" style="display:inline;">
@@ -40,4 +54,19 @@
             </svg>
         </button>
     </div>
-{% endblock %}
+    <style>header , header a {background-color:white !important; color:#343A40 !important}
+
+        header {
+            box-shadow: 5px 2.3px 5px #FAD972;
+        }
+        table caption{
+            background-color:#FAD972 !important;
+            color:#343A40 !important
+        }
+        table caption a{
+            color:#343A40 !important
+        }
+    </style>
+  
+    
+    {% endblock %}

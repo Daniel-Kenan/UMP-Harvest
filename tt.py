@@ -9,32 +9,28 @@ def search_object_history(species_name):
 
         data = response.json()
 
-        # Extract the title, description, summary, and image
+        # Extract the title, description, and summary
         title = data.get('title', 'Unknown')
         description = data.get('description', 'No description available')
         summary = data.get('extract', 'No summary available')
-        page_url = data.get('content_urls', {}).get('desktop', {}).get('page', 'No URL available')
-        
-        # Extract image URL if available
-        image_url = data.get('thumbnail', {}).get('source', None)
 
-        # Format the results as a string with <p> tags
+        # Fetch page URL for more detailed information
+        page_url = data.get('content_urls', {}).get('desktop', {}).get('page', 'No URL available')
+
+        # Format the results as a string
         result = (
-            f"<p>Title: {title}<br>"
-            f"Description: {description}<br>"
-            f"Summary: {summary}<br>"
-            f"More Information: <a href='{page_url}'>{page_url}</a></p>"
+            f"<p>Title: {title}\n"
+            f"Description: {description}\n"
+            f"Summary: {summary}\n"
+            f"More Information: {page_url} </p>"
         )
 
     except requests.exceptions.RequestException as e:
-        result = f"<p>Error: Could not retrieve data for {species_name}. Reason: {e}</p>"
-        image_url = None
+        result = f"Error: Could not retrieve data for {species_name}. Reason: {e}"
 
-    return result, image_url
+    return result
 
 # # Example Usage
 # species_name = "pig"
-# result, image_url = search_object_history(species_name)
+# result = search_object_history(species_name)
 # print(result)
-# if image_url:
-#     print(f"Image URL: {image_url}")
