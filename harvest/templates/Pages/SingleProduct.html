@@ -140,14 +140,8 @@ Home - My Site
           </div>
           <div class="tab-content py-4" id="v-pills-tabContent">
             <div class="tab-pane fade show active" id="v-pills-description" role="tabpanel" aria-labelledby="v-pills-description-tab" tabindex="0">
-              <h5>Product Description</h5>
-              <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna viverra non, semper suscipit, posuere a, pede. Donec nec justo eget felis facilisis fermentum. Aliquam porttitor mauris sit amet orci. Aenean dignissim pellentesque felis. Phasellus ultrices nulla quis nibh. Quisque a lectus. Donec consectetuer ligula vulputate sem tristique cursus.</p>
-              <ul style="list-style-type:disc;" class="list-unstyled ps-4">
-                <li>Donec nec justo eget felis facilisis fermentum.</li>
-                <li>Suspendisse urna viverra non, semper suscipit pede.</li>
-                <li>Aliquam porttitor mauris sit amet orci.</li>
-              </ul> 
-              <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna viverra non, semper suscipit, posuere a, pede. Donec nec justo eget felis facilisis fermentum. Aliquam porttitor mauris sit amet orci. Aenean dignissim pellentesque felis. Phasellus ultrices nulla quis nibh. Quisque a lectus. Donec consectetuer ligula vulputate sem tristique cursus. </p>
+              <h5>Product Summary</h5>
+             {{ product.summary | safe  }}
             </div>
             <div class="tab-pane fade" id="v-pills-additional" role="tabpanel" aria-labelledby="v-pills-additional-tab" tabindex="0">
               <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla dicta aliquam exercitationem optio error. Molestiae dicta iusto ab vero quidem blanditiis obcaecati nesciunt aperiam repellat, suscipit atque assumenda temporibus aliquam.</p>

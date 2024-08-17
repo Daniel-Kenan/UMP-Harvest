@@ -9,6 +9,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from decimal import Decimal
 from django.conf import settings
 from .gateway import PayfastPayment
+from . import wiki
 
 def calculate_discounted_price(price, discount):
     if not isinstance(price, Decimal):
@@ -64,6 +65,7 @@ def single_product(request,id):
     product = get_object_or_404(Product, id=id)
     product.discountedPrice = calculate_discounted_price(product.price, product.discounted_price_percentage)
     product.isOnDiscount = bool( not (product.price == product.discountedPrice) )
+    product.summary = wiki.search_object_history(str(product.name))
     return render(request, page("SingleProduct"),{'product': product, "top_searches" : top_searches})
 
 def SignIn(request):
