@@ -7,3 +7,4 @@ whitenoise==6.3.0
 channels==3.0.5
 daphne==3.0.2
 psycopg2
+requests
