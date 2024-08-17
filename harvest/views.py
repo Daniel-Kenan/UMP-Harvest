@@ -7,6 +7,8 @@ from django.utils import timezone
 from django import template
 from django.shortcuts import render, get_object_or_404, redirect
 from decimal import Decimal
+from django.conf import settings
+from .gateway import PayfastPayment
 
 def calculate_discounted_price(price, discount):
     if not isinstance(price, Decimal):
@@ -206,3 +208,32 @@ def cart_data(request):
 
         return JsonResponse(response_data)
     return JsonResponse({'error': 'Invalid request method'}, status=400)
+
+
+data = {
+    # Merchant details
+    'merchant_id': settings.GATEWAY_CONFIG['merchant_id'],
+    'merchant_key':settings.GATEWAY_CONFIG['merchant_key'],
+    'return_url': settings.SITE+"payment-successful/",
+    'cancel_url': settings.SITE+"payment-failed/",
+    'notify_url': 'https://www.nextgensell.com/err',
+    # Buyer details
+    'name_first': 'First Name',
+    'name_last': 'Last Name',
+    'email_address': 'test@test.com',
+    # Transaction details
+    'm_payment_id': '1234', #Unique payment ID to pass through to notify_url
+    'amount': "200",
+    'item_name': 'Order#123'
+}
+
+payfast_payment = PayfastPayment(data,settings.GATEWAY_CONFIG['passphrase'],sandbox_mode=settings.GATEWAY_CONFIG['mode'])
+html_form = payfast_payment.generate_html_form()
+# print(html_form)
+
+def testpage(request):
+    return render(request, 'testpage.html',{'form':html_form})
+
+
+def bank_payment_transfer(request):
+    return render(request, page("BankTransfer"))

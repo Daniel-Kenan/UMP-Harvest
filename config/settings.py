@@ -74,8 +74,17 @@ TEMPLATES = [
     },
 ]
 
+SITE = 'http://localhost:8000/'  if  DEBUG else 'https://www.nextgensell.com/'
 WSGI_APPLICATION = 'config.wsgi.application'
 
+SANDBOX = False  # Example value, replace with your logic to determine sandbox status
+GATEWAY_CONFIG = {
+    'sandbox': SANDBOX,
+    'merchant_id': '10000100' if SANDBOX else os.environ.get('MERCHANT_ID'),
+    'merchant_key': '46f0cd694581a' if SANDBOX else os.environ.get('MERCHANT_KEY'),
+    'passphrase': 'jt7NOE43FZPn' if SANDBOX else os.environ.get('PAYFAST_SECRET'),
+    'mode':SANDBOX
+}
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
