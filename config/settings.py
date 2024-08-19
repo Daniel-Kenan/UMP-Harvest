@@ -89,9 +89,11 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'allauth.account.middleware.AccountMiddleware',
+  
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+MIDDLEWARE =  MIDDLEWARE if  bool(not DEBUG) else MIDDLEWARE + ['allauth.account.middleware.AccountMiddleware'] 
 
 ROOT_URLCONF = 'config.urls'
 
