@@ -91,11 +91,34 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-
 if not DEBUG:
     MIDDLEWARE.append('allauth.account.middleware.AccountMiddleware')
 
-    
+
+LOG_DIR = os.path.join(BASE_DIR, 'logs')
+if not os.path.exists(LOG_DIR):
+    os.makedirs(LOG_DIR)
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'ERROR',
+            'class': 'logging.FileHandler',
+            'filename': '/path/to/your/logfile.log',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
+    },
+}
+
+
 ROOT_URLCONF = 'config.urls'
 
 TEMPLATES = [
@@ -198,6 +221,5 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',  # Default backend for handling standard username/password authentication
     'allauth.account.auth_backends.AuthenticationBackend',  # Allauth backend for handling social and email-based authentication
 ]
-
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'

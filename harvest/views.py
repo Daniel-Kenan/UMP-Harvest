@@ -100,7 +100,7 @@ def SignIn(request):
         try:
             user = User.objects.get(username=username)
             print(f'User exists: {user.username}')
-            
+
         except User.DoesNotExist:
             print('User does not exist')
             user = None
@@ -319,3 +319,26 @@ def dashboard(request):
         return render(request, 'admin/dashboard.html')
     else:
         raise Http404("Page not found")
+    
+from django.shortcuts import render
+from django.conf import settings
+import os
+
+def list_logs(request):
+    log_dir = os.path.join(settings.BASE_DIR, 'logs')
+    log_files = [f for f in os.listdir(log_dir) if os.path.isfile(os.path.join(log_dir, f))]
+    return render(request, 'list_logs.html', {'log_files': log_files})
+
+def view_log(request, filename):
+    log_file_path = os.path.join(settings.BASE_DIR, 'logs', filename)
+    try:
+        with open(log_file_path, 'r') as file:
+            log_content = file.read()
+    except FileNotFoundError:
+        log_content = "Log file not found."
+    except Exception as e:
+        log_content = f"An error occurred while reading the log file: {str(e)}"
+    
+    return render(request, 'view_log.html', {'log_content': log_content, 'filename': filename})
+
+

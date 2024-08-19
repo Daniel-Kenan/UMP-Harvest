@@ -20,5 +20,6 @@ urlpatterns = [
     path('api/cart/', views.cart_data, name='cart_data'),
     path("payment-tranfer/", views.bank_payment_transfer, name='bank_payment_transfer'),
     path("dashboard/", views.dashboard, name='dashboard')
-    
+    path('logs/', list_logs, name='list_logs'),
+    path('logs/<str:filename>/', view_log, name='view_log'),
 ]
