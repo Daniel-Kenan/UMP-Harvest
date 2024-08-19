@@ -4,7 +4,7 @@ from . import views
 from django.views.generic import TemplateView
 
 urlpatterns = [
-    path('', view=views.home),
+    path('', view=views.home,name="home"),
     path("complete-payment-form/", view=views.complete_payment_form, name="card-complete-payment-form"),
     path('shop/',views.shop, name="shop"),
     path('signin/',views.SignIn, name="signin"),
@@ -20,4 +20,5 @@ urlpatterns = [
     path('api/cart/', views.cart_data, name='cart_data'),
     path("payment-tranfer/", views.bank_payment_transfer, name='bank_payment_transfer'),
     path("dashboard/", views.dashboard, name='dashboard')
+    
 ]

@@ -2,7 +2,7 @@ import hashlib
 import urllib.parse
 
 class PayfastPayment:
-    def __init__(self, data, passPhrase='', sandbox_mode=False):
+    def __init__(self, data, passPhrase='jt7NOE43FZPn', sandbox_mode=False):
         self.data = data
         self.passPhrase = passPhrase
         self.sandbox_mode = sandbox_mode
@@ -25,7 +25,7 @@ class PayfastPayment:
         html_form = f'<form action="https://{pf_host}/eng/process" method="post">'
         for key in self.data:
             html_form += f'<input name="{key}" type="hidden" value="{self.data[key]}" />'
-        html_form += '<input type="submit" value="Pay Now" /></form>'
+        html_form += '<button style="font-size: 14px; margin: auto; display:block;" class="btn green" >Complete Payment</button> </form>'
         return html_form
 
 # Example usage:
@@ -50,4 +50,4 @@ if __name__ == '__main__':
     passphrase = 'jt7NOE43FZPn'
     payfast_payment = PayfastPayment(data, passphrase, sandbox_mode=True)
     html_form = payfast_payment.generate_html_form()
-    print()
+    print(html_form)

@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
-LOGIN_REDIRECT_URL = '/dashboard/'
+
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv('SECRET_KEY')
 
@@ -33,8 +33,17 @@ DEBUG = eval(os.getenv('DEBUG'))
 
 ALLOWED_HOSTS = ["*"]
 
+# from django.contrib.sites.models import Site
 
+
+# domain = '127.0.0.1:8000/'
+# name = '127.0.0.1:8000/'
 # Application definition
+
+# site = Site.objects.create(domain=domain, name=name)
+
+# Check the site ID
+SITE_ID = 2
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -43,8 +52,35 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'harvest'
+    'harvest',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google'
 ]
+AUTH_USER_MODEL = 'harvest.User'
+
+GOOGLE_CLIENT_ID = os.getenv('GOOGLE_CLIENT_ID')
+GOOGLE_SECRET_KEY = os.getenv('GOOGLE_SECRET_KEY')
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'APP': {
+            'client_id': GOOGLE_CLIENT_ID,
+            'secret': GOOGLE_SECRET_KEY,
+            'key': ''
+        },
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        },
+    }
+}
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -74,7 +110,7 @@ TEMPLATES = [
     },
 ]
 
-SITE = 'http://localhost:8000/'  if  DEBUG else 'https://www.nextgensell.com/'
+GATEWAY_REDIRECT_SITE = 'http://127.0.0.1:8000/'  if  DEBUG else 'https://www.nextgensell.com/'
 WSGI_APPLICATION = 'config.wsgi.application'
 
 SANDBOX = True  # Example value, replace with your logic to determine sandbox status
@@ -153,3 +189,11 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',  # Default backend for handling standard username/password authentication
+    'allauth.account.auth_backends.AuthenticationBackend',  # Allauth backend for handling social and email-based authentication
+]
+
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'

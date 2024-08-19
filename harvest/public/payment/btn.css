@@ -23,8 +23,8 @@ body {
 }
 
 .link:hover {
-  color: #2ecc71;
-  border-bottom: 2px dotted #2ecc71;
+  color: #2ecc71 !important;
+  border-bottom: 2px dotted #2ecc71 !important;
 }
 
 /* button div */
@@ -62,8 +62,8 @@ body {
 }
 
 .green {
-  background-color: #2ecc71;
-  box-shadow: 0px 5px 0px 0px #15B358;
+  background-color: #2ecc71 !important;
+  box-shadow: 0px 5px 0px 0px #15B358 !important;
 }
 
 .green:hover {

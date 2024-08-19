@@ -1,0 +1,144 @@
+{% load socialaccount %}  <!-- Load the necessary socialaccount tags -->
+{% block content %}
+{% load static %}
+<!-- In your base.html or sociallogin.html -->
+{% include "Components/loader.html" %}
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f0f0f0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        color: #333;
+    }
+
+    .auth-container {
+        background-color: white;
+        padding: 40px;
+        border-radius: 12px;
+        box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        max-width: 600px;
+        width: 100%;
+    }
+
+    .auth-container img.logo {
+        width: 100px;
+        margin-bottom: 20px;
+    }
+
+    .auth-container h1 {
+        font-size: 28px;
+        margin-bottom: 20px;
+        color: #0073e6;
+    }
+
+    .auth-container p {
+        font-size: 16px;
+        margin-bottom: 30px;
+        color: #555;
+        line-height: 1.6;
+    }
+
+    .illustration {
+        margin-bottom: 30px;
+    }
+
+    .google-login {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 20px;
+    }
+
+    .google-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #fff;
+        color: #333;
+        border: 2px solid #dcdcdc;
+        padding: 12px 20px;
+        border-radius: 30px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: 600;
+        transition: background-color 0.3s, box-shadow 0.3s, border-color 0.3s;
+        width: 100%;
+        max-width: 280px;
+    }
+
+    .google-btn:hover {
+        background-color: #f7f7f7;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.15);
+        border-color: #0073e6;
+    }
+
+    .google-icon {
+        width: 20px;
+        height: 20px;
+        margin-right: 12px;
+    }
+
+    .color-bar {
+        margin-top: 30px;
+        display: flex;
+        justify-content: space-around;
+    }
+
+    .color-bar div {
+        width: 20%;
+        height: 5px;
+    }
+
+    .color-bar .blue {
+        background-color: #0073e6;
+    }
+
+    .color-bar .red {
+        background-color: #d32f2f;
+    }
+
+    .color-bar .green {
+        background-color: #388e3c;
+    }
+
+    .color-bar .yellow {
+        background-color: #fbc02d;
+    }
+
+    .footer-text {
+        margin-top: 20px;
+        font-size: 14px;
+        color: #888;
+    }
+</style>
+
+<div class="auth-container">
+    <img src="https://ump-harvest-production.up.railway.app/static/images/university-logo2.png" alt="University Logo" class="logo">
+    <h1>Authorize Access</h1>
+    
+    <p>To proceed, please authorize access using your Google account. This ensures that your account is secure and that only you can access this service.</p>
+    <div class="google-login">
+        <form method="post" action="{% provider_login_url 'google' %}" id="google-login-form">
+        <div  onclick="this.style.pointerEvents='none'; this.style.opacity='0.5';document.getElementById('google-login-form').submit();" class="google-btn" onclick="alert('This is a mock login. The button does not work.')">
+                {% csrf_token %}
+
+                Authorize with Google
+       
+                
+            </div>
+        </form>
+    </div>
+    <div class="color-bar">
+        <div class="blue"></div>
+        <div class="red"></div>
+        <div class="green"></div>
+        <div class="yellow"></div>
+    </div>
+    <div class="footer-text">Powered by University of Mpumalanga</div>
+</div>
+{% endblock %}

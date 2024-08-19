@@ -11,7 +11,7 @@ class User(AbstractUser):
     is_active = models.BooleanField(default=True)
     groups = models.ManyToManyField(Group, related_name='harvest_user_set', blank=True)
     user_permissions = models.ManyToManyField(Permission, related_name='harvest_user_permissions_set', blank=True)
-    
+    USERNAME_FIELD = 'username'
     def __str__(self):
         return self.username
 

@@ -2,7 +2,7 @@
 <!-- Hidden file input that triggers on button click -->
 <input type="file" id="fileInput" accept="image/*" style="display:none;" onchange="handleFile(event)">
 
-<header>
+<header style="position:relative">
     <div class="container-fluid">
       <div class="row py-3 border-bottom">
         
@@ -75,7 +75,7 @@
         <div class="col-sm-8 col-lg-2 d-flex gap-5 align-items-center justify-content-center justify-content-sm-end">
           <ul class="d-flex justify-content-end list-unstyled m-0">
             <li>
-              <a href="#" class="p-2 mx-1">
+              <a href="#" id="menuButton" class="p-2 mx-1">
                 <svg width="24" height="24"><use xlink:href="#user"></use></svg>
               </a>
             </li>
@@ -180,3 +180,53 @@
   
   
 </style>
+
+<style>
+ 
+
+
+  .floating-menu {
+      display: none; /* Hide the menu initially */
+      position: absolute;
+      right: 20px;
+      background-color: white;
+      border: 1px solid #ccc;
+      box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
+      border-radius: 5px;
+      z-index: 1000; /* Ensure the menu appears above other content */
+  }
+
+  .floating-menu ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      width:170px;
+  }
+
+  .floating-menu ul li {
+      border-bottom: 1px solid #eee;
+  }
+
+  .floating-menu ul li:last-child {
+      border-bottom: none;
+  }
+
+  .floating-menu ul li a {
+      display: block;
+      padding: 10px 20px;
+      color: #333;
+      text-decoration: none;
+  }
+
+  .floating-menu ul li a:hover {
+      background-color: #f1f1f1;
+  }
+</style>
+<div id="floatingMenu" class="floating-menu">
+  <ul>
+      <li><a href="#item1">Item 1</a></li>
+      <li><a href="#item2">Item 2</a></li>
+      <li><a href="#item3">Item 3</a></li>
+  </ul>
+</div>
+

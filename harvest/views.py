@@ -54,7 +54,24 @@ def home(request):
     return  render(request, page("Home"),{'categories': categories,'best_selling_products': best_selling_products, 'top_searches': top_searches,})
 
 def complete_payment_form(request):
-    return render(request , page("Card")) 
+    data = {
+    # Merchant details
+    'merchant_id': settings.GATEWAY_CONFIG['merchant_id'],
+    'merchant_key':settings.GATEWAY_CONFIG['merchant_key'],
+    'return_url': settings.GATEWAY_REDIRECT_SITE+"payment-successful/",
+    'cancel_url': settings.GATEWAY_REDIRECT_SITE+"payment-failed/",
+    'notify_url': 'https://www.nextgensell.com/err',
+    # Buyer details
+    'name_first': 'First Name',
+    'name_last': 'Last Name',
+    'email_address': 'test@test.com',
+    # Transaction details
+    'm_payment_id': '1234', #Unique payment ID to pass through to notify_url
+    'amount': "200",
+    'item_name': 'Order#123'}
+    payfast_payment = PayfastPayment(data,settings.GATEWAY_CONFIG['passphrase'],sandbox_mode=settings.GATEWAY_CONFIG['mode'])
+    html_form = payfast_payment.generate_html_form()
+    return render(request , page("Card"),{"html_form":html_form}) 
 
 from django.shortcuts import render
 from django.core.paginator import Paginator
@@ -68,10 +85,81 @@ def single_product(request,id):
     product.summary, product.wiki_image = wiki.search_object_history(str(product.name))
     return render(request, page("SingleProduct"),{'product': product, "top_searches" : top_searches})
 
+
+from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.views import PasswordResetView
+from django.contrib import messages
+
 def SignIn(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        
+        try:
+            user = User.objects.get(username=username)
+            print(f'User exists: {user.username}')
+            
+        except User.DoesNotExist:
+            print('User does not exist')
+            user = None
+
+        if user and user.check_password(password):
+            print('Password is correct')
+            # Authenticate manually
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                print(("passed"))
+                return redirect('home')
+            else:
+                messages.error(request, 'Authentication failed.')
+        else:
+            messages.error(request, 'Invalid username or password.')
+     
     return render(request, "Auth/SignIn.html")
+
+from django.shortcuts import render, redirect
+from django.contrib.auth import login
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib import messages
+from django.shortcuts import render, redirect
+from django.contrib.auth import login
+from django.contrib.auth.models import User
+from django.http import HttpResponse
+from django.core.exceptions import ValidationError
+from django.shortcuts import render, redirect
+from django.contrib.auth import login
+from django.contrib.auth.hashers import make_password
+from django.http import HttpResponse
+from .models import User
+
 def SignUp(request):
+    
+    if request.method == 'POST':
+        username = request.POST.get('email')
+        password = request.POST.get('password')
+
+        if not username or not password:
+            return HttpResponse("Username and password are required", status=400)
+
+        # Create user
+        try:
+            user = User(
+                username=username,
+                password=make_password(password),  # Hash the password
+                is_active=True
+            )
+            user.save()
+            login(request, user,backend='django.contrib.auth.backends.ModelBackend')
+            return redirect('home')  # Redirect to a success page
+        except ValidationError as e:
+            return HttpResponse(f"Error: {e}", status=400)
+    
+        
     return render(request, "Auth/SignUp.html")
+
 
 def blog(request):
     return render(request, page("Blog"))
@@ -146,7 +234,7 @@ def clear_cache(request):
 
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from .models import Product
+from .models import Product,User
 import json
 
 @csrf_exempt
@@ -212,25 +300,7 @@ def cart_data(request):
     return JsonResponse({'error': 'Invalid request method'}, status=400)
 
 
-data = {
-    # Merchant details
-    'merchant_id': settings.GATEWAY_CONFIG['merchant_id'],
-    'merchant_key':settings.GATEWAY_CONFIG['merchant_key'],
-    'return_url': settings.SITE+"payment-successful/",
-    'cancel_url': settings.SITE+"payment-failed/",
-    'notify_url': 'https://www.nextgensell.com/err',
-    # Buyer details
-    'name_first': 'First Name',
-    'name_last': 'Last Name',
-    'email_address': 'test@test.com',
-    # Transaction details
-    'm_payment_id': '1234', #Unique payment ID to pass through to notify_url
-    'amount': "200",
-    'item_name': 'Order#123'
-}
 
-payfast_payment = PayfastPayment(data,settings.GATEWAY_CONFIG['passphrase'],sandbox_mode=settings.GATEWAY_CONFIG['mode'])
-html_form = payfast_payment.generate_html_form()
 # print(html_form)
 
 def testpage(request):
@@ -241,5 +311,11 @@ def bank_payment_transfer(request):
     return render(request, page("BankTransfer"))
 
 
+from django.shortcuts import render, redirect
+from django.http import Http404
+
 def dashboard(request):
-    return render(request, 'admin/dashboard.html')
+    if request.user.is_staff:  # Check if the user is an admin
+        return render(request, 'admin/dashboard.html')
+    else:
+        raise Http404("Page not found")
