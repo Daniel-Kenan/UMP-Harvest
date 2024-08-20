@@ -32,7 +32,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = eval(os.getenv('DEBUG'))
 
 
-ALLOWED_HOSTS = ["*"] if DEBUG else ["https://ump-harvest-production.up.railway.app/","https://ump-harvest-production.up.railway.app"]
+ALLOWED_HOSTS = ["*"]  #if DEBUG else ["https://ump-harvest-production.up.railway.app/","https://ump-harvest-production.up.railway.app"]
 
 # from django.contrib.sites.models import Site
 
@@ -122,7 +122,7 @@ LOGGING = {
     },
     'loggers': {
         'django': {
-            'handlers': ['file', 'console'],
+            'handlers': ['file'],
             'level': 'ERROR',
             'propagate': True,
         },
