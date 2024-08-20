@@ -83,7 +83,7 @@ Shopping for | {{ product.name }}
               
               
               <div class="product-quantity pt-3">
-                <div class="stock-number text-dark"><em>2 in stock</em></div>
+                <div class="stock-number text-dark"><em>{{ product.quantity }} in stock</em></div>
                 <div class="stock-button-wrap">
 
                   <div class="input-group product-qty" style="max-width: 150px;">
@@ -145,85 +145,90 @@ Shopping for | {{ product.name }}
               
 
               <section id="post-comment">
-                <div class="comments-wrap">
-                  <h2 class="my-5">
-                    <span class="count">3</span> Comments
-                  </h2>
-                  <div class="comment-list padding-small">
-                    <article class="comment-item row flex-wrap mb-3">
-                      <div class="col-lg-1 col-sm-3 mb-3">
-                        <img src="{% static 'images/avatar-person.svg' %}" alt="default" class="img-fluid rounded-circle">
+                <section id="post-comment">
+                  <div class="comments-wrap">
+                      <h2 class="my-5">
+                          <span class="count">{{ reviews.count }}</span> Comments
+                      </h2>
+                      <div class="comment-list padding-small">
+                          {% for review in reviews %}
+                              <article class="comment-item row flex-wrap mb-3">
+                                  <div class="col-lg-1 col-sm-3 mb-3">
+                                      <img src="{% static 'images/avatar-person.svg' %}" alt="default" class="img-fluid rounded-circle">
+                                  </div>
+                                  <div class="col-lg-10 col-sm-9 author-wrap">
+                                      <div class="author-post">
+                                          <div class="comment-meta d-flex">
+                                              <h4 class="author-name text-dark pe-1">{{ review.user.username }} </h4>
+                                              <span class="meta-date text-muted">{{ review.created_at }}</span>
+                                          </div>
+                                          <p class="no-margin">{{ review.comment }}</p>
+                                          <div class="comments-reply">
+                                              <a href="#" class="text-decoration-underline text-dark">Reply Now</a>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </article>
+                              {% if review.replies %}
+                                  {% for reply in review.replies %}
+                                      <article class="comment-item row child-comments flex-wrap ps-5 mb-3">
+                                          <div class="col-lg-1 col-sm-3 mb-3">
+                                              <img src="{% static 'images/avatar-person.svg' %}" alt="default" class="img-fluid rounded-circle">
+                                          </div>
+                                          <div class="col-lg-10 col-sm-9 author-wrap">
+                                              <div class="author-post">
+                                                  <div class="comment-meta d-flex">
+                                                      <h4 class="author-name text-dark pe-1">{{ reply.author_name }}</h4>
+                                                      <span class="meta-date text-muted">{{ reply.date_posted }}</span>
+                                                  </div>
+                                                  <p class="no-margin">{{ reply.comment }}</p>
+                                                  <div class="comments-reply">
+                                                      <a href="#" class="text-decoration-underline text-dark">Reply Now</a>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </article>
+                                  {% endfor %}
+                              {% endif %}
+                          {% endfor %}
                       </div>
-                      <div class="col-lg-10 col-sm-9 author-wrap">
-                        <div class="author-post">
-                          <div class="comment-meta d-flex">
-                            <h4 class="author-name text-dark pe-1">Sam Smith</h4>
-                            <span class="meta-date text-muted">Jul 10</span>
-                          </div>
-                          <p class="no-margin">Mattis pulvinar non viverra donec pellentesque. Odio mi consequat libero dolor. Porta ut diam lobortis eget leo, lectus. Tortor diam dignissim amet, in interdum aliquet. Nascetur libero elementum adipiscing mauris maecenas et magna.</p>
-                          <div class="comments-reply">
-                            <a href="#" class="text-decoration-underline text-dark">Reply Now</a>
-                          </div>
-                        </div>
-                      </div>
-                    </article>
-                    <article class="comment-item row child-comments flex-wrap ps-5 mb-3">
-                      <div class="col-lg-1 col-sm-3 mb-3">
-                        <img src="{% static 'images/avatar-person.svg' %}" alt="default" class="img-fluid rounded-circle">
-                      </div>
-                      <div class="col-lg-10 col-sm-9 author-wrap">
-                        <div class="author-post">
-                          <div class="comment-meta d-flex">
-                            <h4 class="author-name text-dark pe-1">Santie Mary</h4>
-                            <span class="meta-date text-muted">Jul 10</span>
-                          </div>
-                          <p class="no-margin">Tristique tempis condimentum diam done ullancomroer sit element henddg sit he consequert.Tristique tempis condimentum diam done ullancomroer sit element henddg sit he consequert.</p>
-                          <div class="comments-reply">
-                            <a href="#" class="text-decoration-underline text-dark">Reply Now</a>
-                          </div>
-                        </div>
-                      </div>
-                    </article>
-                    <article class="comment-item row flex-wrap">
-                      <div class="col-lg-1 col-sm-3 mb-3">
-                        <img src="{% static 'images/avatar-person.svg' %}" alt="default" class="img-fluid rounded-circle">
-                      </div>
-                      <div class="col-lg-10 col-sm-9 author-wrap">
-                        <div class="author-post">
-                          <div class="comment-meta d-flex">
-                            <h4 class="author-name text-dark pe-1">Analisa Nora</h4>
-                            <span class="meta-date text-muted">Jul 10</span>
-                          </div>
-                          <p class="no-margin">Tristique tempis condimentum diam done ullancomroer sit element henddg sit he consequert.Tristique tempis condimentum diam done ullancomroer sit element henddg sit he consequert.</p>
-                          <div class="comments-reply">
-                            <a href="#" class="text-decoration-underline text-dark">Reply Now</a>
-                          </div>
-                        </div>
-                      </div>
-                    </article>
                   </div>
-                </div>
+                
+              
+              
                 <div class="comment-respond mt-3 rounded-5 bg-light p-5 mt-5">
-                  <h2 class="my-5">Leave a Comment</h2>
-                  <form method="post" class="form-group padding-small">
-                  <p>Your email address will not be published. Required fields are marked *</p>
-                    <div class="row">
-                      <div class="col-lg-12 mb-3">
-                        <textarea class="form-control ps-3 pt-3" style="height:130px" id="comment" name="comment" placeholder="Write your comment here *"></textarea>
-                      </div>
-                      
-                      
-                      <div class="col-lg-12">
-                        <label class="d-flex align-items-center">
-                          <input type="checkbox" class="checked-box me-2">
-                          <span class="label-body">I declare that the comment i made is not offensive to this platform or anyone in general</span>
-                        </label>
-                      </div>
-                      <div class="col-lg-12 mt-3">
-                        <button class="btn btn-lg btn-primary text-uppercase btn-rounded-none w-100" type="submit">Post Comment</button>
-                      </div>
-                    </div>
-                  </form>
+                    
+                    <!-- Review Form -->
+                    {% if user.is_authenticated %}
+                        <h4>Write a Review</h4>
+                        <form action="{% url 'add_review' product.id %}" method="post">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <label for="rating" class="form-label">Rating</label>
+                                <select name="rating" id="rating" class="form-select">
+                                    {% comment %} {% for i in 1|to_range:5 %} {% endcomment %}
+                                        {% comment %} <option value="{{ i }}">{{ i }}</option> {% endcomment %}
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+
+                                    {% comment %} {% endfor %} {% endcomment %}
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="comment" class="form-label">Comment</label>
+                                <textarea name="comment" id="comment" rows="3" class="form-control"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit Review</button>
+                        </form>
+                    {% else %}
+                        <p>You must <a href="{% url 'signin' %}">log in</a> to write a review.</p>
+                    {% endif %}
+                </div>
+            </div>
+        
                 </div>
               </section>
             </div>

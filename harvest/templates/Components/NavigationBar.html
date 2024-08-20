@@ -224,9 +224,14 @@
 </style>
 <div id="floatingMenu" class="floating-menu">
   <ul>
-      <li><a href="#item1">Item 1</a></li>
-      <li><a href="#item2">Item 2</a></li>
-      <li><a href="#item3">Item 3</a></li>
+     
+    {% if isAuthenticated %}
+     <li><a href="#"> ➜ Log Out</a></li>
+    {% else %}
+    <li><a href="{% url "signin" %}"> ➜ Log In</a></li>
+    {% endif %}
+      
+     
   </ul>
 </div>
 

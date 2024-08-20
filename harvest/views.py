@@ -51,7 +51,8 @@ def home(request):
     top_searches = get_top_searches()
     categories = Category.objects.all()
     best_selling_products = Product.objects.filter(is_best_selling=True) 
-    return  render(request, page("Home"),{'categories': categories,'best_selling_products': best_selling_products, 'top_searches': top_searches,})
+    isAuthenticated = request.user.is_authenticated
+    return  render(request, page("Home"),{'categories': categories,'best_selling_products': best_selling_products, 'top_searches': top_searches,"isAuthenticated":isAuthenticated})
 
 def complete_payment_form(request):
     data = {
@@ -80,10 +81,11 @@ from .models import Product
 def single_product(request,id):
     top_searches = get_top_searches()
     product = get_object_or_404(Product, id=id)
+    reviews = product.reviews.all()
     product.discountedPrice = calculate_discounted_price(product.price, product.discounted_price_percentage)
     product.isOnDiscount = bool( not (product.price == product.discountedPrice) )
     product.summary, product.wiki_image = wiki.search_object_history(str(product.name))
-    return render(request, page("SingleProduct"),{'product': product, "top_searches" : top_searches})
+    return render(request, page("SingleProduct"),{'product': product, "top_searches" : top_searches,'reviews': reviews})
 
 
 from django.shortcuts import render, redirect
@@ -342,3 +344,20 @@ def view_log(request, filename):
     return render(request, 'view_log.html', {'log_content': log_content, 'filename': filename})
 
 
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
+from .models import Product, Review
+
+@login_required
+def add_review(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+    if request.method == "POST":
+        rating = request.POST.get('rating')
+        comment = request.POST.get('comment')
+        Review.objects.create(
+            user=request.user,
+            product=product,
+            rating=rating,
+            comment=comment
+        )
+        return redirect('single_product', product.id)

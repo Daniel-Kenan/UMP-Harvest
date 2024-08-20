@@ -22,4 +22,5 @@ urlpatterns = [
     path("dashboard/", views.dashboard, name='dashboard'),
     path('logs/', views.list_logs, name='list_logs'),
     path('logs/<str:filename>/', views.view_log, name='view_log'),
+     path('product/<int:product_id>/add_review/', views.add_review, name='add_review'),
 ]
