@@ -114,10 +114,15 @@ LOGGING = {
             'filename': os.path.join(LOG_DIR, 'django_error.log'),
             'formatter': 'verbose',
         },
+        'console': {
+            'level': 'ERROR',
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple',
+        },
     },
     'loggers': {
         'django': {
-            'handlers': ['file',"console"],
+            'handlers': ['file', 'console'],
             'level': 'ERROR',
             'propagate': True,
         },
