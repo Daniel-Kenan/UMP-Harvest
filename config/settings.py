@@ -148,7 +148,8 @@ TEMPLATES = [
     },
 ]
 
-GATEWAY_REDIRECT_SITE = 'http://127.0.0.1:8000/'  if  DEBUG else 'https://www.nextgensell.com/'
+
+GATEWAY_REDIRECT_SITE = 'http://127.0.0.1:8000/'  if  DEBUG else 'https://ump-harvest-production.up.railway.app/'
 WSGI_APPLICATION = 'config.wsgi.application'
 
 SANDBOX = True  # Example value, replace with your logic to determine sandbox status
