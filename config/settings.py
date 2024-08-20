@@ -50,8 +50,7 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    'allauth.soci
-    alaccount.providers.google'
+    'allauth.socialaccount.providers.google'
 ]
 AUTH_USER_MODEL = 'harvest.User'
 
