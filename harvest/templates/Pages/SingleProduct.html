@@ -1,242 +1,247 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block title %}
-Shopping for | {{ product.name }}  
+Shopping for | {{ product.name }}
 {% endblock %}
 
-{% block content %} 
+{% block content %}
 <section id="selling-product" class="single-product mt-0 mt-md-5">
     <div class="container-lg">
-      <nav class="breadcrumb">
-        <a class="breadcrumb-item" href="#">Home</a>
-        <a class="breadcrumb-item" href="/shop/?category={{ product.category }}">{{ product.category }}</a>
-        <span class="breadcrumb-item active" aria-current="page"> {{ product.name }} </span>
-      </nav>
-      <div class="row g-5">
-        <div class="col-lg-7">
-          <div class="row flex-column-reverse flex-lg-row">
-            <div class="col-md-12 col-lg-2">
-              <!-- product-thumbnail-slider -->
-               <script>
-                function setImage(image){
-    const elms = document.getElementsByClassName("largeImage");
-    for (let elm of elms) {
-    elm.setAttribute("src",image)
-                }
-              }
-               </script>
-              <div class="swiper product-thumbnail-slider swiper-initialized swiper-vertical swiper-backface-hidden swiper-thumbs">
-                <div class="swiper-wrapper" id="swiper-wrapper-6637f3ecf1732b9e" aria-live="polite" style="transform: translate3d(0px, 0px, 0px);">
-                  <div class="swiper-slide swiper-slide-visible swiper-slide-active swiper-slide-thumb-active" role="group" aria-label="1 / 5" style="height: 68px; margin-bottom: 20px;">
-                    <img src="{{ product.image}}" onclick="setImage('{{ product.image }}')" style="background-color:orange" alt="" class="thumb-image img-fluid">
-                  </div>
-                  <div class="swiper-slide swiper-slide-visible swiper-slide-next" role="group" aria-label="2 / 5" style="height: 68px; margin-bottom: 20px;">
-                    <img src="{{ product.wiki_image}}"  onclick="setImage('{{ product.wiki_image }}')" style="margin-top:30px !important" alt="" class="thumb-image img-fluid">
-                  </div>
-                  
-                  
-                  
+        <nav class="breadcrumb">
+            <a class="breadcrumb-item" href="#">Home</a>
+            <a class="breadcrumb-item" href="/shop/?category={{ product.category }}">{{ product.category }}</a>
+            <span class="breadcrumb-item active" aria-current="page"> {{ product.name }} </span>
+        </nav>
+        <div class="row g-5">
+            <div class="col-lg-7">
+                <div class="row flex-column-reverse flex-lg-row">
+                    <div class="col-md-12 col-lg-2">
+                        <!-- product-thumbnail-slider -->
+                        <script>
+                            function setImage(image) {
+                                const elms = document.getElementsByClassName("largeImage");
+                                for (let elm of elms) {
+                                    elm.setAttribute("src", image);
+                                }
+                            }
+                        </script>
+                        <div class="swiper product-thumbnail-slider swiper-initialized swiper-vertical swiper-backface-hidden swiper-thumbs">
+                            <div class="swiper-wrapper" id="swiper-wrapper-6637f3ecf1732b9e" aria-live="polite">
+                                <div class="swiper-slide swiper-slide-visible swiper-slide-active swiper-slide-thumb-active" role="group" aria-label="1 / 5" style="height: 68px; margin-bottom: 20px;">
+                                    <img src="{{ product.image }}" onclick="setImage('{{ product.image }}')" style="background-color:orange" alt="" class="thumb-image img-fluid">
+                                </div>
+                                <div class="swiper-slide swiper-slide-visible swiper-slide-next" role="group" aria-label="2 / 5" style="height: 68px; margin-bottom: 20px;">
+                                    <img src="{{ product.wiki_image }}" onclick="setImage('{{ product.wiki_image }}')" style="margin-top:30px !important" alt="" class="thumb-image img-fluid">
+                                </div>
+                            </div>
+                            <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span>
+                        </div>
+                        <!-- / product-thumbnail-slider -->
+                    </div>
+                    <div class="col-md-12 col-lg-10">
+                        <!-- product-large-slider -->
+                        <div class="swiper product-large-slider swiper-fade swiper-initialized swiper-horizontal swiper-watch-progress swiper-backface-hidden">
+                            <div class="swiper-wrapper" id="swiper-wrapper-77a584b74175a398" aria-live="polite">
+                                <div class="swiper-slide swiper-slide-visible swiper-slide-active" role="group" aria-label="1 / 5" style="width: 423px; opacity: 1; transform: translate3d(0px, 0px, 0px);">
+                                    <div class="image-zoom largeImage" data-scale="2.5" data-image="{{ product.image }}" style="background-color:orange">
+                                        <img src="{{ product.image }}" class="largeImage" style="width:100%;aspect-ratio: 1200 / 1200;" alt="product-large" class="img-fluid">
+                                    </div>
+                                </div>
+                            </div>
+                            <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span>
+                        </div>
+                        <!-- / product-large-slider -->
+                    </div>
                 </div>
-              <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span></div>
-              <!-- / product-thumbnail-slider -->
             </div>
-            <div class="col-md-12 col-lg-10">
-              <!-- product-large-slider -->
-              <div class="swiper product-large-slider swiper-fade swiper-initialized swiper-horizontal swiper-watch-progress swiper-backface-hidden">
-                <div class="swiper-wrapper" id="swiper-wrapper-77a584b74175a398" aria-live="polite">
-                  <div class="swiper-slide swiper-slide-visible swiper-slide-active" role="group" aria-label="1 / 5" style="width: 423px; opacity: 1; transform: translate3d(0px, 0px, 0px);">
-                    <div class="image-zoom largeImage" data-scale="2.5" data-image="{{ product.image}}"  style="background-color:orange"><img src="{{ product.image}}" class="largeImage"  style="width:100%;aspect-ratio: 1200 / 1200; " alt="product-large" class="img-fluid"></div>
-                  </div>
-
-
-
-
+            <div class="col-lg-5">
+                <div class="product-info">
+                    <div class="element-header">
+                        <h2 itemprop="name">{{ product.name }}</h2>
+                        <div class="rating-container d-flex gap-0 align-items-center">
+                            <span class="rating me-2">
+                                <svg width="24" height="24" class="text-warning"><use xlink:href="#star-full"></use></svg>
+                                <svg width="24" height="24" class="text-warning"><use xlink:href="#star-full"></use></svg>
+                                <svg width="24" height="24" class="text-warning"><use xlink:href="#star-full"></use></svg>
+                                <svg width="24" height="24" class="text-warning"><use xlink:href="#star-full"></use></svg>
+                                <svg width="24" height="24" class="text-warning"><use xlink:href="#star-half"></use></svg>
+                            </span>
+                            <span class="rating-count">({{ product.rating }})</span>
+                        </div>
+                    </div>
+                    <div class="product-price pt-3 pb-3">
+                        <strong class="text-primary display-6 fw-bold">R{{ product.discountedPrice }}</strong>
+                        {% if product.isOnDiscount %}<del class="ms-2">R{{ product.price }}</del>{% endif %}
+                    </div>
+                    <p>{{ product.description }}</p>
+                    <div class="cart-wrap py-4">
+                        <div class="product-quantity pt-3">
+                            <div class="stock-number text-dark"><em>{{ product.quantity }} in stock</em></div>
+                            <div class="stock-button-wrap">
+                                <div class="input-group product-qty" style="max-width: 150px;">
+                                    <span class="input-group-btn">
+                                        <button type="button" class="quantity-left-minus btn btn-light btn-number" data-type="minus" data-field="">
+                                            <svg width="16" height="16"><use xlink:href="#minus"></use></svg>
+                                        </button>
+                                    </span>
+                                    <input type="text" id="quantity" name="quantity" class="form-control input-number text-center" value="1" min="1" max="100">
+                                    <span class="input-group-btn">
+                                        <button type="button" class="quantity-right-plus btn btn-light btn-number" data-type="plus" data-field="">
+                                            <svg width="16" height="16"><use xlink:href="#plus"></use></svg>
+                                        </button>
+                                    </span>
+                                </div>
+                                <div class="qty-button d-flex flex-wrap pt-3">
+                                    <button type="submit" class="btn btn-primary py-3 px-4 text-uppercase me-3 mt-3">Buy now</button>
+                                    <button type="submit" name="add-to-cart" value="1269" class="btn btn-dark py-3 px-4 text-uppercase mt-3" onclick="addToCart('{{ product.id }}', '{{ product.name }}', '{{ product.price }}')">Add to cart</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="meta-product py-2">
+                        <div class="meta-item d-flex align-items-baseline">
+                            <h6 class="item-title no-margin pe-2">Category:</h6>
+                            <a href="/shop/?category={{ product.category }}"> {{ product.category }}</a>
+                        </div>
+                        <div class="meta-item d-flex align-items-baseline">
+                            <h6 class="item-title no-margin pe-2">Tags:</h6>
+                            <a href="#">null</a>
+                        </div>
+                    </div>
                 </div>
-                
-              <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span></div>
-              <!-- / product-large-slider -->
             </div>
-          </div>
         </div>
-        <div class="col-lg-5">
-          <div class="product-info">
-            <div class="element-header">
-              <h2 itemprop="name">{{ product.name }}</h2>
-              <div class="rating-container d-flex gap-0 align-items-center">
-                <span class="rating me-2">
-                  <svg width="24" height="24" class="text-warning"><use xlink:href="#star-full"></use></svg>
-                  <svg width="24" height="24" class="text-warning"><use xlink:href="#star-full"></use></svg>
-                  <svg width="24" height="24" class="text-warning"><use xlink:href="#star-full"></use></svg>
-                  <svg width="24" height="24" class="text-warning"><use xlink:href="#star-full"></use></svg>
-                  <svg width="24" height="24" class="text-warning"><use xlink:href="#star-half"></use></svg>
-                </span>
-                <span class="rating-count">({{ product.rating }})</span>
-              </div>
-            </div>
-            <div class="product-price pt-3 pb-3">
-              <strong class="text-primary display-6 fw-bold">R{{ product.discountedPrice }}</strong>
-              {% if product.isOnDiscount %}<del class="ms-2">R{{ product.price }}</del> {% endif %}
-              
-            </div>
-            <p> {{ product.description }}</p>
-            <div class="cart-wrap py-4">
-              
-              
-              <div class="product-quantity pt-3">
-                <div class="stock-number text-dark"><em>{{ product.quantity }} in stock</em></div>
-                <div class="stock-button-wrap">
-
-                  <div class="input-group product-qty" style="max-width: 150px;">
-                    <span class="input-group-btn">
-                        <button type="button" class="quantity-left-minus btn btn-light btn-number" data-type="minus" data-field="">
-                          <svg width="16" height="16"><use xlink:href="#minus"></use></svg>
-                        </button>
-                    </span>
-                    <input type="text" id="quantity" name="quantity" class="form-control input-number text-center" value="1" min="1" max="100">
-                    <span class="input-group-btn">
-                        <button type="button" class="quantity-right-plus btn btn-light btn-number" data-type="plus" data-field="">
-                            <svg width="16" height="16"><use xlink:href="#plus"></use></svg>
-                        </button>
-                    </span>
-                  </div>
-                  <div class="qty-button d-flex flex-wrap pt-3">
-                    <button type="submit" class="btn btn-primary py-3 px-4 text-uppercase me-3 mt-3">Buy now</button>
-                    <button type="submit" name="add-to-cart" value="1269" class="btn btn-dark py-3 px-4 text-uppercase mt-3" onclick="addToCart('{{ product.id }}', '{{ product.name }}', '{{ product.price }}')" >Add to cart</button>                      
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="meta-product py-2">
-             
-              <div class="meta-item d-flex align-items-baseline">
-                <h6 class="item-title no-margin pe-2">Category:</h6>
-                <a href="/shop/?category={{ product.category }}"> {{ product.category }}</a>
-              </div>
-              <div class="meta-item d-flex align-items-baseline">
-                <h6 class="item-title no-margin pe-2">Tags:</h6>
-                 <a href="#"> null </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
-  </section>
+</section>
 
-  <section class="product-info-tabs py-5">
+<section class="product-info-tabs py-5">
     <div class="container-lg">
-      <div class="row">
-        <div>
-          <div class="nav nav-pills justify-content-center" id="v-pills-tab" role="tablist" aria-orientation="horizontal">
-            <button class="nav-link text-start active" id="v-pills-description-tab" data-bs-toggle="pill" data-bs-target="#v-pills-description" type="button" role="tab" aria-controls="v-pills-description" aria-selected="true">Description</button>
-            {% comment %} <button class="nav-link text-start" id="v-pills-additional-tab" data-bs-toggle="pill" data-bs-target="#v-pills-additional" type="button" role="tab" aria-controls="v-pills-additional" aria-selected="false" tabindex="-1">Additional Information</button> {% endcomment %}
-            <button class="nav-link text-start" id="v-pills-reviews-tab" data-bs-toggle="pill" data-bs-target="#v-pills-reviews" type="button" role="tab" aria-controls="v-pills-reviews" aria-selected="false" tabindex="-1">Customer Reviews</button>
-          </div>
-          <div class="tab-content py-4" id="v-pills-tabContent">
-            <div class="tab-pane fade show active" id="v-pills-description" role="tabpanel" aria-labelledby="v-pills-description-tab" tabindex="0">
-              <h5>Product Summary</h5>
-             {{ product.summary | safe  }}
-            </div>
-            <div class="tab-pane fade" id="v-pills-additional" role="tabpanel" aria-labelledby="v-pills-additional-tab" tabindex="0">
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla dicta aliquam exercitationem optio error. Molestiae dicta iusto ab vero quidem blanditiis obcaecati nesciunt aperiam repellat, suscipit atque assumenda temporibus aliquam.</p>
-              <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-            </div>
-            <div class="tab-pane fade" id="v-pills-reviews" role="tabpanel" aria-labelledby="v-pills-reviews-tab" tabindex="0">
-              
-
-              <section id="post-comment">
-                <section id="post-comment">
-                  <div class="comments-wrap">
-                      <h2 class="my-5">
-                          <span class="count">{{ reviews.count }}</span> Comments
-                      </h2>
-                      <div class="comment-list padding-small">
-                          {% for review in reviews %}
-                              <article class="comment-item row flex-wrap mb-3">
-                                  <div class="col-lg-1 col-sm-3 mb-3">
-                                      <img src="{% static 'images/avatar-person.svg' %}" alt="default" class="img-fluid rounded-circle">
-                                  </div>
-                                  <div class="col-lg-10 col-sm-9 author-wrap">
-                                      <div class="author-post">
-                                          <div class="comment-meta d-flex">
-                                              <h4 class="author-name text-dark pe-1">{{ review.user.username }} </h4>
-                                              <span class="meta-date text-muted">{{ review.created_at }}</span>
-                                          </div>
-                                          <p class="no-margin">{{ review.comment }}</p>
-                                          <div class="comments-reply">
-                                              <a href="#" class="text-decoration-underline text-dark">Reply Now</a>
-                                          </div>
-                                      </div>
-                                  </div>
-                              </article>
-                              {% if review.replies %}
-                                  {% for reply in review.replies %}
-                                      <article class="comment-item row child-comments flex-wrap ps-5 mb-3">
-                                          <div class="col-lg-1 col-sm-3 mb-3">
-                                              <img src="{% static 'images/avatar-person.svg' %}" alt="default" class="img-fluid rounded-circle">
-                                          </div>
-                                          <div class="col-lg-10 col-sm-9 author-wrap">
-                                              <div class="author-post">
-                                                  <div class="comment-meta d-flex">
-                                                      <h4 class="author-name text-dark pe-1">{{ reply.author_name }}</h4>
-                                                      <span class="meta-date text-muted">{{ reply.date_posted }}</span>
-                                                  </div>
-                                                  <p class="no-margin">{{ reply.comment }}</p>
-                                                  <div class="comments-reply">
-                                                      <a href="#" class="text-decoration-underline text-dark">Reply Now</a>
+        <div class="row">
+            <div>
+                <div class="nav nav-pills justify-content-center" id="v-pills-tab" role="tablist" aria-orientation="horizontal">
+                    <button class="nav-link text-start active" id="v-pills-description-tab" data-bs-toggle="pill" data-bs-target="#v-pills-description" type="button" role="tab" aria-controls="v-pills-description" aria-selected="true">Description</button>
+                    <button class="nav-link text-start" id="v-pills-reviews-tab" data-bs-toggle="pill" data-bs-target="#v-pills-reviews" type="button" role="tab" aria-controls="v-pills-reviews" aria-selected="false" tabindex="-1">Customer Reviews</button>
+                </div>
+                <div class="tab-content py-4" id="v-pills-tabContent">
+                    <div class="tab-pane fade show active" id="v-pills-description" role="tabpanel" aria-labelledby="v-pills-description-tab" tabindex="0">
+                        <h5>Product Summary</h5>
+                        {{ product.summary | safe }}
+                    </div>
+                    <div class="tab-pane fade" id="v-pills-reviews" role="tabpanel" aria-labelledby="v-pills-reviews-tab" tabindex="0">
+                        <section id="post-comment">
+                            <div class="comments-wrap">
+                                <h2 class="my-5">
+                                    <span class="count">{{ reviews.count }}</span> Comments
+                                </h2>
+                                <div class="comment-list padding-small">
+                                    {% for review in reviews %}
+                                    <article class="comment-item row flex-wrap mb-3">
+                                        <div class="col-lg-1 col-sm-3 mb-3">
+                                            <img src="{% static 'images/avatar-person.svg' %}" alt="default" class="img-fluid rounded-circle">
+                                        </div>
+                                        <div class="col-lg-10 col-sm-9">
+                                            <div class="d-flex justify-content-between">
+                                                <div class="author">
+                                                    <h5>{{ review.user.username }}</h5>
+                                                    <div class="rating">
+                                                        {% for i in "12345" %}
+                                                        {% if review.rating >= i %}
+                                                        <svg width="16" height="16" class="text-warning"><use xlink:href="#star-full"></use></svg>
+                                                        {% else %}
+                                                        <svg width="16" height="16" class="text-warning"><use xlink:href="#star-empty"></use></svg>
+                                                        {% endif %}
+                                                        {% endfor %}
+                                                    </div>
+                                                    <div class="date">{{ review.date_posted|date:"M d, Y" }}</div>
+                                                </div>
+                                            </div>
+                                            <p>{{ review.comment }}</p>
+                                            <button class="btn btn-link reply-toggle" data-review-id="{{ review.id }}">Reply</button>
+                                            <!-- Display replies -->
+                                            <div class="replies">
+                                                {% for reply in review.replies.all %}
+                                                <div class="media mb-3">
+                                                  <!-- Avatar Image -->
+                                                  <img src="{% static 'images/avatar-person.svg' %}" alt="default" class="img-fluid rounded-circle mr-3" style="width: 50px; height: 50px;">
+                                  
+                                                  <div class="media-body">
+                                                      <h5 class="mt-0">{{ reply.user.username }}</h5>
+                                                      <p>{{ reply.comment }}</p>
+                                                      <!-- Display the timestamp if available -->
+                                                      <small class="text-muted">{{ reply.created_at }}</small>
                                                   </div>
                                               </div>
-                                          </div>
-                                      </article>
-                                  {% endfor %}
-                              {% endif %}
-                          {% endfor %}
-                      </div>
-                  </div>
-                
-              
-              
-                <div class="comment-respond mt-3 rounded-5 bg-light p-5 mt-5">
+                                                {% endfor %}
+                                            </div>
+                                            <!-- Reply form -->
+                                            <div class="reply-form-container" id="reply-form-{{ review.id }}" style="display: none;">
+                                                <form action="{% url 'add_reply' review.id %}" method="post">
+                                                    {% csrf_token %}
+                                                    <input type="hidden" name="parent_id" value="{{ review.id }}">
+                                                    <div class="mb-3">
+                                                        <label for="reply-comment-{{ review.id }}" class="form-label">Your Reply</label>
+                                                        <textarea name="comment" id="reply-comment-{{ review.id }}" rows="3" class="form-control"></textarea>
+                                                    </div>
+                                                    <button type="submit" class="btn btn-primary">Submit Reply</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </article>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <div class="comment-respond mt-3 rounded-5 bg-light p-5 mt-5">
                     
-                    <!-- Review Form -->
-                    {% if user.is_authenticated %}
-                        <h4>Write a Review</h4>
-                        <form action="{% url 'add_review' product.id %}" method="post">
-                            {% csrf_token %}
-                            <div class="mb-3">
-                                <label for="rating" class="form-label">Rating</label>
-                                <select name="rating" id="rating" class="form-select">
-                                    {% comment %} {% for i in 1|to_range:5 %} {% endcomment %}
-                                        {% comment %} <option value="{{ i }}">{{ i }}</option> {% endcomment %}
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-
-                                    {% comment %} {% endfor %} {% endcomment %}
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label for="comment" class="form-label">Comment</label>
-                                <textarea name="comment" id="comment" rows="3" class="form-control"></textarea>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Submit Review</button>
-                        </form>
-                    {% else %}
-                        <p>You must <a href="{% url 'signin' %}">log in</a> to write a review.</p>
-                    {% endif %}
+                              <!-- Review Form -->
+                              {% if user.is_authenticated %}
+                                  <h4>Write a Review</h4>
+                                  <form action="{% url 'add_review' product.id %}" method="post">
+                                      {% csrf_token %}
+                                      <div class="mb-3">
+                                          <label for="rating" class="form-label">Rating</label>
+                                          <select name="rating" id="rating" class="form-select">
+                                              {% comment %} {% for i in 1|to_range:5 %} {% endcomment %}
+                                                  {% comment %} <option value="{{ i }}">{{ i }}</option> {% endcomment %}
+                                                  <option value="1">1</option>
+                                                  <option value="2">2</option>
+                                                  <option value="3">3</option>
+                                                  <option value="4">4</option>
+                                                  <option value="5">5</option>
+          
+                                              {% comment %} {% endfor %} {% endcomment %}
+                                          </select>
+                                      </div>
+                                      <div class="mb-3">
+                                          <label for="comment" class="form-label">Comment</label>
+                                          <textarea name="comment" id="comment" rows="3" class="form-control"></textarea>
+                                      </div>
+                                      <button type="submit" class="btn btn-primary">Submit Review</button>
+                                  </form>
+                              {% else %}
+                                  <p>You must <a href="{% url 'signin' %}">log in</a> to write a review.</p>
+                              {% endif %}
+                          </div>
+                      </div>
+                    </div>
+                        </section>
+                    </div>
                 </div>
             </div>
-        
-                </div>
-              </section>
-            </div>
-          </div>
         </div>
-      </div>
     </div>
-  </section>
-  
-    {% include "Components/Products.html" %}
+</section>
+
+<script>
+document.querySelectorAll('.reply-toggle').forEach(button => {
+    button.addEventListener('click', () => {
+        const reviewId = button.dataset.reviewId;
+        const formContainer = document.getElementById(`reply-form-${reviewId}`);
+        if (formContainer.style.display === 'none' || formContainer.style.display === '') {
+            formContainer.style.display = 'block';
+        } else {
+            formContainer.style.display = 'none';
+        }
+    });
+});
+</script>
 {% endblock %}

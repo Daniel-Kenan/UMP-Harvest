@@ -31,18 +31,11 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = eval(os.getenv('DEBUG'))
 
-ALLOWED_HOSTS = ["*"]
+
+ALLOWED_HOSTS = ["*"] if DEBUG else ["https://ump-harvest-production.up.railway.app/","https://ump-harvest-production.up.railway.app"]
 
 # from django.contrib.sites.models import Site
 
-
-# domain = '127.0.0.1:8000/'
-# name = '127.0.0.1:8000/'
-# Application definition
-
-# site = Site.objects.create(domain=domain, name=name)
-
-# Check the site ID
 SITE_ID = 2
 
 INSTALLED_APPS = [
@@ -57,7 +50,8 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    'allauth.socialaccount.providers.google'
+    'allauth.soci
+    alaccount.providers.google'
 ]
 AUTH_USER_MODEL = 'harvest.User'
 
@@ -124,7 +118,7 @@ LOGGING = {
     },
     'loggers': {
         'django': {
-            'handlers': ['file'],
+            'handlers': ['file',"console"],
             'level': 'ERROR',
             'propagate': True,
         },

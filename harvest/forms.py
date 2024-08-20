@@ -68,3 +68,27 @@ class SignUpForm(forms.ModelForm):
 
         if password != repeat_password:
             self.add_error('repeat_password', "Passwords do not match")
+
+
+
+from django import forms
+from .models import Review
+
+class ReviewForm(forms.ModelForm):
+    class Meta:
+        model = Review
+        fields = ['comment', 'rating', 'parent']  # Include 'parent' field for replies
+    
+    def __init__(self, *args, **kwargs):
+        # Allow parent field to be set dynamically
+        parent = kwargs.pop('parent', None)
+        super().__init__(*args, **kwargs)
+        if parent:
+            self.fields['parent'].initial = parent
+
+    def clean(self):
+        cleaned_data = super().clean()
+        comment = cleaned_data.get('comment')
+        if not comment:
+            raise forms.ValidationError('Comment field cannot be empty.')
+        return cleaned_data

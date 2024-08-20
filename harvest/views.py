@@ -361,3 +361,30 @@ def add_review(request, product_id):
             comment=comment
         )
         return redirect('single_product', product.id)
+    
+
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
+from .models import Review, Reply
+
+from django.shortcuts import get_object_or_404, redirect
+from .models import Review, Reply
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseRedirect
+
+@login_required
+def add_reply(request, review_id):
+    if request.method == 'POST':
+        review = get_object_or_404(Review, id=review_id)
+        comment = request.POST.get('comment')
+        new_reply = Reply(
+            review=review,
+            user=request.user,
+            comment=comment
+        )
+        new_reply.save()
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))  # Redirect to the previous page or home
+    return HttpResponseRedirect('/')
+
+
+

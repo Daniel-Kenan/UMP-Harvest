@@ -226,7 +226,10 @@
   <ul>
      
     {% if isAuthenticated %}
-     <li><a href="#"> ➜ Log Out</a></li>
+     <li><form action="{% url 'logout' %}" method="post" style="display:inline;">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-danger">Log Out</button>
+  </form></li>
     {% else %}
     <li><a href="{% url "signin" %}"> ➜ Log In</a></li>
     {% endif %}

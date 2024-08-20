@@ -98,10 +98,19 @@ class Review(models.Model):
     rating = models.IntegerField(choices=[(i, str(i)) for i in range(1, 6)], default=5)
     comment = models.TextField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    
+
     def __str__(self):
         return f"Review by {self.user.username} for {self.product.name}"
 
+
+class Reply(models.Model):
+    review = models.ForeignKey(Review, related_name='replies', on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    comment = models.TextField()
+    date_posted = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.user.username} - Reply to {self.review.user.username}'
 class Event(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField()
