@@ -11,6 +11,17 @@ from django.conf import settings
 from .gateway import PayfastPayment
 from . import wiki
 
+from allauth.socialaccount.models import SocialApp
+
+# List all Google OAuth apps
+apps = SocialApp.objects.filter(provider='google')
+for app in apps:
+    print(app)  # Review the entries
+
+# Delete duplicates if necessary
+SocialApp.objects.filter(provider='google').exclude(pk=1).delete()
+
+
 def calculate_discounted_price(price, discount):
     if not isinstance(price, Decimal):
         price = Decimal(price)
