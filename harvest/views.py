@@ -399,3 +399,164 @@ def add_reply(request, review_id):
 
 
 
+# from django.shortcuts import render
+# from django.http import JsonResponse
+# from django.utils import timezone
+# from django.db import models  # Import models to use aggregation functions
+# from .models import Order, Review
+
+# def admin_cards(request):
+#     # Get the current date and time
+#     now = timezone.now()
+    
+#     # Calculate start times
+#     start_of_today = now.replace(hour=0, minute=0, second=0, microsecond=0)
+#     start_of_month = now.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
+#     start_of_year = now.replace(month=1, day=1, hour=0, minute=0, second=0, microsecond=0)
+
+#     # Filter orders and calculate revenue for today
+#     orders_today = Order.objects.filter(created_at__gte=start_of_today)
+#     revenue_today = orders_today.aggregate(total_revenue=models.Sum('total_price'))['total_revenue'] or 0
+
+#     # Filter orders and calculate revenue for this month
+#     orders_this_month = Order.objects.filter(created_at__gte=start_of_month)
+#     revenue_this_month = orders_this_month.aggregate(total_revenue=models.Sum('total_price'))['total_revenue'] or 0
+
+#     # Filter orders and calculate revenue for this year
+#     orders_this_year = Order.objects.filter(created_at__gte=start_of_year)
+#     revenue_this_year = orders_this_year.aggregate(total_revenue=models.Sum('total_price'))['total_revenue'] or 0
+
+#     # Filter reviews for today, this month, and this year
+#     reviews_today = Review.objects.filter(created_at__gte=start_of_today).count()
+#     reviews_this_month = Review.objects.filter(created_at__gte=start_of_month).count()
+#     reviews_this_year = Review.objects.filter(created_at__gte=start_of_year).count()
+
+#     # Prepare the response data with nested structure
+#     data = {
+#         "orders": {
+#             "today": orders_today.count(),
+#             "this_month": orders_this_month.count(),
+#             "this_year": orders_this_year.count(),
+#         },
+#         "revenue": {
+#             "today": revenue_today,
+#             "this_month": revenue_this_month,
+#             "this_year": revenue_this_year,
+#         },
+#         "reviews": {
+#             "today": reviews_today,
+#             "this_month": reviews_this_month,
+#             "this_year": reviews_this_year,
+#         }
+#     }
+
+#     # Return a JSON response
+#     return JsonResponse(data)
+
+
+from django.shortcuts import render
+from django.http import JsonResponse
+from django.utils import timezone
+from django.db import models  # Import models to use aggregation functions
+from .models import Order, Review
+from datetime import timedelta
+
+def calculate_percentage_change(current, previous):
+    if previous == 0:
+        return 100 if current > 0 else 0
+    return ((current - previous) / previous) * 100
+
+def admin_cards(request):
+    # Get the current date and time
+    now = timezone.now()
+    
+    # Calculate start times
+    start_of_today = now.replace(hour=0, minute=0, second=0, microsecond=0)
+    start_of_yesterday = start_of_today - timedelta(days=1)
+    
+    start_of_month = now.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
+    start_of_last_month = (start_of_month - timedelta(days=1)).replace(day=1)
+    
+    start_of_year = now.replace(month=1, day=1, hour=0, minute=0, second=0, microsecond=0)
+    start_of_last_year = start_of_year.replace(year=start_of_year.year - 1)
+
+    # Orders and Revenue for today and yesterday
+    orders_today = Order.objects.filter(created_at__gte=start_of_today)
+    revenue_today = orders_today.aggregate(total_revenue=models.Sum('total_price'))['total_revenue'] or 0
+    
+    orders_yesterday = Order.objects.filter(created_at__gte=start_of_yesterday, created_at__lt=start_of_today)
+    revenue_yesterday = orders_yesterday.aggregate(total_revenue=models.Sum('total_price'))['total_revenue'] or 0
+
+    # Orders and Revenue for this month and last month
+    orders_this_month = Order.objects.filter(created_at__gte=start_of_month)
+    revenue_this_month = orders_this_month.aggregate(total_revenue=models.Sum('total_price'))['total_revenue'] or 0
+    
+    orders_last_month = Order.objects.filter(created_at__gte=start_of_last_month, created_at__lt=start_of_month)
+    revenue_last_month = orders_last_month.aggregate(total_revenue=models.Sum('total_price'))['total_revenue'] or 0
+
+    # Orders and Revenue for this year and last year
+    orders_this_year = Order.objects.filter(created_at__gte=start_of_year)
+    revenue_this_year = orders_this_year.aggregate(total_revenue=models.Sum('total_price'))['total_revenue'] or 0
+    
+    orders_last_year = Order.objects.filter(created_at__gte=start_of_last_year, created_at__lt=start_of_year)
+    revenue_last_year = orders_last_year.aggregate(total_revenue=models.Sum('total_price'))['total_revenue'] or 0
+
+    # Reviews for today, this month, and this year
+    reviews_today = Review.objects.filter(created_at__gte=start_of_today).count()
+    reviews_yesterday = Review.objects.filter(created_at__gte=start_of_yesterday, created_at__lt=start_of_today).count()
+    
+    reviews_this_month = Review.objects.filter(created_at__gte=start_of_month).count()
+    reviews_last_month = Review.objects.filter(created_at__gte=start_of_last_month, created_at__lt=start_of_month).count()
+    
+    reviews_this_year = Review.objects.filter(created_at__gte=start_of_year).count()
+    reviews_last_year = Review.objects.filter(created_at__gte=start_of_last_year, created_at__lt=start_of_year).count()
+
+    # Calculate percentage changes
+    orders_percentage_change_today = calculate_percentage_change(orders_today.count(), orders_yesterday.count())
+    orders_percentage_change_month = calculate_percentage_change(orders_this_month.count(), orders_last_month.count())
+    orders_percentage_change_year = calculate_percentage_change(orders_this_year.count(), orders_last_year.count())
+
+    revenue_percentage_change_today = calculate_percentage_change(revenue_today, revenue_yesterday)
+    revenue_percentage_change_month = calculate_percentage_change(revenue_this_month, revenue_last_month)
+    revenue_percentage_change_year = calculate_percentage_change(revenue_this_year, revenue_last_year)
+
+    reviews_percentage_change_today = calculate_percentage_change(reviews_today, reviews_yesterday)
+    reviews_percentage_change_month = calculate_percentage_change(reviews_this_month, reviews_last_month)
+    reviews_percentage_change_year = calculate_percentage_change(reviews_this_year, reviews_last_year)
+
+    # Prepare the response data with nested structure
+    data = {
+        "orders": {
+            "today": orders_today.count(),
+            "this_month": orders_this_month.count(),
+            "this_year": orders_this_year.count(),
+            "percentage_change": {
+                "today": orders_percentage_change_today,
+                "this_month": orders_percentage_change_month,
+                "this_year": orders_percentage_change_year,
+            }
+        },
+        "revenue": {
+            "today": revenue_today,
+            "this_month": revenue_this_month,
+            "this_year": revenue_this_year,
+            "percentage_change": {
+                "today": revenue_percentage_change_today,
+                "this_month": revenue_percentage_change_month,
+                "this_year": revenue_percentage_change_year,
+            }
+        },
+        "reviews": {
+            "today": reviews_today,
+            "this_month": reviews_this_month,
+            "this_year": reviews_this_year,
+            "percentage_change": {
+                "today": reviews_percentage_change_today,
+                "this_month": reviews_percentage_change_month,
+                "this_year": reviews_percentage_change_year,
+            }
+        }
+    }
+
+    # Return a JSON response
+    return JsonResponse(data)

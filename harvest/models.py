@@ -3,7 +3,7 @@ from django.contrib.auth.models import AbstractUser, Group, Permission
 # Custom User model to handle different roles and additional fields
 from django.db import models
 from django.contrib.auth.models import AbstractUser, Group, Permission
-
+import json
 class User(AbstractUser):
     phone_number = models.CharField(max_length=15, unique=True, null=True, blank=True)
     address = models.TextField(null=True, blank=True)
@@ -81,6 +81,35 @@ class Order(models.Model):
     
     def __str__(self):
         return f"Order {self.id} by {self.user.username}"
+    
+    def get_orders_summary(self):
+        today = timezone.now().date()
+        start_of_week = today - timezone.timedelta(days=today.weekday())
+        start_of_month = today.replace(day=1)
+
+        # Filtering orders
+        today_orders = self.__class__.objects.filter(created_at__date=today)
+        week_orders = self.__class__.objects.filter(created_at__date__gte=start_of_week)
+        month_orders = self.__class__.objects.filter(created_at__date__gte=start_of_month)
+
+        # Helper function to extract product details
+        def get_order_products(orders):
+            return [
+                {
+                'order_id': order.id,
+                'products': list(order.items.values('product__name', 'quantity', 'price'))
+                }
+            for order in orders]
+
+            # Creating the JSON structure
+        summary = {
+                'today': get_order_products(today_orders),
+                'week': get_order_products(week_orders),
+                'this_month': get_order_products(month_orders)
+                }
+
+        return json.dumps(summary)
+
 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, related_name='items', on_delete=models.CASCADE)

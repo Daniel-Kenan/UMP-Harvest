@@ -1,0 +1,84 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+{% block extrahead %}
+{{ block.super }}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+{% comment %} <link rel="stylesheet" type="text/css" href="{% static 'admin/css/custom_admin.css' %}"> {% endcomment %}
+  <!-- Vendor CSS Files -->
+<link href="{% static 'admin/assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+<link href="{% static 'admin/assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+<link href="{% static 'admin/assets/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+<link href="{% static 'admin/assets/vendor/quill/quill.snow.css' %}" rel="stylesheet">
+<link href="{% static 'admin/assets/vendor/quill/quill.bubble.css' %}" rel="stylesheet">
+<link href="{% static 'admin/assets/vendor/remixicon/remixicon.css' %}" rel="stylesheet">
+<link href="{% static 'admin/assets/vendor/simple-datatables/style.css' %}" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+<link href="{% static 'admin/assets/css/style.css' %}" rel="stylesheet">
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+</style>
+<style>
+    body,
+html,
+.container {
+  height: 100%;
+  margin: 0;
+  font-family: "Inter", sans-serif;;
+  font-size: 18px;
+}
+</style>
+{% endblock %}
+
+{% block branding %}
+<h1 id="site-name">
+    <a href="{% url 'admin:index' %}">
+        <img src="{% static 'images/university-logo2.png' %}" alt="Site Logo" style="height: 50px;">
+    </a>
+</h1>
+{% endblock %}
+
+{% block usertools %}
+    <div id="user-tools" >
+        Welcome ,
+        <strong>{{ request.user.get_username }}</strong>.
+
+        <a href="{% url "dashboard" %}">dashboard</a> /
+        <a href="{% url 'admin:password_change' %}">Change password</a> /
+
+        <form id="logout-form" method="post" action="{% url 'admin:logout' %}" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit" style="background:none;border:none;padding:0;color:#337ab7;text-decoration:underline;cursor:pointer;">
+                Log out
+            </button>
+        </form>
+
+        <button class="theme-toggle">
+            <svg aria-hidden="true" class="theme-icon-when-auto">
+                <use xlink:href="#icon-auto"></use>
+            </svg>
+            <svg aria-hidden="true" class="theme-icon-when-dark">
+                <use xlink:href="#icon-moon"></use>
+            </svg>
+            <svg aria-hidden="true" class="theme-icon-when-light">
+                <use xlink:href="#icon-sun"></use>
+            </svg>
+        </button>
+    </div>
+    <style>header , header a {background-color:white !important; color:#343A40 !important}
+
+        header {
+            box-shadow: 5px 2.3px 5px #FAD972;
+        }
+        table caption{
+            background-color:#FAD972 !important;
+            color:#343A40 !important
+        }
+        table caption a{
+            color:#343A40 !important
+        }
+    </style>
+  
+    
+    {% endblock %}

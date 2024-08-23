@@ -26,5 +26,6 @@ urlpatterns = [
      path('product/<int:product_id>/add_review/', views.add_review, name='add_review'),
      path('add_reply/<int:review_id>/', views.add_reply, name='add_reply'),
       path('logout/', LogoutView.as_view(), name='logout'),
+       path('admin_cards/', views.admin_cards, name='admin_cards'),
 
 ]

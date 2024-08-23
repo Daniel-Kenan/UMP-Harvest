@@ -1,72 +1,68 @@
 {% extends "admin/base_site.html" %}
 {% load static %}
 {% block extrahead %}
-{{ block.super }}
+
+<style>
+  .dashboard-visibilty{display:none}
+ 
+</style>
+ {% comment %} #content{display:none} {% endcomment %}
+<script>
+    document.querySelectorAll('link[rel="stylesheet"]').forEach(function(link) {
+        link.parentNode.removeChild(link);
+    });
+    
+document.addEventListener('DOMContentLoaded', function() {
+  if (window.location.pathname === '/admin/') {
+      console.log('You are in the dashboard');
+      document.querySelector(".dashboard-visibilty").style.display = "block";
+  }
+});
+</script>
+
+{% comment %} <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet"> {% endcomment %}
+
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-<link rel="stylesheet" type="text/css" href="{% static 'admin/css/custom_admin.css' %}">
+{% comment %} <link rel="stylesheet" type="text/css" href="{% static 'admin/css/custom_admin.css' %}"> {% endcomment %}
+  <!-- Vendor CSS Files -->
+<link href="{% static 'admin/assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+<link href="{% static 'admin/assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+<link href="{% static 'admin/assets/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+<link href="{% static 'admin/assets/vendor/quill/quill.snow.css' %}" rel="stylesheet">
+<link href="{% static 'admin/assets/vendor/quill/quill.bubble.css' %}" rel="stylesheet">
+<link href="{% static 'admin/assets/vendor/remixicon/remixicon.css' %}" rel="stylesheet">
+<link href="{% static 'admin/assets/vendor/simple-datatables/style.css' %}" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+<link href="{% static 'admin/assets/css/style.css' %}" rel="stylesheet">
+
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 </style>
-<style>
-    body,
-html,
-.container {
-  height: 100%;
-  margin: 0;
-  font-family: "Inter", sans-serif;;
-  font-size: 18px;
-}
-</style>
+
 {% endblock %}
 
 {% block branding %}
-<h1 id="site-name">
-    <a href="{% url 'admin:index' %}">
-        <img src="{% static 'images/university-logo2.png' %}" alt="Site Logo" style="height: 50px;">
-    </a>
-</h1>
+{% include "Components/loader.html" %}
+{% include "admin/Components/Nav.html" %}
+{% include "admin/Components/Sidebar.html" %}
+{% include "admin/Components/Dashboard.html" %}
 {% endblock %}
 
 {% block usertools %}
-    <div id="user-tools" >
-        Welcome ,
-        <strong>{{ request.user.get_username }}</strong>.
-
-        <a href="{% url "dashboard" %}">dashboard</a> /
-        <a href="{% url 'admin:password_change' %}">Change password</a> /
-
-        <form id="logout-form" method="post" action="{% url 'admin:logout' %}" style="display:inline;">
-            {% csrf_token %}
-            <button type="submit" style="background:none;border:none;padding:0;color:#337ab7;text-decoration:underline;cursor:pointer;">
-                Log out
-            </button>
-        </form>
-
-        <button class="theme-toggle">
-            <svg aria-hidden="true" class="theme-icon-when-auto">
-                <use xlink:href="#icon-auto"></use>
-            </svg>
-            <svg aria-hidden="true" class="theme-icon-when-dark">
-                <use xlink:href="#icon-moon"></use>
-            </svg>
-            <svg aria-hidden="true" class="theme-icon-when-light">
-                <use xlink:href="#icon-sun"></use>
-            </svg>
-        </button>
-    </div>
-    <style>header , header a {background-color:white !important; color:#343A40 !important}
-
-        header {
-            box-shadow: 5px 2.3px 5px #FAD972;
-        }
-        table caption{
-            background-color:#FAD972 !important;
-            color:#343A40 !important
-        }
-        table caption a{
-            color:#343A40 !important
-        }
-    </style>
+    
+    
   
     
+
+<!-- Vendor JS Files -->
+<script src="{% static 'admin/assets/vendor/apexcharts/apexcharts.min.js' %}"></script>
+<script src="{% static 'admin/assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'admin/assets/vendor/chart.js/chart.umd.js' %}"></script>
+<script src="{% static 'admin/assets/vendor/echarts/echarts.min.js' %}"></script>
+<script src="{% static 'admin/assets/vendor/quill/quill.js' %}"></script>
+<script src="{% static 'admin/assets/vendor/simple-datatables/simple-datatables.js' %}"></script>
+<script src="{% static 'admin/assets/vendor/tinymce/tinymce.min.js' %}"></script>
+<script src="{% static 'admin/assets/vendor/php-email-form/validate.js' %}"></script>
+
     {% endblock %}
