@@ -56,7 +56,7 @@ def page(name):
 
 # Utility function to get top 18 most searched items
 def get_top_searches():
-    return SearchQuery.objects.order_by('-search_count', '-last_searched')[:18]
+    return SearchQuery.objects.order_by('-search_count', '-last_searched')[:24]
 
 from datetime import date
 
