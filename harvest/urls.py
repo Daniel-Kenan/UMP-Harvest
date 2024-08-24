@@ -23,9 +23,9 @@ urlpatterns = [
     path("dashboard/", views.dashboard, name='dashboard'),
     path('logs/', views.list_logs, name='list_logs'),
     path('logs/<str:filename>/', views.view_log, name='view_log'),
-     path('product/<int:product_id>/add_review/', views.add_review, name='add_review'),
-     path('add_reply/<int:review_id>/', views.add_reply, name='add_reply'),
-      path('logout/', LogoutView.as_view(), name='logout'),
-       path('admin_cards/', views.admin_cards, name='admin_cards'),
+    path('product/<int:product_id>/add_review/', views.add_review, name='add_review'),
+    path('add_reply/<int:review_id>/', views.add_reply, name='add_reply'),
+    path('logout/', LogoutView.as_view(), name='logout'),
+    path('admin_cards/', views.admin_cards, name='admin_cards'),
 
 ]

@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from .models import Category,Product, SearchQuery
+from .models import Category,Product, SearchQuery,Season
 from django.core.paginator import Paginator
 from django.db.models import F
 from django.utils import timezone
@@ -58,12 +58,61 @@ def page(name):
 def get_top_searches():
     return SearchQuery.objects.order_by('-search_count', '-last_searched')[:18]
 
+from datetime import date
+
+def get_current_season():
+    today = date.today()
+    try:
+        season = Season.objects.get(start_date__lte=today, end_date__gte=today)
+    except Season.DoesNotExist:
+        season = None
+    return season
+
 def home(request):
     top_searches = get_top_searches()
     categories = Category.objects.all()
-    best_selling_products = Product.objects.filter(is_best_selling=True) 
+
+    # Fetch best selling products
+    best_selling_products = Product.objects.filter(is_best_selling=True).order_by('?')[:4]
+    for product in best_selling_products:
+        product.stars = generate_stars(product.rating)
+        product.discountedPrice = calculate_discounted_price(product.price, product.discounted_price_percentage)
+        product.isOnDiscount = bool(product.price != product.discountedPrice)
+
+    # Fetch just arrived products using 'created_at'
+    just_arrived_products = Product.objects.filter(is_available=True).order_by('-created_at')[:4]
+    for product in just_arrived_products:
+        product.stars = generate_stars(product.rating)
+        product.discountedPrice = calculate_discounted_price(product.price, product.discounted_price_percentage)
+        product.isOnDiscount = bool(product.price != product.discountedPrice)
+
+    # Fetch seasonal products
+    current_season = get_current_season()
+    if current_season:
+        seasonal_products = Product.objects.filter(season=current_season).order_by('?')[:4]
+    else:
+        seasonal_products = Product.objects.none()  # Empty queryset if no season
+
+    # If no seasonal products, fetch featured products
+    if not seasonal_products.exists():
+        seasonal_products = Product.objects.filter(is_featured=True).order_by('?')[:4]
+
+    for product in seasonal_products:
+        product.stars = generate_stars(product.rating)
+        product.discountedPrice = calculate_discounted_price(product.price, product.discounted_price_percentage)
+        product.isOnDiscount = bool(product.price != product.discountedPrice)
+
     isAuthenticated = request.user.is_authenticated
-    return  render(request, page("Home"),{'categories': categories,'best_selling_products': best_selling_products, 'top_searches': top_searches,"isAuthenticated":isAuthenticated})
+    return render(request, page("Home"), {
+        'categories': categories,
+        'best_selling_products': best_selling_products,
+        'just_arrived_products': just_arrived_products,
+        'seasonal_products': seasonal_products,
+        'top_searches': top_searches,
+        "isAuthenticated": isAuthenticated
+    })
+
+
 
 def complete_payment_form(request):
     data = {
