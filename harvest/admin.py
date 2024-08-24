@@ -2,7 +2,7 @@ from django.contrib import admin
 
 # Register your models here.
 from django.contrib import admin
-from .models import User, Category, Product, Tag, Article, Order, OrderItem, Review, Event, Inventory, Subscription, Notification
+from .models import User, Category, Product, Tag, Article, Order, OrderItem, Review, Event, Inventory, Subscription, Notification,Season
 from django.utils.translation import gettext_lazy as _
 
 
@@ -101,3 +101,10 @@ class NotificationAdmin(admin.ModelAdmin):
     list_display = ('user', 'message', 'is_read', 'created_at')
     search_fields = ('user__username', 'message')
     list_filter = ('is_read', 'created_at')
+
+
+@admin.register(Season)
+class SeasonAdmin(admin.ModelAdmin):
+    list_display = ('name', 'start_date', 'end_date')
+    search_fields = ('name',)
+    list_filter = ('start_date', 'end_date')
