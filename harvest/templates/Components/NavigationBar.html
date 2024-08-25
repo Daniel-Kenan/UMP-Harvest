@@ -100,9 +100,9 @@
     function handleFile(event) {
       const file = event.target.files[0];
       
-      document.querySelector(".loader").style.display  = "block"
       if (file) {
-          const loader = document.querySelector("#loader-animation");// Show loader animation
+        document.querySelector(".loader").style.display  = "block"  
+        const loader = document.querySelector("#loader-animation");// Show loader animation
           document.querySelector("#search-input") 
           // Prepare the file data
           const formData = new FormData();
