@@ -116,10 +116,12 @@
             cartItemsList.innerHTML = '';
 
             data.cart.forEach(item => {
+                console.log(item)
                 const listItem = document.createElement('li');
                 listItem.className = 'list-group-item d-flex justify-content-between lh-sm';
                 listItem.innerHTML = `
-                    <div>
+                <img src="${item.image}" style="height:50px;width:50px;float:left;display:none"  /> 
+                <div>
                         <h6 class="my-0">${item.name}</h6>
                         <small class="text-body-secondary">
                             Quantity: 

@@ -82,6 +82,8 @@
       <script>
         function addToCart(productId, productName, productPrice) {
             // Assuming you have a session or backend route to handle the cart addition
+            const quantity = document.getElementById(`quantity-${productId}`).value;
+            
             fetch(`/add-to-cart/`, {
                 method: 'POST',
                 headers: {
@@ -92,7 +94,7 @@
                     'product_id': productId,
                     'product_name': productName,
                     'product_price': productPrice,
-                    'quantity': 1 // You can modify this based on user input
+                    'quantity': quantity // You can modify this based on user input
                 })
             })
             .then(response => response.json())
