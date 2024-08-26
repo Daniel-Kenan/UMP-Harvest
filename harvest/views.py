@@ -214,8 +214,8 @@ def SignUp(request):
                 is_active=True
             )
             user.save()
-            login(request, user,backend='django.contrib.auth.backends.ModelBackend')
-            return redirect('home')  # Redirect to a success page
+            # login(request, user,backend='django.contrib.auth.backends.ModelBackend')
+            return render(request, "Auth/SignIn.html")  # Redirect to a success page
         except ValidationError as e:
             return HttpResponse(f"Error: {e}", status=400)
     
