@@ -12,6 +12,21 @@ from .gateway import PayfastPayment
 from . import wiki
 
 from allauth.socialaccount.models import SocialApp
+from django.shortcuts import redirect
+from django.contrib.auth.decorators import user_passes_test
+
+def anonymous_required(function=None, redirect_url=None):
+    if not redirect_url:
+        redirect_url = '/'
+
+    actual_decorator = user_passes_test(
+        lambda u: not u.is_authenticated,
+        login_url=redirect_url
+    )
+    if function:
+        return actual_decorator(function)
+    return actual_decorator
+
 
 # List all Google OAuth apps
 apps = SocialApp.objects.filter(provider='google')
@@ -154,6 +169,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.views import PasswordResetView
 from django.contrib import messages
 
+@anonymous_required(redirect_url='/')
 def SignIn(request):
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -197,6 +213,7 @@ from django.contrib.auth.hashers import make_password
 from django.http import HttpResponse
 from .models import User
 
+@anonymous_required(redirect_url='/')
 def SignUp(request):
     
     if request.method == 'POST':
