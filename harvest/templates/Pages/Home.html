@@ -13,7 +13,7 @@
               <p class="fs-4">Growing the future, one harvest at a time.</p>
               <div class="d-flex gap-3">
                 <a href="{% url "shop" %}" class="btn btn-primary text-uppercase fs-6 rounded-pill px-4 py-3 mt-3">Start with Shopping</a>
-                <a href="{% url "signin" %}" class="btn btn-dark text-uppercase fs-6 rounded-pill px-4 py-3 mt-3">Start with Signin</a>
+                {% if not isAuthenticated %}<a href="{% url "signin" %}" class="btn btn-dark text-uppercase fs-6 rounded-pill px-4 py-3 mt-3">Start with Signin</a>{% endif %}
               </div>
               <div class="row my-5">
                 <div class="col">
