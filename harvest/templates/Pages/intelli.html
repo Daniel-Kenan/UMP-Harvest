@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>7-Digit Input</title>
+    <style>
+     body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Center vertically */
+    height: 100vh;
+    margin: 0;
+    background-color: #f5f5f5; /* Light background color */
+}
+
+.container {
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    align-items: center;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #fff; /* White background for better visibility */
+    min-width: 500px; /* Make the container responsive */
+    max-width: 1000px; /* Max width for larger screens */
+    box-sizing: border-box;
+}
+
+.image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px; /* Space below images */
+    width: 100%; /* Ensure it spans the width of the container */
+}
+
+.image {
+    width: 150px; /* Adjusted size for better visibility */
+    height: auto; /* Maintain aspect ratio */
+    margin: 0 10px; /* Space between images */
+}
+
+.digit-input-container {
+    display: flex;
+    justify-content: center;
+    gap: 5px; /* Space between inputs */
+}
+
+.digit-input {
+    width: 40px; /* Larger input fields for easier interaction */
+    height: 40px;
+    font-size: 20px; /* Larger text for readability */
+    text-align: center;
+    border: 2px solid #ddd; /* Thicker border for better visibility */
+    border-radius: 5px;
+    padding: 5px;
+    outline: none;
+    transition: border-color 0.3s ease; /* Smooth transition for focus effect */
+}
+
+.digit-input:focus {
+    border-color: #FF8343; /* Blue border color on focus */
+    box-shadow: 0 0 5px #FF8343; /* Shadow effect on focus */
+}
+
+.verify-button {
+    margin-top: 25px;
+    background-color: #f59e42;
+    border: 2px solid transparent; /* Initial border state */
+    border-radius: 10px;
+    height: 40px; /* Adjusted height for better visibility */
+    width: 100px; /* Adjusted width for better visibility */
+    font-family: Arial, sans-serif; /* Font family */
+    font-size: 14px; /* Font size */
+    text-transform: uppercase;
+    font-weight: bold;
+    transition: border 0.3s ease, transform 0.3s ease; /* Transition for both border and scale */
+}
+
+.verify-button:hover {
+    border: 1px solid #f59e42; /* Border state on hover */
+    transform: scale(1.1); /* Scale the button to 110% of its original size */
+}
+
+/* Styles for tablets and larger mobile devices */
+@media (max-width: 1200px) {
+    .container {
+	    width:500px;
+        padding: 15px; /* Adjusted padding for better spacing */
+    }
+
+    .digit-input {
+        width: 35px;
+        height: 35px;
+        font-size: 18px;
+    }
+
+    .verify-button {
+        width: 90px;
+        height: 35px;
+        font-size: 14px; /* Adjusted font-size for better readability */
+    }
+
+    .image {
+        width: 150px;
+		height: 50px;
+        margin: 0 20px;
+    }
+
+    h3 {
+        font-size: 1.3rem;
+    }
+}
+
+/* Styles for mobile phones */
+@media (max-width: 480px) {
+    .container {
+        padding: 10px; /* Increased padding for better spacing on small screens */
+    }
+
+    .digit-input {
+        width: 30px; /* Limit width to prevent too large input fields */
+        height: 30px;
+        font-size: 16px;
+        margin-bottom: 10px; /* Spacing between inputs */
+    }
+
+    .verify-button {
+        width: 80%; /* Full width to fit small screens */
+        max-width: 100px; /* Limit width for button */
+        height: 35px;
+        font-size: 12px;
+        margin-top: 10px; /* Spacing above button */
+        
+    }
+
+    .image {
+        width: 150px; /* Adjust width for better fit */
+        max-width:150px; /* Limit width of images */
+        margin: 0 20px;
+    }
+
+    h3 {
+        font-size: 1.2rem;
+    }
+}
+
+
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="image-container">
+            <img src="https://ump-harvest-production.up.railway.app/static/images/university-logo2.png" class="image" />
+            <img src="data:image/png;base64,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" class="image" />
+            <!-- Add more image tags here -->
+        </div>
+		<h3>Enter Voucher</h3>
+     <div class="digit-input-container">
+        <input type="text" id="digit1" class="digit-input" maxlength="1" size="1" />
+        <input type="text" id="digit2" class="digit-input" maxlength="1" size="1" />
+        <input type="text" id="digit3" class="digit-input" maxlength="1" size="1" />
+        <input type="text" id="digit4" class="digit-input" maxlength="1" size="1" />
+        <input type="text" id="digit5" class="digit-input" maxlength="1" size="1" />
+        <input type="text" id="digit6" class="digit-input" maxlength="1" size="1" />
+        <input type="text" id="digit7" class="digit-input" maxlength="1" size="1" />
+  </div>
+  <button class="verify-button">Verify</button>
+    </div>
+
+    <script>
+        const inputs = document.querySelectorAll('.digit-input');
+
+        inputs.forEach((input, index) => {
+            input.addEventListener('input', (e) => {
+                const value = e.target.value;
+                if (!/^\d+$/.test(value)) {
+                    e.target.value = value.replace(/[^0-9]/g, '');
+                }
+                if (value.length > 0) {
+                    if (index < inputs.length - 1) {
+                        inputs[index + 1].focus();
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

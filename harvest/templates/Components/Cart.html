@@ -24,6 +24,7 @@
 <select id="payment-type" name="payment-type" style="padding:10px">
   <option value="credit-card" style="padding:10px">Card Payment</option>
   <option value="bank-transfer" style="padding:10px">Bank Transfer</option>
+  <option value="intelli" style="padding:10px">IntelliMali</option>
   
 </select>
             <button class="w-100 btn btn-primary btn-lg mt-3" type="button"  id="checkout-button" >Continue to checkout</button>
@@ -227,7 +228,11 @@
 
             if (selectedPaymentType === 'bank-transfer') {
                 window.location.href = '{% url "bank_payment_transfer" %}'; // Replace with your actual URL
-            } else {
+            } 
+            else if(selectedPaymentType === 'intelli'){
+                window.location.href = '{% url "intellipay" %}'
+            }
+            else {
                 window.location.href = '{% url "card-complete-payment-form" %}';
             }
         });

@@ -136,13 +136,13 @@ Shopping for | {{ product.name }}
                                 <div class="comment-list padding-small">
                                     {% for review in reviews %}
                                     <article class="comment-item row flex-wrap mb-3">
-                                        <div class="col-lg-1 col-sm-3 mb-3">
-                                            <img src="{% static 'images/avatar-person.svg' %}" alt="default" class="img-fluid rounded-circle">
+                                        <div class="col-lg-1 col-sm-3 mb-3" style="max-width:100px;float:left">
+                                            <img src="{% static 'images/avatar-person.svg' %}" style="max-width:100px;float:left" alt="default" class="img-fluid rounded-circle">
                                         </div>
                                         <div class="col-lg-10 col-sm-9">
                                             <div class="d-flex justify-content-between">
                                                 <div class="author">
-                                                    <h5>{{ review.user.username }}</h5>
+                                                    <h5>{{ review.user.first_name }} {{ review.user.last_name }}</h5>
                                                     <div class="rating">
                                                         {% for i in "12345" %}
                                                         {% if review.rating >= i %}
@@ -165,7 +165,7 @@ Shopping for | {{ product.name }}
                                                   <img src="{% static 'images/avatar-person.svg' %}" alt="default" class="img-fluid rounded-circle mr-3" style="width: 50px; height: 50px;">
                                   
                                                   <div class="media-body">
-                                                      <h5 class="mt-0">{{ reply.user.username }}</h5>
+                                                      <h5 class="mt-0">{{ reply.user.email }}</h5>
                                                       <p>{{ reply.comment }}</p>
                                                       <!-- Display the timestamp if available -->
                                                       <small class="text-muted">{{ reply.created_at }}</small>
@@ -207,7 +207,6 @@ Shopping for | {{ product.name }}
                                                   <option value="3">3</option>
                                                   <option value="4">4</option>
                                                   <option value="5">5</option>
-          
                                               {% comment %} {% endfor %} {% endcomment %}
                                           </select>
                                       </div>

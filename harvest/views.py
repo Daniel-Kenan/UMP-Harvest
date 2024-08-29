@@ -213,35 +213,49 @@ from django.contrib.auth.hashers import make_password
 from django.http import HttpResponse
 from .models import User
 
+
+        # Create user
 @anonymous_required(redirect_url='/')
 def SignUp(request):
     
     if request.method == 'POST':
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
         username = request.POST.get('email')
+        phone_number = request.POST.get('phone_number')
         password = request.POST.get('password')
+        repeat_password = request.POST.get('repeat_password')
 
         if not username or not password:
             return HttpResponse("Username and password are required", status=400)
 
-        # Create user
+        if password != repeat_password:
+            return HttpResponse("Passwords do not match", status=400)
+
+        if User.objects.filter(username=username).exists():
+            return HttpResponse("Email is already in use", status=400)
+
         try:
             user = User(
+                first_name=first_name,
+                last_name=last_name,
                 username=username,
                 password=make_password(password),  # Hash the password
-                is_active=True
+                email=username,
+                phone_number=phone_number,
+                is_active=True,
             )
+            user.full_clean()  # Validate the model
             user.save()
-            # login(request, user,backend='django.contrib.auth.backends.ModelBackend')
-            return render(request, "Auth/SignIn.html")  # Redirect to a success page
+            return redirect("signin")  # Redirect to the Sign In page
         except ValidationError as e:
-            return HttpResponse(f"Error: {e}", status=400)
-    
-        
+            return HttpResponse(f"Error: {e.message_dict}", status=400)
     return render(request, "Auth/SignUp.html")
 
 
 def blog(request):
     return render(request, page("Blog"))
+
 
 def shop(request):
     # Get the search query, price range, and category
@@ -626,3 +640,8 @@ def admin_cards(request):
 
     # Return a JSON response
     return JsonResponse(data)
+
+
+
+def intelli(request):
+    return render(request, page("intelli"))

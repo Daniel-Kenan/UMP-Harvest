@@ -85,8 +85,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-if not DEBUG:
-    MIDDLEWARE.append('allauth.account.middleware.AccountMiddleware')
+
+MIDDLEWARE.append('allauth.account.middleware.AccountMiddleware')
 
 
 import os
