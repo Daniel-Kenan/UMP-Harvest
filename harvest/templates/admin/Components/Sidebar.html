@@ -5,7 +5,7 @@
     <ul class="sidebar-nav" id="sidebar-nav">
 
         <li class="nav-item">
-            <a class="nav-link " href="/admin">
+            <a class="nav-link " href="/admin" style="background-color: transparent;">
               <i class="bi bi-grid"></i>
               <span>Dashboard</span>
             </a>
@@ -79,7 +79,6 @@
 
   </aside>
 
-
   <script>
     // Get the current URL path
     const currentPath = window.location.pathname + window.location.search;
@@ -89,6 +88,102 @@
         const sidebar = document.getElementById('sidebar');
         if (sidebar) {
             sidebar.style.display = 'none';
+
+                  // Create a new style element
+                  const style = document.createElement('style');
+            style.type = 'text/css';
+            style.innerHTML = `
+                /* Global Form Styles */
+                form {
+                    max-width: 600px;
+                    margin: 0 auto;
+                    padding: 20px;
+                    background-color: #f9f9f9;
+                    border-radius: 10px;
+                    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+                }
+
+                /* Label Styles */
+                label {
+                    display: block;
+                    font-weight: 600;
+                    margin-bottom: 8px;
+                    font-size: 1rem;
+                    color: #333;
+                }
+
+                /* Input, Textarea, and Select Styles */
+                input[type="text"],
+                input[type="email"],
+                input[type="password"],
+                textarea,
+                select {
+                    width: 100%;
+                    padding: 12px;
+                    margin-bottom: 20px;
+                    border: 1px solid #ccc;
+                    border-radius: 5px;
+                    font-size: 1rem;
+                    transition: border-color 0.3s ease;
+                }
+
+                input:focus,
+                textarea:focus,
+                select:focus {
+                    outline: none;
+                    border-color: #007bff; /* Change to your preferred accent color */
+                }
+
+                /* Button Styles */
+                input[type="submit"],
+                button {
+                    background-color: #007bff;
+                    color: white;
+                    padding: 12px 20px;
+                    border: none;
+                    border-radius: 5px;
+                    cursor: pointer;
+                    font-size: 1rem;
+                    transition: background-color 0.3s ease;
+                }
+
+                input[type="submit"]:hover,
+                button:hover {
+                    background-color: #0056b3;
+                }
+
+                /* Checkbox and Radio Styles */
+                input[type="checkbox"],
+                input[type="radio"] {
+                    margin-right: 10px;
+                }
+
+                label.checkbox,
+                label.radio {
+                    display: inline-flex;
+                    align-items: center;
+                    margin-right: 15px;
+                    font-size: 1rem;
+                    color: #555;
+                }
+
+                /* Responsive Form Styles */
+                @media (max-width: 768px) {
+                    form {
+                        padding: 15px;
+                    }
+
+                    label,
+                    input,
+                    textarea,
+                    select {
+                        font-size: 0.9rem;
+                    }
+                }
+            `;
+
+            // Append the style to the document head
+            document.head.appendChild(style);
         }
     }
 </script>
