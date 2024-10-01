@@ -187,3 +187,67 @@
         }
     }
 </script>
+
+<style>
+  /* Table Styles */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 1em;
+    font-family: 'Arial', sans-serif;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Table Header */
+th {
+    background-color: #4CAF50; /* Green background for header */
+    color: white;
+    padding: 12px;
+    text-align: left;
+}
+
+/* Table Data Cells */
+td {
+    padding: 12px;
+    border: 1px solid #ddd; /* Light gray border for cells */
+}
+
+/* Hover Effect */
+tr:hover {
+    background-color: #f1f1f1; /* Light gray background on hover */
+}
+
+/* Alternate Row Colors */
+tr:nth-child(even) {
+    background-color: #f9f9f9; /* Light background for even rows */
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    table, thead, tbody, th, td, tr {
+        display: block;
+    }
+    thead {
+        display: none; /* Hide header on small screens */
+    }
+    tr {
+        margin-bottom: 15px; /* Add spacing between rows */
+    }
+    td {
+        text-align: right; /* Align text to the right for better readability */
+        position: relative; /* Positioning for pseudo-elements */
+        padding-left: 50%; /* Add padding for labels */
+    }
+    td::before {
+        content: attr(data-label); /* Use data-label for header names */
+        position: absolute;
+        left: 0;
+        width: 50%;
+        padding-left: 10px; /* Padding for labels */
+        font-weight: bold; /* Bold labels */
+        text-align: left; /* Align labels to the left */
+    }
+}
+
+</style>
