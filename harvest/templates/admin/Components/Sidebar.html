@@ -78,3 +78,17 @@
     </ul>
 
   </aside>
+
+
+  <script>
+    // Get the current URL path
+    const currentPath = window.location.pathname + window.location.search;
+
+    // If the URL is /admin/login/?next=/admin/ or /admin, hide the sidebar
+    if (currentPath === "/admin/login/?next=/admin/" || currentPath === "/admin") {
+        const sidebar = document.getElementById('sidebar');
+        if (sidebar) {
+            sidebar.style.display = 'none';
+        }
+    }
+</script>

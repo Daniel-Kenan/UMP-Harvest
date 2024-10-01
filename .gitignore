@@ -5,3 +5,4 @@ __pycache__
 google.json
 logs
 aa.py
+.env.example
