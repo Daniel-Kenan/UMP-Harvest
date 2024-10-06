@@ -145,6 +145,7 @@ def complete_payment_form(request):
     'm_payment_id': '1234', #Unique payment ID to pass through to notify_url
     'amount': "200",
     'item_name': 'Order#123'}
+    
     payfast_payment = PayfastPayment(data,settings.GATEWAY_CONFIG['passphrase'],sandbox_mode=settings.GATEWAY_CONFIG['mode'])
     html_form = payfast_payment.generate_html_form()
     return render(request , page("Card"),{"html_form":html_form}) 

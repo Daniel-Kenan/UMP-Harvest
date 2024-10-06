@@ -96,7 +96,7 @@
         </li><!-- End Notification Nav -->
 
        <!-- End Messages Nav -->
-
+       <button id="nextgensell_embedface1Btn" style="margin-left: -180px;">📑</button>
        <li class="nav-item dropdown pe-3" {% if request.user.is_superuser %} style="margin-left: -100px !important;" >
 
         <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown" style="margin-left: -100px !important;">
@@ -165,3 +165,60 @@
     </nav><!-- End Icons Navigation -->
 
   </header>
+
+
+  
+<script defer>
+const iframe = document.createElement('iframe');
+const url = false ? "https://ai.nextgensell.com" : "http://localhost:8765";
+iframe.src = `${url}/plugin?access_token=89c59fj3crjrt4543dmc`;
+Object.assign(iframe.style, {
+    position: 'absolute',
+    top: '0',
+    right: '-600px', // Start hidden off-screen
+    width: '600px',
+    height: '100%',
+    borderLeft: '1px solid slategrey', // Left border only
+    borderTop: 'none', // No top border
+    borderRight: 'none', // No right border
+    borderBottom: 'none', // No bottom border
+    transition: 'right 0.5s ease',
+});
+
+const closeButton = document.createElement('button');
+closeButton.textContent = '-';
+
+// Close button styles in JavaScript
+Object.assign(closeButton.style, {
+    position: 'absolute',
+    top: '10px',
+    right: '10px',
+    color: 'black',
+    padding: '5px 10px',
+    cursor: 'pointer',
+    borderRadius: '3px',
+    fontWeight: 'bold',
+    zIndex: '10', // Ensure the button is above the iframe
+    display: 'none', // Initially hidden
+});
+
+// Close button logic
+closeButton.addEventListener('click', () => {
+    iframe.style.right = '-600px'; // Slide out the iframe
+    closeButton.style.display = 'none'; // Hide the close button
+});
+
+const toggleButton = document.getElementById('nextgensell_embedface1Btn');
+toggleButton.addEventListener('click', () => {
+    if (iframe.style.right === '0px') {
+        iframe.style.right = '-600px'; // Slide out
+        closeButton.style.display = 'none'; // Hide the close button
+    } else {
+        iframe.style.right = '0'; // Slide in
+        closeButton.style.display = 'block'; // Show the close button
+    }
+});
+
+document.body.appendChild(iframe);
+document.body.appendChild(closeButton); // Append the close button to the body
+</script>
