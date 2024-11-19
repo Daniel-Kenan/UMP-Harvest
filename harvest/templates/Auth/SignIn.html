@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Log In Page</title>
   <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/1.1.2/tailwind.min.css'>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   {% load static %}
   {% load socialaccount %}
 </head>
@@ -20,13 +21,32 @@
     <img src="{% static 'images/market.png' %}" alt="background" class="w-full h-full object-cover">
   </div>
 
+  
+
   <!-- Form Section -->
-  <div class="bg-white w-full md:max-w-md lg:max-w-lg xl:max-w-xl mx-auto px-6 lg:px-16 xl:px-12 flex items-center justify-center h-full">
+  <div class="bg-white w-full md:max-w-md lg:max-w-lg xl:max-w-xl mx-auto px-6 lg:p x-16 xl:px-12 flex items-center justify-center h-full">
 
     <div class="w-full max-w-sm">
       <img src="{% static 'images/university-logo2.png' %}" alt="Site Logo" class="h-12 mx-auto mb-8">
       <h1 class="text-xl md:text-2xl font-bold leading-tight text-center">Log in to your account</h1>
-
+      {% if messages %}
+      <script>
+        document.addEventListener("DOMContentLoaded", function() {
+          {% for message in messages %}
+            Swal.fire({
+              toast: true,
+              position: 'top-end',
+              icon: '{{ message.tags }}',  // Map message tag to Swal icon if possible
+              title: '{{ message }}',
+              showConfirmButton: false,
+              timer: 5000,
+              timerProgressBar: true,
+            });
+          {% endfor %}
+        });
+      </script>
+    {% endif %}
+    
       <form class="mt-6" action="#" method="POST">
         {% csrf_token %}
         
@@ -57,13 +77,33 @@
 
         <!-- Forgot Password -->
         <div class="text-right mb-4">
-          <a href="#" class="text-sm font-semibold text-gray-700 hover:text-blue-700 focus:text-blue-700">Forgot Password?</a>
-        </div>
+          <a href="#" class="text-sm font-semibold text-gray-700 hover:text-blue-700 focus:text-blue-700" onclick="submitForm()">Forgot Password?</a>
+      </div>
+   
+      
 
         <!-- Login Button -->
         <button type="submit" class="w-full block bg-green-500 hover:bg-green-400 focus:bg-green-400 text-white font-semibold rounded-lg px-4 py-3">Log In</button>
       </form>
 
+         
+     
+    
+      <script>
+          function submitForm() {
+            const width = 500;
+const height = 600;
+const left = (window.screen.width / 2) - (width / 2);
+const top = (window.screen.height / 2) - (height / 2);
+
+const newWindow = window.open(
+  "{% url 'password_reset' %}",
+  "_blank",
+  `width=${width},height=${height},left=${left},top=${top},menubar=no,toolbar=no,location=no,status=no,toolbar=no,location=no,status=no,scrollbars=no,resizable=no`
+);
+              alert("submitted")
+          }
+      </script>
       <!-- Divider -->
       <hr class="my-6 border-gray-300">
       <script>

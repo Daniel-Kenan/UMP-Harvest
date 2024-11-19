@@ -3,7 +3,7 @@ from django.urls import path
 from . import views
 from django.views.generic import TemplateView
 from django.contrib.auth.views import LogoutView
-
+from sandbox.PY.testemail import send_test_email
 urlpatterns = [
     path('', view=views.home,name="home"),
     path("complete-payment-form/", view=views.complete_payment_form, name="card-complete-payment-form"),
@@ -28,4 +28,7 @@ urlpatterns = [
     path('logout/', LogoutView.as_view(), name='logout'),
     path('admin_cards/', views.admin_cards, name='admin_cards'),
     path('intellipay/', views.intelli, name='intellipay'),
+     path('profile/', views.profile, name='profile'), 
+     path('send-email/', send_test_email, name='send_test_email'),
+
 ]

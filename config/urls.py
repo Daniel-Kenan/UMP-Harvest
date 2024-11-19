@@ -23,12 +23,23 @@ from django.views.generic import TemplateView
 from django.contrib.auth.decorators import user_passes_test
 from django.urls import re_path
 from django.views.static import serve
-from django.conf import settings
+from django.contrib.auth import views as auth_views
+from django.urls import reverse_lazy
+from django.contrib.auth.views import PasswordResetView
+
+class CustomPasswordResetView(PasswordResetView):
+    # template_name = 'registration/password_reset_form.html'  # Optional: Customize the password reset form
+    email_template_name = 'resetpswd.html'  
+    success_url = reverse_lazy('password_reset_done') 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
-    path("", include("harvest.urls"))
+    path("", include("harvest.urls")),
+    path('password_reset/', CustomPasswordResetView.as_view(), name='password_reset'),
+    path('password_reset/done/', auth_views.PasswordResetDoneView.as_view(), name='password_reset_done'),
+    path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
+    path('reset/done/', auth_views.PasswordResetCompleteView.as_view(), name='password_reset_complete'),
 ]
 
 if settings.DEBUG:

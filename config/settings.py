@@ -32,7 +32,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = eval(os.getenv('DEBUG'))
 
 
-ALLOWED_HOSTS = ["*"]  #if DEBUG else ["https://ump-harvest-production.up.railway.app/","https://ump-harvest-production.up.railway.app"]
+ALLOWED_HOSTS = [os.getenv('DOMAIN_NAME', '127.0.0.1'), "*"]  #if DEBUG else ["https://ump-harvest-production.up.railway.app/","https://ump-harvest-production.up.railway.app"]
 
 # from django.contrib.sites.models import Site
 
@@ -57,22 +57,22 @@ AUTH_USER_MODEL = 'harvest.User'
 GOOGLE_CLIENT_ID = os.getenv('GOOGLE_CLIENT_ID')
 GOOGLE_SECRET_KEY = os.getenv('GOOGLE_SECRET_KEY')
 
-# SOCIALACCOUNT_PROVIDERS = {
-#     'google': {
-#         'APP': {
-#             'client_id': GOOGLE_CLIENT_ID,
-#             'secret': GOOGLE_SECRET_KEY,
-#             'key': ''
-#         },
-#         'SCOPE': [
-#             'profile',
-#             'email',
-#         ],
-#         'AUTH_PARAMS': {
-#             'access_type': 'online',
-#         },
-#     }
-# }
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'APP': {
+            'client_id': GOOGLE_CLIENT_ID,
+            'secret': GOOGLE_SECRET_KEY,
+            'key': ''
+        },
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        },
+    }
+}
 
 
 MIDDLEWARE = [
@@ -107,6 +107,14 @@ LOGGING = {
             'format': '{levelname} {message}',
             'style': '{',
         },
+        'detailed': {
+            'format': (
+                '{levelname} {asctime} {module} {name} {process:d} {thread:d} '
+                'URL: {request_url} | Status: {status_code} | '
+                'User: {user} | Message: {message}'
+            ),
+            'style': '{',
+        },
     },
     'handlers': {
         'file': {
@@ -118,7 +126,7 @@ LOGGING = {
         'console': {
             'level': 'ERROR',
             'class': 'logging.StreamHandler',
-            'formatter': 'simple',
+            'formatter': 'detailed',
         },
     },
     'loggers': {
@@ -126,6 +134,11 @@ LOGGING = {
             'handlers': ['file','console'],
             'level': 'ERROR',
             'propagate': True,
+        },
+        'my_custom_logger': {
+            'handlers': ['file', 'console'],
+            'level': 'INFO',
+            'propagate': False,
         },
     },
 }
@@ -136,7 +149,7 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'harvest', 'templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'templates'),os.path.join(BASE_DIR, 'harvest', 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -236,3 +249,17 @@ AUTHENTICATION_BACKENDS = [
 ]
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
+
+
+
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# For production, configure SMTP settings
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = os.getenv('EMAIL_HOST', 'smtp.gmail.com')
+EMAIL_PORT = int(os.getenv('EMAIL_PORT', 465))
+EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS', 'True') == 'True'  # Convert string to bool
+EMAIL_USE_SSL = os.getenv('EMAIL_USE_SSL', 'True') == 'True'  # Convert string to bool
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER 
+DOMAIN_NAME = os.getenv('DOMAIN_NAME', 'localhost')

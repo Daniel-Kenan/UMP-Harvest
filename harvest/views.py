@@ -28,13 +28,13 @@ def anonymous_required(function=None, redirect_url=None):
     return actual_decorator
 
 
-# List all Google OAuth apps
-apps = SocialApp.objects.filter(provider='google')
-for app in apps:
-    print(app)  # Review the entries
+# # List all Google OAuth apps
+# apps = SocialApp.objects.filter(provider='google')
+# for app in apps:
+#     print(app)  # Review the entries
 
-# Delete duplicates if necessary
-SocialApp.objects.filter(provider='google').exclude(pk=1).delete()
+# # Delete duplicates if necessary
+# SocialApp.objects.filter(provider='google').exclude(pk=1).delete()
 
 
 def calculate_discounted_price(price, discount):
@@ -645,4 +645,16 @@ def admin_cards(request):
 
 
 def intelli(request):
-    return render(request, page("intelli"))
+    return render(request, page("Intelli"))
+
+def profile(request):
+    return render(request, page("Profile"))
+
+
+from django.contrib.auth.views import PasswordResetView
+from django.urls import reverse_lazy
+
+class CustomPasswordResetView(PasswordResetView):
+    template_name = 'registration/password_reset_form.html'  # Optional: Customize the password reset form
+    email_template_name = 'registration/password_reset_email.html'  # Your custom email template
+    success_url = reverse_lazy('password_reset_done')  # Redirect after successful email send
