@@ -28,6 +28,9 @@ COPY . .
 
 # Expose the port
 EXPOSE 8000
+RUN  python manage.py makemigrations 
+RUN  python manage.py migrate
+
 
 # Run the command to start the development server
 CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]

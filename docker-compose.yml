@@ -11,11 +11,15 @@ services:
       - .:/app
     depends_on:
       - db
+      - minio
     environment:
       - POSTGRES_NAME=your_database_name
       - POSTGRES_USER=your_database_user
       - POSTGRES_PASSWORD=your_database_password
       - POSTGRES_HOST=db
+      - MINIO_ACCESS_KEY=minioadmin
+      - MINIO_SECRET_KEY=minioadmin
+      - STORAGE_BUCKET_NAME=your_bucket_name
 
   db:
     image: postgres:14
@@ -25,3 +29,18 @@ services:
       POSTGRES_DB: your_database_name
     ports:
       - "5432:5432"
+
+  minio:
+    image: minio/minio:latest
+    command: server /data
+    ports:
+      - "9000:9000" # For S3 API access
+      - "9001:9001" # For MinIO web UI
+    environment:
+      MINIO_ACCESS_KEY: minioadmin
+      MINIO_SECRET_KEY: minioadmin
+    volumes:
+      - minio-data:/data
+
+volumes:
+  minio-data:
