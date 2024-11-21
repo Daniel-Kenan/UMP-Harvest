@@ -57,6 +57,7 @@ class ProductAdminForm(forms.ModelForm):
 # Register the Product model
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
+    form = ProductAdminForm
     list_display = ('name', 'category', 'price', 'quantity', 'is_featured', 'is_available', 'slug','is_best_selling','review_count')
     search_fields = ('name', 'slug')
     list_filter = ('is_featured', 'is_available', 'category')
