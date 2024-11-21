@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django import forms
+from django.utils.html import format_html
 # Register your models here.
 from django.contrib import admin
 from .models import User, Category, Product, Tag, Article, Order, OrderItem, Review, Event, Inventory, Subscription, Notification,Season
@@ -58,10 +59,14 @@ class ProductAdminForm(forms.ModelForm):
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     form = ProductAdminForm
-    list_display = ('name', 'category', 'price', 'quantity', 'is_featured', 'is_available', 'slug','is_best_selling','review_count')
+    list_display = ('image_tag','name', 'category', 'price', 'quantity', 'is_featured', 'is_available', 'slug','is_best_selling','review_count')
     search_fields = ('name', 'slug')
     list_filter = ('is_featured', 'is_available', 'category')
     prepopulated_fields = {'slug': ('name',)}
+    def image_tag(self, obj):
+        if obj.image and obj.image != "leave_blank":
+            return format_html('<img src="{}" style="width: 50px; height: 50px;" />', obj.image)
+        return "No Image"
 
 # Register the Tag model
 @admin.register(Tag)
