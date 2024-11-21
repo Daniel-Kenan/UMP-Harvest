@@ -82,11 +82,11 @@ class EventAdmin(admin.ModelAdmin):
     list_filter = ('date', 'is_active')
 
 # Register the Inventory model
-@admin.register(Inventory)
-class InventoryAdmin(admin.ModelAdmin):
-    list_display = ('product', 'quantity_in_stock', 'restock_date')
-    search_fields = ('product__name',)
-    list_filter = ('restock_date',)
+# @admin.register(Inventory)
+# class InventoryAdmin(admin.ModelAdmin):
+#     list_display = ('product', 'quantity_in_stock', 'restock_date')
+#     search_fields = ('product__name',)
+#     list_filter = ('restock_date',)
 
 # Register the Subscription model
 @admin.register(Subscription)
