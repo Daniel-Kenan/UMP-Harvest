@@ -1,5 +1,5 @@
 from django.contrib import admin
-
+from django import forms
 # Register your models here.
 from django.contrib import admin
 from .models import User, Category, Product, Tag, Article, Order, OrderItem, Review, Event, Inventory, Subscription, Notification,Season
@@ -29,6 +29,30 @@ class CategoryAdmin(admin.ModelAdmin):
     list_display = ('name', 'slug', 'created_at', 'updated_at')
     search_fields = ('name', 'slug')
     prepopulated_fields = {'slug': ('name',)}
+
+
+
+class ProductAdminForm(forms.ModelForm):
+    image_file = forms.FileField(required=False, label="Upload Image")
+
+    class Meta:
+        model = Product
+        fields = '__all__'
+
+    def save(self, commit=True):
+        instance = super().save(commit=False)
+        image_file = self.cleaned_data.get('image_file')
+        if image_file:
+            try:
+                upload_result = instance.upload_image_to_server(image_file)
+                if not upload_result.get('access_url'):
+                    raise Exception("Failed to retrieve the access URL.")
+            except Exception as e:
+                raise forms.ValidationError(f"Error uploading image: {e}")
+        if commit:
+            instance.save()
+        return instance
+    
 
 # Register the Product model
 @admin.register(Product)

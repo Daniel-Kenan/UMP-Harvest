@@ -4,7 +4,7 @@ from django.contrib.auth.models import AbstractUser, Group, Permission
 from django.db import models
 from django.contrib.auth.models import AbstractUser, Group, Permission
 import json
-
+import requests
 
 class Season(models.Model):
     name = models.CharField(max_length=100, unique=True)
@@ -54,7 +54,24 @@ class Product(models.Model):
     is_best_selling = models.BooleanField(default=False)
     review_count = models.IntegerField(default=0)
     season = models.ForeignKey(Season, related_name='products', on_delete=models.SET_NULL, null=True, blank=True)
-    
+
+    def upload_image_to_server(self, file, folder='public'):
+        """Upload image to the external server and update the `image` field."""
+        url = 'https://media.nextgensell.com/files/upload'
+        files = {'file': file}
+        data = {'folder': folder}
+
+        try:
+            response = requests.post(url, files=files, data=data)
+            response.raise_for_status()
+            result = response.json()
+            if 'access_url' in result:
+                self.image = result['access_url']
+                self.save()
+            return result
+        except Exception as e:
+            raise Exception(f"Error uploading file: {e}")
+
     def __str__(self):
         return self.name
 
