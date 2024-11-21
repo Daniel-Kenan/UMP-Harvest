@@ -5,6 +5,8 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser, Group, Permission
 import json
 import requests
+import os
+import uuid
 
 class Season(models.Model):
     name = models.CharField(max_length=100, unique=True)
@@ -55,19 +57,36 @@ class Product(models.Model):
     review_count = models.IntegerField(default=0)
     season = models.ForeignKey(Season, related_name='products', on_delete=models.SET_NULL, null=True, blank=True)
 
+        
     def upload_image_to_server(self, file, folder='public'):
-        """Upload image to the external server and update the `image` field."""
+        """
+        Upload image to the external server and update the `image` field with a unique filename.
+        """
         url = 'https://media.nextgensell.com/files/upload'
+
+        # Generate a unique filename with the same extension as the original file
+        original_filename = file.name
+        extension = os.path.splitext(original_filename)[1]  # e.g., '.jpg', '.png'
+        unique_filename = f"{uuid.uuid4().hex}{extension}"  # e.g., 'abc12345.jpg'
+
+        # Temporarily rename the file
+        file.name = unique_filename
+
         files = {'file': file}
         data = {'folder': folder}
 
         try:
+            # Upload the file to the server
             response = requests.post(url, files=files, data=data)
             response.raise_for_status()
             result = response.json()
+
+            # Set the `image` field with the full URL of the uploaded file
             if 'access_url' in result:
-                self.image = result['access_url']
+                self.image = f"https://media.nextgensell.com/files/{folder}/{unique_filename}"
                 self.save()
+
+
             return result
         except Exception as e:
             raise Exception(f"Error uploading file: {e}")
