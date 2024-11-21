@@ -130,10 +130,10 @@
                             
                             console.log(data)
                             const updateCard = (id,dict_key,start="") =>{ 
-                              let statement =start + `${data[dict_key].this_month}`
+                              let statement =start + `R {data[dict_key].this_month}`
                               let percentage = data[dict_key]["percentage_change"].this_month;
-                              document.querySelector(`#${id} .card-body h6`).innerText = statement;
-                              document.querySelector(`#${id} .card-body span.fw-bold`).innerText = `${percentage}%`;
+                              document.querySelector(`#R {id} .card-body h6`).innerText = statement;
+                              document.querySelector(`#R {id} .card-body span.fw-bold`).innerText = `R {percentage}%`;
                             
                             } 
                             updateCard("Sales",'orders')
@@ -141,15 +141,15 @@
                             updateCard("Reviews",'reviews')
                               // Update the orders card
                               document.querySelector('.sales-card h6').textContent = data.orders[period];
-                              document.querySelector('.sales-card .card-title span').textContent = `| ${capitalize(period)}`;
+                              document.querySelector('.sales-card .card-title span').textContent = `| R {capitalize(period)}`;
                 
                               // Update the revenue card
-                              document.querySelector('.revenue-card h6').textContent = `R${data.revenue[period].toFixed(2)}`;
-                              document.querySelector('.revenue-card .card-title span').textContent = `| ${capitalize(period)}`;
+                              document.querySelector('.revenue-card h6').textContent = `RR {data.revenue[period].toFixed(2)}`;
+                              document.querySelector('.revenue-card .card-title span').textContent = `| R {capitalize(period)}`;
                 
                               // Update the reviews card
                               document.querySelector('.customers-card h6').textContent = data.reviews[period];
-                              document.querySelector('.customers-card .card-title span').textContent = `| ${capitalize(period)}`;
+                              document.querySelector('.customers-card .card-title span').textContent = `| R {capitalize(period)}`;
                           })
                           .catch(error => console.error('Error fetching data:', error));
                   }
@@ -287,37 +287,37 @@
                       <tr>
                         <th scope="row"><a href="#"><img src="assets/img/product-1.jpg" alt=""></a></th>
                         <td><a href="#" class="text-primary fw-bold">Ut inventore ipsa voluptas nulla</a></td>
-                        <td>$64</td>
+                        <td>R 64</td>
                         <td class="fw-bold">124</td>
-                        <td>$5,828</td>
+                        <td>R 5,828</td>
                       </tr>
                       <tr>
                         <th scope="row"><a href="#"><img src="assets/img/product-2.jpg" alt=""></a></th>
                         <td><a href="#" class="text-primary fw-bold">Exercitationem similique doloremque</a></td>
-                        <td>$46</td>
+                        <td>R 46</td>
                         <td class="fw-bold">98</td>
-                        <td>$4,508</td>
+                        <td>R 4,508</td>
                       </tr>
                       <tr>
                         <th scope="row"><a href="#"><img src="assets/img/product-3.jpg" alt=""></a></th>
                         <td><a href="#" class="text-primary fw-bold">Doloribus nisi exercitationem</a></td>
-                        <td>$59</td>
+                        <td>R 59</td>
                         <td class="fw-bold">74</td>
-                        <td>$4,366</td>
+                        <td>R 4,366</td>
                       </tr>
                       <tr>
                         <th scope="row"><a href="#"><img src="assets/img/product-4.jpg" alt=""></a></th>
                         <td><a href="#" class="text-primary fw-bold">Officiis quaerat sint rerum error</a></td>
-                        <td>$32</td>
+                        <td>R 32</td>
                         <td class="fw-bold">63</td>
-                        <td>$2,016</td>
+                        <td>R 2,016</td>
                       </tr>
                       <tr>
                         <th scope="row"><a href="#"><img src="assets/img/product-5.jpg" alt=""></a></th>
                         <td><a href="#" class="text-primary fw-bold">Sit unde debitis delectus repellendus</a></td>
-                        <td>$79</td>
+                        <td>R 79</td>
                         <td class="fw-bold">41</td>
-                        <td>$3,239</td>
+                        <td>R 3,239</td>
                       </tr>
                     </tbody>
                   </table>
@@ -330,33 +330,7 @@
           </div>
         </div><!-- End Left side columns -->
 
-        <!-- Right side columns -->
-        <div class="col-lg-4">
-
-          <!-- Recent Activity -->
-          <div class="card">
-            <div class="filter">
-              <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-              <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                <li class="dropdown-header text-start">
-                  <h6>Filter</h6>
-                </li>
-
-                <li><a class="dropdown-item" href="#">Today</a></li>
-                <li><a class="dropdown-item" href="#">This Month</a></li>
-                <li><a class="dropdown-item" href="#">This Year</a></li>
-              </ul>
-            </div>
-
-           
-
-         
-
-
-
-        </div><!-- End Right side columns -->
-
-      </div>
+        
     </section>
 
   </main>
