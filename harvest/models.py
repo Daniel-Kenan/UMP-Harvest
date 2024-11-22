@@ -46,7 +46,7 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2,default=1)
     discounted_price_percentage = models.IntegerField(default=0)
     quantity = models.IntegerField(default=1)
-    image = models.URLField(null=True, blank=True, default="leave_blank")
+    image = models.URLField(null=True, blank=True)
     is_featured = models.BooleanField(default=False)
     is_available = models.BooleanField(default=True)
     slug = models.SlugField(max_length=200, unique=True)
