@@ -355,16 +355,11 @@ h6 {
 }
 
 .logo img {
-  max-height: 26px;
+  max-height: 50px;
   margin-right: 6px;
 }
 
-.logo span {
-  font-size: 26px;
-  font-weight: 700;
-  color: #012970;
-  font-family: "Nunito", sans-serif;
-}
+
 
 .header {
   transition: all 0.5s;
@@ -619,31 +614,8 @@ h6 {
   background-color: #aab7cf;
 }
 
-@media (min-width: 1200px) {
 
-  #main,
-  #footer {
-    margin-left: 300px;
-  }
-}
 
-@media (max-width: 1199px) {
-  .toggle-sidebar .sidebar {
-    left: 0;
-  }
-}
-
-@media (min-width: 1200px) {
-
-  .toggle-sidebar #main,
-  .toggle-sidebar #footer {
-    margin-left: 0;
-  }
-
-  .toggle-sidebar .sidebar {
-    left: -300px;
-  }
-}
 
 .sidebar-nav {
   padding: 0;
@@ -806,8 +778,8 @@ h6 {
   line-height: 0;
   width: 64px;
   height: 64px;
-  flex-shrink: 0;
-  flex-grow: 0;
+  flex-shrink: 1;
+  flex-grow: 1;
 }
 
 .dashboard .sales-card .card-icon {
@@ -1051,85 +1023,9 @@ h6 {
   color: #6980aa;
 }
 
-/*--------------------------------------------------------------
-# Contact
---------------------------------------------------------------*/
-.contact .info-box {
-  padding: 28px 30px;
-}
 
-.contact .info-box i {
-  font-size: 38px;
-  line-height: 0;
-  color: #4154f1;
-}
 
-.contact .info-box h3 {
-  font-size: 20px;
-  color: #012970;
-  font-weight: 700;
-  margin: 20px 0 10px 0;
-}
 
-.contact .info-box p {
-  padding: 0;
-  line-height: 24px;
-  font-size: 14px;
-  margin-bottom: 0;
-}
-
-.contact .php-email-form .error-message {
-  display: none;
-  color: #fff;
-  background: #ed3c0d;
-  text-align: left;
-  padding: 15px;
-  margin-bottom: 24px;
-  font-weight: 600;
-}
-
-.contact .php-email-form .sent-message {
-  display: none;
-  color: #fff;
-  background: #18d26e;
-  text-align: center;
-  padding: 15px;
-  margin-bottom: 24px;
-  font-weight: 600;
-}
-
-.contact .php-email-form .loading {
-  display: none;
-  background: #fff;
-  text-align: center;
-  padding: 15px;
-  margin-bottom: 24px;
-}
-
-.contact .php-email-form .loading:before {
-  content: "";
-  display: inline-block;
-  border-radius: 50%;
-  width: 24px;
-  height: 24px;
-  margin: 0 10px -6px 0;
-  border: 3px solid #18d26e;
-  border-top-color: #eee;
-  animation: animate-loading 1s linear infinite;
-}
-
-.contact .php-email-form input,
-.contact .php-email-form textarea {
-  border-radius: 0;
-  box-shadow: none;
-  font-size: 14px;
-  border-radius: 0;
-}
-
-.contact .php-email-form input:focus,
-.contact .php-email-form textarea:focus {
-  border-color: #4154f1;
-}
 
 .contact .php-email-form input {
   padding: 10px 15px;
