@@ -218,7 +218,6 @@ from .models import User
         # Create user
 @anonymous_required(redirect_url='/')
 def SignUp(request):
-    
     if request.method == 'POST':
         first_name = request.POST.get('first_name')
         last_name = request.POST.get('last_name')
@@ -228,29 +227,36 @@ def SignUp(request):
         repeat_password = request.POST.get('repeat_password')
 
         if not username or not password:
-            return HttpResponse("Username and password are required", status=400)
+            messages.error(request, "Username and password are required")
+            return redirect("signup")  # Redirect to SignUp page
 
         if password != repeat_password:
-            return HttpResponse("Passwords do not match", status=400)
+            messages.error(request, "Passwords do not match")
+            return redirect("signup")
 
         if User.objects.filter(username=username).exists():
-            return HttpResponse("Email is already in use", status=400)
+            messages.error(request, "Email is already in use")
+            return redirect("signup")
 
         try:
             user = User(
                 first_name=first_name,
                 last_name=last_name,
                 username=username,
-                password=make_password(password),  # Hash the password
+                password=make_password(password),
                 email=username,
                 phone_number=phone_number,
                 is_active=True,
             )
-            user.full_clean()  # Validate the model
+            user.full_clean()
             user.save()
-            return redirect("signin")  # Redirect to the Sign In page
+            messages.success(request, "Account created successfully! Please sign in.")
+            return redirect("signin")
         except ValidationError as e:
-            return HttpResponse(f"Error: {e.message_dict}", status=400)
+            for field, errors in e.message_dict.items():
+                for error in errors:
+                    messages.error(request, f"{field}: {error}")
+            return redirect("signup")
     return render(request, "Auth/SignUp.html")
 
 
