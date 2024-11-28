@@ -95,15 +95,15 @@
                     </div>
                     <div class="sort-by">
                         <select id="input-sort" class="form-control" data-filter-sort="" data-filter-order="">
-                            <option value="">Default sorting</option>
-                            <option value="">Name (A - Z)</option>
-                            <option value="">Name (Z - A)</option>
-                            <option value="">Price (Low-High)</option>
-                            <option value="">Price (High-Low)</option>
-                            <option value="">Rating (Highest)</option>
-                            <option value="">Rating (Lowest)</option>
-                            <option value="">Model (A - Z)</option>
-                            <option value="">Model (Z - A)</option>
+                            <option value="default">Default sorting</option>
+                            <option value="name-asc">Name (A - Z)</option>
+                            <option value="name-desc">Name (Z - A)</option>
+                            <option value="price-asc">Price (Low-High)</option>
+                            <option value="price-desc">Price (High-Low)</option>
+                            <option value="rating-desc">Rating (Highest)</option>
+                            <option value="rating-asc">Rating (Lowest)</option>
+                            <option value="model-asc">Model (A - Z)</option>
+                            <option value="model-desc">Model (Z - A)</option>
                         </select>
                     </div>
                 </div>
@@ -210,4 +210,95 @@
     if (searchValue) {
         document.getElementById('search-input').value = searchValue;
     }
+</script>
+
+<script>
+
+document.getElementById('input-sort').addEventListener('change', function(event) {
+    const selectedOption = event.target.value;
+    sortProducts(selectedOption);
+});
+
+function sortProducts(option) {
+    const productGrid = document.querySelector('.product-grid');
+    const products = Array.from(productGrid.children);
+
+    let sortedProducts;
+
+    switch(option) {
+        case 'name-asc':
+            sortedProducts = products.sort((a, b) => {
+                const nameA = a.querySelector('h3').textContent.trim().toLowerCase();
+                const nameB = b.querySelector('h3').textContent.trim().toLowerCase();
+                return nameA.localeCompare(nameB);
+            });
+            break;
+
+        case 'name-desc':
+            sortedProducts = products.sort((a, b) => {
+                const nameA = a.querySelector('h3').textContent.trim().toLowerCase();
+                const nameB = b.querySelector('h3').textContent.trim().toLowerCase();
+                return nameB.localeCompare(nameA);
+            });
+            break;
+
+        case 'price-asc':
+            sortedProducts = products.sort((a, b) => {
+                const priceA = parseFloat(a.querySelector('.fw-semibold').textContent.replace('R', '').trim());
+                const priceB = parseFloat(b.querySelector('.fw-semibold').textContent.replace('R', '').trim());
+                return priceA - priceB;
+            });
+            break;
+
+        case 'price-desc':
+            sortedProducts = products.sort((a, b) => {
+                const priceA = parseFloat(a.querySelector('.fw-semibold').textContent.replace('R', '').trim());
+                const priceB = parseFloat(b.querySelector('.fw-semibold').textContent.replace('R', '').trim());
+                return priceB - priceA;
+            });
+            break;
+
+        case 'rating-desc':
+            sortedProducts = products.sort((a, b) => {
+                const ratingA = parseFloat(a.querySelector('.rating').textContent.trim());
+                const ratingB = parseFloat(b.querySelector('.rating').textContent.trim());
+                return ratingB - ratingA;
+            });
+            break;
+
+        case 'rating-asc':
+            sortedProducts = products.sort((a, b) => {
+                const ratingA = parseFloat(a.querySelector('.rating').textContent.trim());
+                const ratingB = parseFloat(b.querySelector('.rating').textContent.trim());
+                return ratingA - ratingB;
+            });
+            break;
+
+        case 'model-asc':
+            sortedProducts = products.sort((a, b) => {
+                const modelA = a.querySelector('h3').textContent.trim().toLowerCase();
+                const modelB = b.querySelector('h3').textContent.trim().toLowerCase();
+                return modelA.localeCompare(modelB);
+            });
+            break;
+
+        case 'model-desc':
+            sortedProducts = products.sort((a, b) => {
+                const modelA = a.querySelector('h3').textContent.trim().toLowerCase();
+                const modelB = b.querySelector('h3').textContent.trim().toLowerCase();
+                return modelB.localeCompare(modelA);
+            });
+            break;
+
+        default:
+            // Default sorting behavior (could be reordering based on a default criterion)
+            sortedProducts = products; // No sorting applied
+            break;
+    }
+
+    // Reattach sorted products to the product grid
+    productGrid.innerHTML = '';
+    sortedProducts.forEach(product => productGrid.appendChild(product));
+}
+
 </script>
