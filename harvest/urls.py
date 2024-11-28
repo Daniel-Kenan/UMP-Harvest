@@ -4,6 +4,16 @@ from . import views
 from django.views.generic import TemplateView
 from django.contrib.auth.views import LogoutView
 from sandbox.PY.testemail import send_test_email
+
+class ServiceWorkerView(TemplateView):
+    template_name = 'PWA/service-worker.js'
+    content_type = 'application/javascript'
+
+    def get(self, request, *args, **kwargs):
+        response = super().get(request, *args, **kwargs)
+        response['Service-Worker-Allowed'] = '/'  # Set the allowed scope to root
+        return response
+    
 urlpatterns = [
     path('', view=views.home,name="home"),
     path("complete-payment-form/", view=views.complete_payment_form, name="card-complete-payment-form"),
@@ -13,7 +23,7 @@ urlpatterns = [
     path("blog/",views.blog,name="blog"),
     path('product/<int:id>/', views.single_product, name='single_product'),
     path('manifest.json', TemplateView.as_view(template_name='PWA/manifest.json', content_type='application/json')),
-    path('service-worker.js', TemplateView.as_view(template_name='PWA/service-worker.js', content_type='application/javascript')),
+ path('service-worker.js/', ServiceWorkerView.as_view(), name='service-worker'),
     path('clear_cache/', views.clear_cache),
     path('add-to-cart/', views.add_to_cart, name='add_to_cart'),
     path('cart/', views.view_cart, name='view_cart'),

@@ -1,15 +1,15 @@
 const CACHE_NAME = "ump-harvest-cache-v1";
 const urlsToCache = [
   "/",
-  "/static/css/styles.css",
-  "/static/favicons/favicon-48x48.png",
-  "/static/favicons/favicon-72x72.png",
-  "/static/favicons/favicon-96x96.png",
-  "/static/favicons/favicon-144x144.png",
-  "/static/favicons/favicon-192x192.png",
-  "/static/favicons/favicon-256x256.png",
-  "/static/favicons/favicon-384x384.png",
-  "/static/favicons/favicon-512x512.png"
+  // "/static/css/styles.css",
+  // "/static/favicons/favicon-48x48.png",
+  // "/static/favicons/favicon-72x72.png",
+  // "/static/favicons/favicon-96x96.png",
+  // "/static/favicons/favicon-144x144.png",
+  // "/static/favicons/favicon-192x192.png",
+  // "/static/favicons/favicon-256x256.png",
+  // "/static/favicons/favicon-384x384.png",
+  // "/static/favicons/favicon-512x512.png"
 ];
 
 self.addEventListener("install", function(event) {

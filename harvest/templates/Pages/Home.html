@@ -173,6 +173,44 @@
       </section>
       {% include "Components/featured.html" %}
     {% comment %} {% include "Components/Blog.html" %} {% endcomment %}
-   
+    <script defer>
+
+      var beforeInstallPrompt = null;
+      
+      window.addEventListener("beforeinstallprompt", eventHandler, errorHandler);
+      
+      function eventHandler(event) {
+        // if 
+        beforeInstallPrompt = event;
+        Swal.fire({
+              title: 'Get UMP Harvest On Your Device',
+              text: 'Download The Application Today',
+              imageUrl: "https://media.nextgensell.com/files/bnjhb/5.png",  
+              imageWidth: 400,
+              imageHeight: 300,
+              imageAlt: 'Custom image ',
+              showCancelButton: true,
+              confirmButtonText: 'Download',
+              confirmButtonColor:"#6BB252",
+              cancelButtonText:"Continue in Web"
+            
+            }).then((result) => {
+              if (result.isConfirmed) {
+                 instalar();
+              }
+            })
+      }
+      
+      
+      function errorHandler(event) {
+        console.log("error: " + event);
+      }
+      
+      function instalar() {
+        if (beforeInstallPrompt) beforeInstallPrompt.prompt();
+      }
+      
+      </script>
+      
     {% endblock %}
     
