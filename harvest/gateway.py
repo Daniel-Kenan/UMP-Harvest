@@ -38,8 +38,8 @@ if __name__ == '__main__':
     'cancel_url': 'http://www.yourdomain.co.za/cancel.php',
     'notify_url': 'http://www.yourdomain.co.za/notify.php',
     # Buyer details
-    'name_first': 'First Name',
-    'name_last': 'Last Name',
+    'name_first': 'Firstname',
+    'name_last': 'Lastname',
     'email_address': 'test@test.com',
     # Transaction details
     'm_payment_id': '1234', #Unique payment ID to pass through to notify_url

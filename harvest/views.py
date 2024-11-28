@@ -138,11 +138,11 @@ def complete_payment_form(request):
     'cancel_url': settings.GATEWAY_REDIRECT_SITE+"payment-failed/",
     'notify_url': 'https://www.nextgensell.com/err',
     # Buyer details
-    'name_first': 'First Name',
-    'name_last': 'Last Name',
-    'email_address': 'test@test.com',
+    'name_first': 'Firstname',
+    'name_last': 'Lastname',
+    'email_address': 'sdanielkenan@gmail.com',
     # Transaction details
-    'm_payment_id': '1234', #Unique payment ID to pass through to notify_url
+    'm_payment_id': '3454', #Unique payment ID to pass through to notify_url
     'amount': "200",
     'item_name': 'Order#123'}
     
