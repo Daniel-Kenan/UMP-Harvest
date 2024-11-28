@@ -96,6 +96,9 @@
 </style>
 
 <script>
+
+let cartData = {};
+
   document.addEventListener("DOMContentLoaded", function() {
     function fetchCartData() {
         showSkeletonLoading();
@@ -103,6 +106,7 @@
         fetch('/api/cart/')
         .then(response => response.json())
         .then(data => {
+            cartData = data; 
             const totalPriceElement = document.getElementById('total-price');
 
             if (!totalPriceElement) {
@@ -116,25 +120,24 @@
             const cartItemsList = document.getElementById('cart-items-list');
             cartItemsList.innerHTML = '';
 
-            data.cart.forEach(item => {
-                console.log(item)
-                const listItem = document.createElement('li');
-                listItem.className = 'list-group-item d-flex justify-content-between lh-sm';
-                listItem.innerHTML = `
-                <img src="${item.image}" style="height:50px;width:50px;float:left;display:none"  /> 
-                <div>
-                        <h6 class="my-0">${item.name}</h6>
-                        <small class="text-body-secondary">
-                            Quantity: 
-                            <button class="btn btn-sm btn-warning" onclick="updateQuantity('${item.id}', ${item.quantity - 1})">-</button>
-                            ${item.quantity}
-                            <button class="btn btn-sm btn-warning" onclick="updateQuantity('${item.id}', ${item.quantity + 1})">+</button>
-                        </small>
-                    </div>
-                    <span class="text-body-secondary">R${item.price}</span>
-                `;
-                cartItemsList.appendChild(listItem);
-            });
+            data.cart.forEach((item, index) => {
+    const listItem = document.createElement('li');
+    listItem.className = 'list-group-item d-flex justify-content-between lh-sm';
+    listItem.innerHTML = `
+        <img src="${item.image}" style="height:50px;width:50px;float:left;display:none"  /> 
+        <div>
+            <h6 class="my-0">${item.name}</h6>
+            <small class="text-body-secondary">
+                Quantity: 
+                <button class="btn btn-sm btn-warning" onclick="changeQuantity(${index}, -1,this)">-</button>
+                <span>${item.quantity}</span>
+                <button class="btn btn-sm btn-warning" onclick="changeQuantity(${index}, 1  ,this)">+</button>
+            </small>
+        </div>
+        <span class="text-body-secondary">R${item.price}</span>
+    `;
+    cartItemsList.appendChild(listItem);
+});
 
             hideSkeletonLoading();
         })
@@ -153,57 +156,6 @@
         document.getElementById('skeleton-loading').style.display = 'none';
     }
 
-    function updateQuantity(itemId, newQuantity) {
-        if (newQuantity <= 0) {
-            removeItem(itemId);
-            return;
-        }
-
-        fetch(`/api/cart/update/`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRFToken': getCsrfToken()
-            },
-            body: JSON.stringify({ id: itemId, quantity: newQuantity })
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                fetchCartData();
-            } else {
-                showErrorMessage('Failed to update item quantity.');
-            }
-        })
-        .catch(error => {
-            console.error('Error updating item quantity:', error);
-            showErrorMessage('Failed to update item quantity.');
-        });
-    }
-
-    function removeItem(itemId) {
-        fetch(`/api/cart/remove/`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRFToken': getCsrfToken()
-            },
-            body: JSON.stringify({ id: itemId })
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                fetchCartData();
-            } else {
-                showErrorMessage('Failed to remove item.');
-            }
-        })
-        .catch(error => {
-            console.error('Error removing item:', error);
-            showErrorMessage('Failed to remove item.');
-        });
-    }
-
     function getCsrfToken() {
         return document.querySelector('[name=csrfmiddlewaretoken]').value;
     }
@@ -219,7 +171,32 @@
 
 </script>
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+
+
+function changeQuantity(index, change,button) {
+    const item = cartData.cart[index];
+    let span;
+    if (change === 1) {
+        // If the "+" button was clicked, find the previous sibling (span)
+        span = button.previousElementSibling;
+    } else {
+        // If the "-" button was clicked, find the next sibling (span)
+        span = button.nextElementSibling;
+    }
+
+    let quantity = parseInt(span.textContent);
+    if (item.quantity + change >= 0) { // Prevent quantity from going below 0
+        item.quantity += change;
+        span.textContent = item.quantity
+    }
+}
+
+
+
+</script>
+
+<script>
+        document.addEventListener('DOMContentLoaded', function() {
         const paymentTypeSelect = document.getElementById('payment-type');
         const checkoutButton = document.getElementById('checkout-button');
 
@@ -237,6 +214,7 @@
             }
         });
     });
+
 </script>
 
 <style>
@@ -266,8 +244,6 @@
     font-weight: 600;
     font-size: 1.2rem;
 }
-
-
 
 
 
