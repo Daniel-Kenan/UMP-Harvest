@@ -8,7 +8,7 @@ const urlsToCache = [
   // "/static/favicons/favicon-144x144.png",
   // "/static/favicons/favicon-192x192.png",
   // "/static/favicons/favicon-256x256.png",
-  // "/static/favicons/favicon-384x384.png",
+  // "/static/favicons/favicon-3  84x384.png",
   // "/static/favicons/favicon-512x512.png"
 ];
 

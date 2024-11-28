@@ -158,6 +158,7 @@ def single_product(request,id):
     top_searches = get_top_searches()
     product = get_object_or_404(Product, id=id)
     reviews = product.reviews.all()
+    product.stars = generate_stars(product.rating)
     product.discountedPrice = calculate_discounted_price(product.price, product.discounted_price_percentage)
     product.isOnDiscount = bool( not (product.price == product.discountedPrice) )
     product.summary, product.wiki_image = wiki.search_object_history(str(product.name))

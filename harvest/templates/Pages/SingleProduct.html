@@ -60,11 +60,7 @@ Shopping for | {{ product.name }}
                         <h2 itemprop="name">{{ product.name }}</h2>
                         <div class="rating-container d-flex gap-0 align-items-center">
                             <span class="rating me-2">
-                                <svg width="24" height="24" class="text-warning"><use xlink:href="#star-full"></use></svg>
-                                <svg width="24" height="24" class="text-warning"><use xlink:href="#star-full"></use></svg>
-                                <svg width="24" height="24" class="text-warning"><use xlink:href="#star-full"></use></svg>
-                                <svg width="24" height="24" class="text-warning"><use xlink:href="#star-full"></use></svg>
-                                <svg width="24" height="24" class="text-warning"><use xlink:href="#star-half"></use></svg>
+                                {{ product.stars | safe }}
                             </span>
                             <span class="rating-count">({{ product.rating }})</span>
                         </div>
