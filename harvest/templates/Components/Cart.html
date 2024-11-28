@@ -173,23 +173,46 @@ let cartData = {};
 <script>
 
 
-function changeQuantity(index, change,button) {
+function changeQuantity(index, change, button) {
     const item = cartData.cart[index];
     let span;
+
+    // Find the corresponding span element for the quantity
     if (change === 1) {
-        // If the "+" button was clicked, find the previous sibling (span)
         span = button.previousElementSibling;
     } else {
-        // If the "-" button was clicked, find the next sibling (span)
         span = button.nextElementSibling;
     }
 
+    // Get the current quantity
     let quantity = parseInt(span.textContent);
-    if (item.quantity + change >= 0) { // Prevent quantity from going below 0
+
+    // Only update if the quantity is valid
+    if (item.quantity + change >= 0) {
         item.quantity += change;
-        span.textContent = item.quantity
+        span.textContent = item.quantity;
+        updateTotalPrice();  // Recalculate and update the total price
     }
 }
+
+function updateTotalPrice() {
+    const totalPriceElement = document.getElementById('total-price');
+    
+    if (!totalPriceElement) {
+        console.error('Total price element is missing from the DOM.');
+        return;
+    }
+
+    // Calculate the new total price based on the cart data
+    let totalPrice = 0;
+    cartData.cart.forEach(item => {
+        totalPrice += item.price * item.quantity;
+    });
+
+    // Update the total price in the DOM
+    totalPriceElement.textContent = `R${totalPrice.toFixed(2)}`;
+}
+
 
 
 
@@ -204,7 +227,7 @@ function changeQuantity(index, change,button) {
             const selectedPaymentType = paymentTypeSelect.value;
 
             if (selectedPaymentType === 'bank-transfer') {
-                window.location.href = '{% url "bank_payment_transfer" %}'; // Replace with your actual URL
+                window.location.href = '{% url "bank_payment_transfer" %}'; 
             } 
             else if(selectedPaymentType === 'intelli'){
                 window.location.href = '{% url "intellipay" %}'
