@@ -350,7 +350,7 @@ def add_to_cart(request):
         cart = request.session.get('cart', {})
         print(cart)
         if product_id in cart:
-            cart[product_id]['quantity'] += quantity
+            cart[product_id]['quantity']  =int(cart[product_id]['quantity'])+ int(quantity)
         else:
             cart[product_id] = {
                 'name': product_name,

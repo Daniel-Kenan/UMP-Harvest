@@ -187,11 +187,24 @@ function changeQuantity(index, change, button) {
     // Get the current quantity
     let quantity = parseInt(span.textContent);
 
-    // Only update if the quantity is valid
+    // Update quantity only if it is valid
     if (item.quantity + change >= 0) {
         item.quantity += change;
-        span.textContent = item.quantity;
-        updateTotalPrice();  // Recalculate and update the total price
+
+        if (item.quantity === 0) {
+            // Remove the item from cartData when quantity is zero
+            cartData.cart.splice(index, 1);
+
+            // Remove the corresponding DOM element
+            const listItem = button.closest('li');
+            listItem.remove();
+        } else {
+            // Update the span's content if quantity is greater than zero
+            span.textContent = item.quantity;
+        }
+
+        // Update the total price
+        updateTotalPrice();
     }
 }
 
