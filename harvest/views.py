@@ -10,7 +10,8 @@ from decimal import Decimal
 from django.conf import settings
 from .gateway import PayfastPayment
 from . import wiki
-
+import uuid
+from datetime import datetime
 from allauth.socialaccount.models import SocialApp
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import user_passes_test
@@ -128,24 +129,58 @@ def home(request):
     })
 
 
+def generate_order_number():
+    # Get the current timestamp in a readable format (e.g., 'YYYYMMDDHHMMSS')
+    timestamp = datetime.now().strftime('%Y%m%d%H%M%S')
+    
+    # Generate a random UUID
+    unique_id = uuid.uuid4().hex[:8]  # Using the first 8 characters of the UUID for brevity
+    
+    # Combine the timestamp and UUID to form a unique order number
+    order_number = f"ORD-{timestamp}-{unique_id}"
+    
+    return order_number
 
 def complete_payment_form(request):
-    data = {
-    # Merchant details
-    'merchant_id': settings.GATEWAY_CONFIG['merchant_id'],
-    'merchant_key':settings.GATEWAY_CONFIG['merchant_key'],
-    'return_url': settings.GATEWAY_REDIRECT_SITE+"payment-successful/",
-    'cancel_url': settings.GATEWAY_REDIRECT_SITE+"payment-failed/",
-    'notify_url': 'https://www.nextgensell.com/err',
-    # Buyer details
-    'name_first': 'Firstname',
-    'name_last': 'Lastname',
-    'email_address': 'sdanielkenan@gmail.com',
-    # Transaction details
-    'm_payment_id': '3454', #Unique payment ID to pass through to notify_url
-    'amount': "200",
-    'item_name': 'Order#123'}
+    # Get the signed-in user's first and last name
+    if request.user.is_authenticated:
+        first_name = request.user.first_name
+        last_name = request.user.last_name
+    else:
+        first_name = "Guest"
+        last_name = "User"
+
+    # Retrieve the cart from the session
+    cart = request.session.get('cart', {})
     
+    # Calculate the total price of the cart
+    total_amount = 0
+    for item in cart.values():
+        # Ensure price is a float and quantity is an integer
+        price = float(item['price']) if isinstance(item['price'], (int, float, str)) else 0
+        quantity = int(item['quantity']) if isinstance(item['quantity'], (int, float, str)) else 0
+        total_amount += price * quantity
+        
+    order_number = generate_order_number()
+    # Payment form data
+    data = {
+        # Merchant details
+        'merchant_id': settings.GATEWAY_CONFIG['merchant_id'],
+        'merchant_key': settings.GATEWAY_CONFIG['merchant_key'],
+        'return_url': settings.GATEWAY_REDIRECT_SITE + "payment-successful/",
+        'cancel_url': settings.GATEWAY_REDIRECT_SITE + "payment-failed/",
+        'notify_url': 'https://www.nextgensell.com/err',
+        
+        # Buyer details (using the signed-in user's details)
+        'name_first': first_name,
+        'name_last': last_name,
+        'email_address': request.user.email if request.user.is_authenticated else 'guest@example.com',
+        
+        # Transaction details
+        'm_payment_id': '3454',  # Unique payment ID to pass through to notify_url
+        'amount': str(total_amount),  # Dynamically calculated total amount from the cart
+        'item_name': f"Order#{order_number}",  
+    }
     payfast_payment = PayfastPayment(data,settings.GATEWAY_CONFIG['passphrase'],sandbox_mode=settings.GATEWAY_CONFIG['mode'])
     html_form = payfast_payment.generate_html_form()
     return render(request , page("Card"),{"html_form":html_form}) 
