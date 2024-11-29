@@ -88,7 +88,7 @@ Shopping for | {{ product.name }}
                                     </span>
                                 </div>
                                 <div class="qty-button d-flex flex-wrap pt-3">
-                                    <button type="submit" class="btn btn-primary py-3 px-4 text-uppercase me-3 mt-3">Buy now</button>
+                                    {% comment %} <button type="submit" class="btn btn-primary py-3 px-4 text-uppercase me-3 mt-3">Buy now</button> {% endcomment %}
                                     <button type="submit" name="add-to-cart" value="1269" class="btn btn-dark py-3 px-4 text-uppercase mt-3" onclick="addToCart('{{ product.id }}', '{{ product.name }}', '{{ product.price }}')">Add to cart</button>
                                 </div>
                             </div>
