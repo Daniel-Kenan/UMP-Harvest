@@ -27,7 +27,12 @@
   <option value="intelli" style="padding:10px">IntelliMali</option>
   
 </select>
-            <button class="w-100 btn btn-primary btn-lg mt-3" type="button"  id="checkout-button" >Continue to checkout</button>
+{% if user.is_authenticated %}
+<button class="w-100 btn btn-primary btn-lg mt-3" id="checkout-button">Continue to checkout</button>
+{% else %}
+<button class="w-100 btn btn-secondary btn-lg mt-3" disabled>Please log in to proceed</button>
+{% endif %}
+
         </div>
     </div>
 </div>
